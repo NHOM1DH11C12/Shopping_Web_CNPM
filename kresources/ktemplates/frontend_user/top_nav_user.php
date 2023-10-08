@@ -1,0 +1,52 @@
+<style>
+    .search-box {
+        padding-top: 5px;
+        padding-left: 60px;
+        padding-right: 30px;
+         
+        
+    }
+</style>
+
+<div class="navbar-form navbar-center" id="navbarNav">
+    <ul class="nav navbar-nav">
+        <li>
+            <a href="index_user.php"><i class="fa fa-home"></i> TRANG CHỦ</a>
+        </li>
+        <li>
+            <a href="shop.php"><i class="fa fa-briefcase"></i> GIAN HÀNG</a>
+        </li>
+        <li>
+            <a href="user/index_user.php"><i class="fa fa-cog"></i> QUẢN LÍ TÀI KHOẢN</a>
+        </li>
+        <li>
+            <a href="checkout.php"><i class="fa fa-shopping-cart"></i> GIỎ HÀNG</a>
+        </li>
+        
+        <li>
+            <a href="contact.php"><i class="fa fa-fa fa-mail-forward"></i>LIÊN HỆ</a>
+        </li>
+    </ul>
+
+
+    
+
+
+
+
+    
+    
+</div>
+
+<!-- search box -->
+<div class="search-box">
+        <form action="display_product.php" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm ">
+                    <div class="input-group-btn">
+                        <button type="submit" name="submit" class="btn btn-orang"><i class="fa fa-search"></i></button>
+                    </div>
+            </div>
+        </form>
+</div>
+
