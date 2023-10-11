@@ -57,7 +57,10 @@ function cart()
   $amount = 1;
   $quantity = 1;
   $dem = 0;
-  echo"<tr>
+  echo "<tr>
+              <th><input type='checkbox' id='select-all' name='select_all'>
+              Chọn sản phẩm
+              </th>
               <th>Sản phẩm</th>
               <th>Giá</th>
               <th>Số lượng</th>
@@ -71,7 +74,7 @@ function cart()
         $id = substr($name, 8, $length);
         $query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
         confirm($query);
-        
+
         while ($row = fetch_array($query)) {
           $sub = $row['product_price'] * $value;
           $item_quantity += $value;
@@ -79,28 +82,30 @@ function cart()
           $product = <<<DELIMETER
           
 <tr>
-  <td>{$row['product_title']}<br>
-    <img width='100' src = '../kresources/{$product_photo}'>
+<td>
+  <input type='checkbox' name='product_select[]' value='{$row['product_id']}'>
+  </td>
+  <td>
+  {$row['product_title']}<br>
+    <img width='100' src='../kresources/{$product_photo}'>
   </td>
   <td>{$row['product_price']} VND</td>
   <td>{$value}</td>
   <td>{$sub} VND</td>
   <td>
-  <a class='btn btn-warning' href="..\kresources\cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>   
-  <a class='btn btn-success' href=" ..\kresources\cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a>
-  <a class='btn btn-danger' href=" ..\kresources\cart.php?delete={$row['product_id']}"
-  onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a>
-  <input class='btn btn-success' type="checkbox" name="product_select[]" value="{$row['product_id']}">
+  <a class='btn btn-warning' href='..\kresources\cart.php?remove={$row['product_id']}'><span class='glyphicon glyphicon-minus'></span></a>   
+  <a class='btn btn-success' href='..\kresources\cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
+  <a class='btn btn-danger' href='..\kresources\cart.php?delete={$row['product_id']}' onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a>
   </td>
   </tr>
   
-<input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}">
-<input type="hidden" name="item_number_{$item_number}" value="{$row['product_id']}">
-<input type="hidden" name="amount_{$amount}" value="{$row['product_price']}">
-<input type="hidden" name="quantity_{$quantity}" value="{$value}">
+<input type='hidden' name='item_name_{$item_name}' value='{$row['product_title']}'>
+<input type='hidden' name='item_number_{$item_number}' value='{$row['product_id']}'>
+<input type='hidden' name='amount_{$amount}' value='{$row['product_price']}'>
+<input type='hidden' name='quantity_{$quantity}' value='{$value}'>
  
 DELIMETER;
-          
+
           echo $product;
           $item_name++;
           $item_number++;
@@ -117,7 +122,15 @@ DELIMETER;
   if ($dem == 0) {
     echo "<h2 class='text-center '>Không có sản phẩm</h2> ";
   }
-  
+
+  echo "<script>
+  document.getElementById('select-all').addEventListener('change', function() {
+    var checkboxes = document.getElementsByName('product_select[]');
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = this.checked;
+    }
+  });
+</script>";
 }
 function buy()
 {
@@ -172,9 +185,10 @@ function buy_cart()
     echo "}";
     echo "</script>";
   }
-  
+
 }
-function display_buy(){
+function display_buy()
+{
   $query = query("SELECT * FROM buy ORDER BY id DESC LIMIT 1");
 
   // Kiểm tra xem có dữ liệu hay không
@@ -206,15 +220,15 @@ function display_buy(){
       echo "</div>";
 
       //Cột hiển thị nút điều hướng
-     echo "<div class='col-md-5' style='border: 1px solid black; border-radius: 10px; width: 610px; height: 369px; margin: auto; display: flex; flex-direction: column; justify-content: center; align-items: center;'>";
-echo "<div style='width: 100%; text-align: center;'>
+      echo "<div class='col-md-5' style='border: 1px solid black; border-radius: 10px; width: 610px; height: 369px; margin: auto; display: flex; flex-direction: column; justify-content: center; align-items: center;'>";
+      echo "<div style='width: 100%; text-align: center;'>
     <h2>Bạn muốn chuyển đi đâu?</h2>
     <div>
         <a href='index_user.php' class='btn btn-success' style='margin-right: 10px;'>Trang chủ</a>
         <a href='..\public_user\user\index_user.php?order' class='btn btn-success'>Trang Đơn Hàng</a>
     </div>
 </div>";
-echo "</div>";
+      echo "</div>";
 
       echo "</div>";
 
@@ -222,6 +236,7 @@ echo "</div>";
     }
   }
 }
+
 
 
 

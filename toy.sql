@@ -1,15 +1,7 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Oct 08, 2023 at 07:46 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+07:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -45,6 +37,7 @@ CREATE TABLE `address` (
 
 CREATE TABLE `buy` (
   `id` int(11) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -70,6 +63,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
+(1, 'Mô hình Gundam'),
+(2, 'Đồ chơi Supper sentai'),
+(3, 'Đồ chơi Kamen rider'),
+(4, 'Đồ chơi Dragon ball'),
 (12, 'Đồ Chơi Bandai DX'),
 (13, 'Mô Hình Động Bandai SHFiguart'),
 (14, 'Mô Hình Cao Cấp Bandai Complete Selection Modification'),

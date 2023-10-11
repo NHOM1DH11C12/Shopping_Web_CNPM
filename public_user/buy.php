@@ -16,9 +16,9 @@
         </h4>
         <h1 class="text-center ">Đặt hàng</h1>
         <div class="col-lg-4 col-md-6">
-            <div class="panel panel-red">
+            <div>
                 <div class="panel-heading">
-                    <div>
+                    <div class="row">
                         <table>
                             <?php buy_address(); ?>
                         </table>
@@ -27,8 +27,7 @@
                 <a href="user/index_user.php?address">
                     <div class="panel-footer">
                         <span class="pull-left">Thay đổi địa chỉ </span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i>&nbsp;&#8594;
-                            <div class="clearfix"></div>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     </div>
                 </a>
             </div>
@@ -54,13 +53,7 @@
                 </thead>
 
                 <tbody>
-
-
                     <?php buy_cart(); ?>
-
-
-
-
                 </tbody>
             </table>
             <?php return_cart()?>
@@ -69,8 +62,6 @@
                 <input type="submit" name="add_order" class="btn btn-primary pull-right" value="Đặt hàng">
             </div>
         </form>
-
-
     </div>
     <!-- /.container -->
 

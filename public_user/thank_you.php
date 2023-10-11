@@ -19,7 +19,7 @@
 </div>
 <h2>Có thể bạn sẽ cần :</h2>
 </div>
-<div class="row ">
+<div class="container ">
 
 
 <?php get_products_in_shop_page() ?>

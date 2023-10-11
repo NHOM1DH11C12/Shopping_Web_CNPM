@@ -25,31 +25,28 @@
         </tbody>
       </table>
       <?php buy()?>
-      <div class="form-group text-left">
-        <input type="submit" name="buy" class="btn btn-primary pull-left" value="MUA HÀNG" ></br>
-        </div>
     </form>
 
     <!--  ***********CART TOTALS*************-->
 
     <div class="col-xs-4 pull-right ">
-      <h2>Cart Totals</h2>
+      <h2>Tổng cộng</h2>
 
       <table class="table table-bordered" cellspacing="0">
 
         <tr class="cart-subtotal">
-          <th>Items:</th>
+          <th>Số lượng:</th>
           <td><span class="amount">
               <?php
               echo isset($_SESSION['item_quantity']) ? $_SESSION['item_quantity'] : $_SESSION['item_quantity'] = "0"; ?>
             </span></td>
         </tr>
         <tr class="shipping">
-          <th>Shipping and Handling</th>
-          <td>Free Shipping</td>
+          <th>Phí ship</th>
+          <td>Miễn phí</td>
         </tr>
         <tr class="order-total">
-          <th>Order Total</th>
+          <th>Tổng giá trị :</th>
           <td><strong><span class="amount"> 
                 <?php
                 echo isset($_SESSION['item_total']) ? $_SESSION['item_total'] : $_SESSION['item_total'] = "0"; ?> VND
@@ -59,6 +56,9 @@
       </table>
     </div>
   </div>
+  <div class="form-group text-left">
+        <input type="submit" name="buy" class="btn btn-primary pull-left" value="MUA HÀNG" ></br>
+        </div>
 </div>
 
 

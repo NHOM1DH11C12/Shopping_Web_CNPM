@@ -13,7 +13,7 @@ if (!isset($_SESSION['username'])) {
 <div id="page-wrapper">
     <div class="container-fluid">
         <?php
-        if($_SERVER['REQUEST_URI'] == "/Codes/public/admin/" || $_SERVER['REQUEST_URI'] == "/Codes/public/admin/index.php") {
+        if($_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/" || $_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/index.php") {
             include(TEMPLATE_BACK . '/admin_ct.php');
         }
         

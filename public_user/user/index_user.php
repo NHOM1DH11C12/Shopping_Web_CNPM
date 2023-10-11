@@ -12,7 +12,7 @@
 
 
         <?php
-        if ($_SERVER['REQUEST_URI'] == "/Codes/public_user/user/" || $_SERVER['REQUEST_URI'] == "/Codes/public_user/user/index_user.php") {
+        if ($_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public_user/user/" || $_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public_user/user/index_user.php") {
             include(TEMPLATE_BACK_USER  . '\content.php');
         }
         //orders******************************************************************************

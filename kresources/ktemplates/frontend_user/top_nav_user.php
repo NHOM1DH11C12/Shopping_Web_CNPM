@@ -1,12 +1,3 @@
-<style>
-    .search-box {
-        padding-top: 5px;
-        padding-left: 60px;
-        padding-right: 30px;
-         
-        
-    }
-</style>
 
 <div class="navbar-form navbar-center" id="navbarNav">
     <ul class="nav navbar-nav">
@@ -27,14 +18,6 @@
             <a href="contact.php"><i class="fa fa-fa fa-mail-forward"></i>LIÊN HỆ</a>
         </li>
     </ul>
-
-
-    
-
-
-
-
-    
     
 </div>
 

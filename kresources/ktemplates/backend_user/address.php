@@ -16,7 +16,7 @@
                       <div class="col-md-12">
                         <br/>
 
-                          <table class="table table-hover" border="1px">
+                          <table class="table table-hover" style='border: 1px solid #ffff;'>
                               <thead>
                                   <tr>
                                   <th>Họ và tên</th>

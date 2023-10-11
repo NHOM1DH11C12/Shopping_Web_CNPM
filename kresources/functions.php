@@ -154,7 +154,7 @@ function get_product()
     while ($row = fetch_array($query2)) {
         $product_photo = display_images($row['product_image']);
         $products = <<<DELIMETER
-        <div class="col-sm-4 col-lg-3 col-md-4">
+        <div class="col-sm-3 col-lg-3 col-md-3">
             <div class="thumbnail">
                 <a  href="item.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                 <div class="caption">
@@ -251,7 +251,7 @@ function get_user_product()
         $next = $page + 1;
         $outputPagination .= '<li class="page-item"><a class="page-link" href="' . $_SERVER['PHP_SELF'] . '?page=' . $next . '">Next</a></li>';
     }
-    $count=0;
+    $count = 0;
     while ($row = fetch_array($query2)) {
         //$product_image = display_image($row['product_image']);
         $product_photo = display_images($row['product_image']);
@@ -337,7 +337,7 @@ function get_products_in_ad_category_page()
         $category_page = <<<DELIMETER
  <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
-                    <img src="../kresources/{$product_photo}" alt="">
+                    <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
                     <div >
                         <h3>{$row['product_title']}</h3>
                         <p>{$row['short_desc']}</p>
@@ -372,7 +372,7 @@ function get_products_in_category_page()
             $category_page = <<<DELIMETER
             <div class="col-md-3 col-sm-6 hero-feature">
                            <div class="thumbnail">
-                               <img src="../kresources/{$product_photo}" alt="">
+                               <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
                                <div >
                                    <h3>{$row['product_title']}</h3>
                                    <p>{$row['short_desc']}</p>
@@ -437,7 +437,7 @@ function get_products_in_shop_page()
             $category_page = <<<DELIMETER
                 <div class="col-md-3 col-sm-6 hero-feature">
                     <div class="thumbnail">
-                        <img src="../kresources/{$product_photo}" alt="" width="100" height="80">
+                        <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
                         <div>
                             <h3>{$row['product_title']}</h3>
                             <p>{$short_desc}</p>
@@ -500,7 +500,7 @@ function get_products_in_admin_shop_page()
         $category_page = <<<DELIMETER
 <div class="col-md-3 col-sm-6 hero-feature">
     <div class="thumbnail">
-        <img src="../kresources/{$product_photo}" alt="" width="100" height="80">
+        <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
         <div>
             <h3>{$row['product_title']}</h3>
             <p>{$short_desc}</p>
@@ -656,7 +656,7 @@ function add_order()
         $total = 0;
         $item_quantity = 0;
         $user_name = "";
-        $user_id = $_SESSION['user_id']; 
+        $user_id = $_SESSION['user_id'];
         $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
         confirm($query_user);
         while ($row_user = fetch_array($query_user)) {
@@ -683,14 +683,15 @@ function add_order()
 
                 // Insert into 'orders'
                 $query3 = "INSERT INTO orders(order_name, order_quantity, order_amount, order_status, order_currency) 
-                VALUES('{$row['product_title']}', '{$_SESSION["product_" . $selected_product]}', '{$sub}', 'Đang xử lý', 'Đồng')";
+                VALUES('{$row['product_title']}', '{$_SESSION["product_" . $selected_product]}', '{$sub}', 'Đang xử lý', 'VND')";
                 confirm($query3);
                 $result2 = mysqli_query($connection, $query3);
                 if (!$result2) {
                     die('Query FAILED' . mysqli_error($connection));
                 }
 
-
+                unset($_SESSION['item_quantity']);
+                unset($_SESSION['item_total']);
                 // Trừ số lượng sản phẩm trong cơ sở dữ liệu
                 $query4 = "UPDATE products 
                 SET product_quantity = product_quantity - {$_SESSION["product_" . $selected_product]} 
@@ -716,7 +717,7 @@ function add_order()
 function display_order()
 {
     global $connection;
-    $user_name = ""; // Khởi tạo biến user_name
+    $user_name = "";
 
     // Lấy username từ bảng users
     $user_id = $_SESSION['user_id']; // Giả sử user_id đã được lưu trữ trong session
@@ -1070,7 +1071,62 @@ DELIMETER;
 
 
 }
+function display_photo_user()
+{
+    $category_query = query("SELECT * FROM users");
+    confirm($category_query);
 
+    while ($row = fetch_array($category_query)) {
+        $user_photo = $row['user_photo'];
+        $username = $row['username'];
+
+        // Add condition to only display the currently logged-in user
+        if ($username === $_SESSION['username']) {
+            $user = <<<DELIMETER
+                 <h2>USER</h2>
+                 <h3>{$username}<br/><h3>
+                <img src='../kresources/uploads/{$user_photo}'style='width:100px'>
+            DELIMETER;
+
+            echo $user;
+        }
+    }
+}
+function save_message($message)
+{
+    if (!isset($_SESSION['messages'])) {
+        $_SESSION['messages'] = [];
+    }
+    array_push($_SESSION['messages'], $message);
+}
+
+// Hàm hiển thị tin nhắn từ session
+function display_messages()
+{
+    // Kiểm tra xem người dùng hiện tại có phải là admin hay không
+    $query = query("SELECT * FROM users WHERE username ='{$_SESSION['username']}' ");
+    confirm($query);
+    $row = fetch_array($query);
+
+    if ($row['user_level'] == 2 || $_SESSION['username'] == user_name()) {
+        if (isset($_SESSION['messages'])) {
+            $username = user_name();
+            foreach ($_SESSION['messages'] as $message) {
+                echo "<h3>$username</h3>";
+                echo "<p class='form-control'>$message</p>";
+            }
+        }
+    }
+}
+
+function clear_messages() {
+   
+// Kiểm tra nếu nút "Xóa hội thoại" đã được nhấn
+if (isset($_POST['clear'])) {
+     $_SESSION['messages'] = [];
+    header("Refresh:0");
+}
+}
 //hiện tên người dùng trong trang quả lý
 function user_name()
 {

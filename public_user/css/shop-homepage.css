@@ -46,7 +46,7 @@ body {
 
 .thumbnail .caption-full {
     padding: 9px;
-    color: #cc4311;
+    color: #333;
 }
 
 footer {
@@ -73,7 +73,3 @@ footer {
     height: 40px;
 }
 
-*{
-    font-family: 'AR One Sans', sans-serif;
-
-}
