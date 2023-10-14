@@ -1111,16 +1111,16 @@ function display_adorder()
             if ($status == 'Đang xử lý') {
                 echo "<td><a href='index.php?edit_status&id={$row['id']}'>
                 
-                Trạng thái: <div class='status-processing text-center'><i class='fa fa-check-circle-o'></i> {$row['status']}</div></td>";
+                Trạng thái: <div class='status-processing text-center'><i class='fa fa-spinner'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đã xác nhận') {
                 echo "<td><a href='index.php?edit_status&id={$row['id']}'>
-                Trạng thái: <div class='status-confirmed text-center'><i class='fa fa fa-check-square-o'></i> {$row['status']}</div></td>";
+                Trạng thái: <div class='status-confirmed text-center'><i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
                 echo "<td><a href='index.php?edit_status&id={$row['id']}'>
                 Trạng thái: <div class='status-shipping text-center'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
             } else {
                 echo "<td><a href='index.php?edit_status&id={$row['id']}'>
-                Trạng thái: <div class='status-delivered text-center'><i class='fa fa-spinner'></i> {$row['status']}</div></td>";
+                Trạng thái: <div class='status-delivered text-center'><i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
             }
             echo "</tr>";
         }
