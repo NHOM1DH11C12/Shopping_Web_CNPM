@@ -41,7 +41,7 @@ while ($row=fetch_array($query)):
     <div class="caption-full">
         <h4><a href="#"><?php echo $row['product_title']?></a> </h4>
         <hr>
-        <h4 class="">&#165;<?php echo $row['product_price']?></h4>
+        <h4 class=""><?php echo number_format($row['product_price'])?> VND</h4>
 
     <div class="ratings">
      

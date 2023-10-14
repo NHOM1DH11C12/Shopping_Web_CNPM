@@ -1,12 +1,13 @@
+*{
+
+  font-family: 'Poppins', sans-serif !important;
+  
+}
+
 #page-wrapper {
   background-color: #F1F1F1 !important;
 }
 
-*{
-
-  font-family: 'AR One Sans', sans-serif;
-  
-}
 
 .product_image {
 

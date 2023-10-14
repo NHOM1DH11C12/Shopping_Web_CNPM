@@ -11,7 +11,6 @@
                         </p>
 
                         <td><a href="index.php?add_user" class="btn btn-primary">Thêm tài khoản</a></td>
-                        <td><a href="index.php?edit_users" class="btn btn-primary">Sửa tài khoản</a></td>
 
 
                         <div class="col-md-12">

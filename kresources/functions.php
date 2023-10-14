@@ -153,13 +153,14 @@ function get_product()
     $count = 0;
     while ($row = fetch_array($query2)) {
         $product_photo = display_images($row['product_image']);
+        $product_price = number_format($row['product_price']);
         $products = <<<DELIMETER
         <div class="col-sm-3 col-lg-3 col-md-3">
             <div class="thumbnail">
                 <a  href="item.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                 <div class="caption">
                     <h4><a  href="item.php?id={$row['product_id']}" >{$row['product_title']}</a></h4><p>{$row['short_desc']}.</p>
-                    <h5 class="pull-left" style="color: #FFA500;">{$row['product_price']} Đồng</h5><br/>
+                    <h5 class="pull-left" style="color: #FFA500;">{$product_price} Đồng</h5><br/>
                     
                 </div>
                 <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a>
@@ -255,6 +256,7 @@ function get_user_product()
     while ($row = fetch_array($query2)) {
         //$product_image = display_image($row['product_image']);
         $product_photo = display_images($row['product_image']);
+        $product_price = number_format($row['product_price']);
         $link = isset($_SESSION['username']) && !empty($_SESSION['username'])
             ? "..\kresources\cart.php?add={$row['product_id']}"
             : "javascript:alert('Cần đăng nhập để đặt hàng!');window.location.href='login.php';";
@@ -266,7 +268,7 @@ function get_user_product()
                         <div class="caption">
                            <h4> <a  href="item_user.php?id={$row['product_id']}" >{$row['product_title']}</a></h4>
                            <p>{$row['short_desc']}.</p>
-                            <h4 class="pull-right" style="color: #FFA500;">{$row['product_price']} Đồng</h4>
+                            <h4 class="pull-right" style="color: #FFA500;">{$product_price} Đồng</h4>
                             
                              </div><a href="{$link}" class="btn btn-primary">Đặt hàng</a> 
                               </div>
@@ -278,7 +280,7 @@ function get_user_product()
                 <div class="thumbnail">
                     <a  href="item_user.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                         <div class="caption">
-                            <h4 class="pull-right">{$row['product_price']} Đồng</h4>
+                            <h4 class="pull-right">{$product_price} Đồng</h4>
                            <p>{$row['short_desc']}.</p>
                            <h5> <a  href="item_user.php?id={$row['product_id']}" >{$row['product_title']}</a></h5>
                              </div><a class="btn btn-primary">Đã hết hàng</a> 
@@ -413,6 +415,49 @@ function get_products_in_category_page()
         }
     }
 }
+//sp theo danh mục ở admin 
+function cat_product()
+{
+    if (isset($_POST['up'])) {
+        $query = query("SELECT * FROM products WHERE product_category_id=" . escape_string($_POST['product_category_id']) . " ");
+        confirm($query);
+        echo "
+    <thead>
+
+    <tr>
+           <th>Id</th>
+           <th>Tên sản phẩm</th>
+           <th>Giá</th>
+           <th>Số lượng</th>
+      </tr>
+    </thead>";
+        echo "<tbody ";
+        while ($row = fetch_array($query)) {
+            $product_photo = display_images($row['product_image']);
+            
+        $product_price = number_format($row['product_price']);
+            //************************************************************
+            $products = <<<DELIMETER
+        <tr>
+            <td> {$row['product_id']}</td>
+            <td><a href="index.php?edit_product&id={$row['product_id']}&cat_id={$row['product_category_id']}"><p>{$row['product_title']}</p>
+            </a><div><img src="../../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></div></td>
+            <td >{$product_price} VND</td>
+            <td>{$row['product_quantity']}</td>
+            <td>
+            <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}">
+            <span class = " glyphicon glyphicon-remove"></span></a>
+            </td>
+       </tr>
+      
+DELIMETER;
+
+            echo $products;
+        }
+    }
+    echo "</tbody>";
+
+}
 //#########################################
 
 //#######################################
@@ -523,6 +568,69 @@ DELIMETER;
         }
     }
 }
+//tim kiem sản phẩm ở admin
+function search_product($keyword)
+{
+    $connection = mysqli_connect('localhost', 'root', '', 'thuchanh2');
+    if ($connection === false) {
+        die("Lỗi kết nối database: " . mysqli_connect_error());
+    }
+
+    if (isset($_POST['submit'])) {
+        $keyword = $_POST['search'];
+        $query = $connection->prepare("SELECT * FROM products WHERE product_title LIKE ?");
+        confirm($query);
+        $keyword = '%' . $keyword . '%';
+        $query->bind_param("s", $keyword);
+        $query->execute();
+        $result = $query->get_result();
+        echo "
+    <thead>
+
+    <tr>
+           <th>Id</th>
+           <th>Tên sản phẩm</th>
+           <th>Phân loại</th>
+           <th>Giá</th>
+           <th>Số lượng</th>
+      </tr>
+    </thead>";
+        echo "<tbody ";
+        if ($result->num_rows > 0) {
+            echo "<ul>";
+            while ($row = $result->fetch_assoc()) {
+                $result_product = $row['product_category_id'];
+                $category = show_product_category_title($result_product);
+                $product_price = number_format($row['product_price']);
+                $product_photo = display_images($row['product_image']);
+                //************************************************************
+                $products = <<<DELIMETER
+                <tr>
+                    <td> {$row['product_id']}</td>
+                    <td><a href="index.php?edit_product&id={$row['product_id']}&cat_id={$row['product_category_id']}"><p>{$row['product_title']}</p>
+                    </a><div><img src="../../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></div></td>
+                    <td>{$category}</td>
+                    <td >{$product_price} VND</td>
+                    <td>{$row['product_quantity']}</td>
+                    <td>
+                    <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}">
+                    <span class = " glyphicon glyphicon-remove"></span></a>
+                    </td>
+               </tr>
+DELIMETER;
+                echo $products;
+
+            }
+            echo "</tbody> ";
+
+        } else {
+            echo "<h2>Không tìm thấy sản phẩm nào.</h2>";
+        }
+    }
+
+}
+
+
 //tìm kiếm sp
 
 function search($keyword)
@@ -655,9 +763,7 @@ function add_order()
     if (isset($_POST['add_order'])) {
         $total = 0;
         $item_quantity = 0;
-        $user_name = "";
-        $user_id = $_SESSION['user_id'];
-        $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
+        $query_user = query("SELECT * FROM buy INNER JOIN users ON buy.user_name=users.username ORDER BY id");
         confirm($query_user);
         while ($row_user = fetch_array($query_user)) {
             $user_name = $row_user['username'];
@@ -742,7 +848,9 @@ function display_order()
             echo "<tr>";
             echo "<td>{$row['product_name']}</td>";
             echo "<td>{$row['quantity']}</td>";
-            echo "<td>{$row['price']} (KĐồng)</td>";
+            echo "<td>";
+            echo number_format($row['price']);
+            echo" VND</td>";
             echo "</tr>";
             echo "<tr>";
             echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
@@ -753,7 +861,9 @@ function display_order()
             }
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Tổng tiền: {$row['amount']} (KĐồng)</td>";
+            echo "<td>Tổng tiền: ";
+            echo number_format($row['amount']);
+            echo" VND</td>";
             echo "<td>Trạng thái: {$row['status']}</td>";
             echo "</tr>";
         }
@@ -773,6 +883,7 @@ function display_adorder()
 
         while ($row = fetch_array($query)) {
             $photo = display_images($row['photo']);
+            $price = number_format($row['price']);
             $id = $row['id'];
             $status = $row['status'];
             echo "<tr>";
@@ -787,22 +898,18 @@ function display_adorder()
             echo "<td>{$row['product_name']}<br/>
             <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
             echo "<td>{$row['quantity']}</td>";
-            echo "<td>{$row['price']}.000</td>";
+            echo "<td>{$price} VND</td>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Tổng tiền: {$row['amount']}.000(Đồng)</td>";
-            echo "<td>{$status}</td>";
-            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$id}' 
-            onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\">
-            <span class='glyphicon glyphicon-remove'></span></a></td>";
+            echo "<td>Tổng tiền: {$row['amount']} VND</td>";
+            echo "<td>
+            <label>Trạng thái:</label>{$status}</td>";
             echo "</tr>";
         }
     } else {
         echo "<br><h4 class='text-center' colspan='4'><strong>Không có đơn hàng</strong></h4>";
     }
 }
-
-//Cập nhật trạng thái đơn hàng
 function update_status()
 {
     $connection = mysqli_connect("localhost", "root", "", "toy");
@@ -826,6 +933,7 @@ function update_status()
         }
     }
 }
+//Cập nhật trạng thái đơn hàng
 //hiện doanh thu
 function display_revenue()
 {
@@ -1047,14 +1155,16 @@ function display_users()
         $username = $row['username'];
         $email = $row['email'];
         $password = $row['password'];
+        $user_photo = $row['user_photo'];
 
         $user = <<<DELIMETER
 
 
 <tr>
-    <td>{$user_id}</td>
+    <td><a href="index.php?edit_users&user_id={$row['user_id']}">{$user_id}</td>
     <td>{$user_level}</td>
-    <td>{$username}</td>
+    <td>{$username}<br>
+    <img width='100'src='../../kresources/uploads/{$user_photo}'></td></td>
     <td>{$first_name}</td>
     <td>{$last_name}</td>
      <td>{$email}</td>
@@ -1068,65 +1178,84 @@ DELIMETER;
 
         echo $user;
     }
-
-
 }
-function display_photo_user()
+function edit_user()
 {
-    $category_query = query("SELECT * FROM users");
-    confirm($category_query);
+    if (isset($_POST['update_user'])) {
+        $user_id = $_SESSION['user_id'];
+        $username = $_POST['username'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user_photo = ($_FILES['file']['name']);
+        $image_temp_location = ($_FILES['file']['tmp_name']);
+        $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
+        move_uploaded_file($image_temp_location, $final_destination);
 
-    while ($row = fetch_array($category_query)) {
-        $user_photo = $row['user_photo'];
-        $username = $row['username'];
+        $query = "UPDATE users SET 
+                    username = '{$username}',
+                    first_name = '{$first_name}',
+                    last_name = '{$last_name}',
+                    email = '{$email}',
+                    password = '{$password}',
+                    user_photo = '{$user_photo}' 
+                    WHERE user_id={$user_id}";
 
-        // Add condition to only display the currently logged-in user
-        if ($username === $_SESSION['username']) {
-            $user = <<<DELIMETER
-                 <h2>USER</h2>
-                 <h3>{$username}<br/><h3>
-                <img src='../kresources/uploads/{$user_photo}'style='width:100px'>
-            DELIMETER;
+        $send_update_query = query($query);
+        confirm($send_update_query);
 
-            echo $user;
+        echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index_user.php?user';</script>";
+
+    }
+}
+
+
+function edit()
+{
+    if (isset($_POST['update_users'])) {
+        if (empty($user_level)) {
+            $get_level = query("SELECT user_level FROM users WHERE user_id =" . escape_string($_GET['user_id']) . "");
+            confirm($get_level);
+            $row = fetch_array($get_level);
+            $user_level = $row['user_level'];
+        } else {
+            $user_level = $_POST['user_level'];
         }
-    }
-}
-function save_message($message)
-{
-    if (!isset($_SESSION['messages'])) {
-        $_SESSION['messages'] = [];
-    }
-    array_push($_SESSION['messages'], $message);
-}
-
-// Hàm hiển thị tin nhắn từ session
-function display_messages()
-{
-    // Kiểm tra xem người dùng hiện tại có phải là admin hay không
-    $query = query("SELECT * FROM users WHERE username ='{$_SESSION['username']}' ");
-    confirm($query);
-    $row = fetch_array($query);
-
-    if ($row['user_level'] == 2 || $_SESSION['username'] == user_name()) {
-        if (isset($_SESSION['messages'])) {
-            $username = user_name();
-            foreach ($_SESSION['messages'] as $message) {
-                echo "<h3>$username</h3>";
-                echo "<p class='form-control'>$message</p>";
-            }
+        $username = $_POST['username'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user_photo = ($_FILES['file']['name']);
+        $image_temp_location = ($_FILES['file']['tmp_name']);
+        $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
+        move_uploaded_file($image_temp_location, $final_destination);
+        if (empty($user_photo)) {
+            $get_pic = query("SELECT user_photo FROM users WHERE user_id =" . escape_string($_GET['user_id']) . "");
+            confirm($get_pic);
+            $row = fetch_array($get_pic);
+            $user_photo = $row['user_photo'];
         }
+        $query = "UPDATE users SET 
+                    user_level = '{$user_level}',
+                    username = '{$username}',
+                    first_name = '{$first_name}',
+                    last_name = '{$last_name}',
+                    email = '{$email}',
+                    password = '{$password}',
+                    user_photo = '{$user_photo}'
+                    WHERE user_id = " . escape_string($_GET['user_id']) . "";
+
+        $send_update_query = query($query);
+        confirm($send_update_query);
+
+        echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index.php?users';</script>";
+
     }
 }
 
-function clear_messages() {
-   
-// Kiểm tra nếu nút "Xóa hội thoại" đã được nhấn
-if (isset($_POST['clear'])) {
-     $_SESSION['messages'] = [];
-    header("Refresh:0");
-}
-}
+
 //hiện tên người dùng trong trang quả lý
 function user_name()
 {
@@ -1249,15 +1378,17 @@ function get_products_in_admin()
         //***********************************************************
         $result_product = $row['product_category_id'];
         $category = show_product_category_title($result_product);
+        $product_price = number_format($row['product_price']);
 
         $product_photo = display_images($row['product_image']);
         //************************************************************
         $products = <<<DELIMETER
         <tr>
             <td> {$row['product_id']}</td>
-            <td><a href="index.php?edit_product&id={$row['product_id']}"><p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
+            <td><a href="index.php?edit_product&id={$row['product_id']}">
+            <p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
             <td>{$category}</td>
-            <td >{$row['product_price']} Đồng</td>
+            <td >{$product_price} Đồng</td>
             <td>{$row['product_quantity']}</td>
             <td>
             <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}"
@@ -1289,10 +1420,15 @@ DELIMETER;
 function update_product()
 {
     if (isset($_POST['update'])) {
-
-        $connection = mysqli_connect("localhost", "root", "", "toy");
         $product_title = escape_string($_POST['product_title']);
-        $product_category_id = escape_string($_POST['product_category_id']);
+        if (empty($product_category_id)) {
+            $get_cat = query("SELECT product_category_id FROM products WHERE product_id =" . escape_string($_GET['id']) . "");
+            confirm($get_cat);
+            $row = fetch_array($get_cat);
+            $product_category_id = $row['product_category_id'];
+        } else {
+            $product_category_id = escape_string($_POST['product_category_id']);
+        }
         $product_price = escape_string($_POST['product_price']);
         $product_quantity = escape_string($_POST['product_quantity']);
         $product_description = escape_string($_POST['product_description']);
@@ -1322,7 +1458,7 @@ function update_product()
         $query .= "short_desc             = '{$short_desc}'               , ";
         $query .= "product_image          = '{$product_image}'              ";
         $query .= "WHERE product_id= " . escape_string($_GET['id']);
-        $send_update_query = mysqli_query($connection, $query);
+        $send_update_query = query( $query);
         confirm($send_update_query);
         set_message("Products has been updated !");
         redirect("index.php?products");
@@ -1330,7 +1466,6 @@ function update_product()
     }
 
 }
-
 
 //*************************************************Category Zone Under The Admin Page {Editting Category ,Deleting and other Options in Admin } **********
 //hiển thị danh mục sp
@@ -1371,83 +1506,6 @@ function add_category()
         }
     }
 }
-
-
-function edit1()
-{
-    if (isset($_POST['update_user'])) {
-        $user_id = $_SESSION['user_id'];
-        $user_level = 1;
-        $username = $_POST['username'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $user_photo = ($_FILES['file']['name']);
-        $image_temp_location = ($_FILES['file']['tmp_name']);
-        $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
-        move_uploaded_file($image_temp_location, $final_destination);
-
-        $query = "UPDATE users SET 
-                user_level = '{$user_level}',
-                username = '{$username}',
-                first_name = '{$first_name}',
-                last_name = '{$last_name}',
-                email = '{$email}',
-                password = '{$password}',
-                user_photo = '{$user_photo}' 
-                WHERE user_id={$user_id}";
-
-        $send_update_query = query($query);
-        confirm($send_update_query);
-
-        echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index_user.php?user';</script>";
-
-    }
-}
-
-
-function edit()
-{
-    if (isset($_POST['update_users'])) {
-        // Lấy giá trị từ các trường nhập liệu
-        $user_id = $_POST['user_id'];
-        $user_level = $_POST['user_level'];
-        $username = $_POST['username'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $user_photo = $_POST['user_photo'];
-
-        // Kiểm tra xem user_id có tồn tại trong cơ sở dữ liệu không
-        $check_query = "SELECT * FROM users WHERE user_id = {$user_id}";
-        $check_result = query($check_query);
-
-        if (mysqli_num_rows($check_result) > 0) {
-            // Nếu user_id tồn tại, cập nhật dữ liệu
-            $query = "UPDATE users SET 
-                user_level = '{$user_level}',
-                username = '{$username}',
-                first_name = '{$first_name}',
-                last_name = '{$last_name}',
-                email = '{$email}',
-                password = '{$password}'
-                user_photo = '{$user_photo}'
-                WHERE user_id= {$user_id}";
-
-            $send_update_query = query($query);
-            confirm($send_update_query);
-
-            echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index.php?users';</script>";
-        } else {
-            // Nếu user_id không tồn tại, hiển thị thông báo và load lại trang
-            echo "<script>alert('ID không tồn tại!Vui lòng nhập lại');window.location='';</script>";
-        }
-    }
-}
-
-
 
 
 /******************ADDRESS Functions *******************/

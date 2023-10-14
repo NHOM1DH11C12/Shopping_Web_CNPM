@@ -29,7 +29,14 @@ if (!isset($_SESSION['username'])) {
         if(isset($_GET['products'])){
             include(TEMPLATE_BACK . '/products.php'); 
         }
-        
+        //sp tìm kiếm được
+        if(isset($_POST['submit'])){
+            include(TEMPLATE_BACK . '/display_product.php'); 
+        }
+        //sp theo bộ lọc
+        if(isset($_POST['up'])){
+            include(TEMPLATE_BACK . '/cat_product.php'); 
+        }
         // Hiển thị trang categories
         if(isset($_GET['categories'])){
             include(TEMPLATE_BACK . '/categories.php'); 

@@ -21,10 +21,10 @@ function extra_title()
 function extra_category_id()
 {
     if (isset($_GET['id'])) {
-        $query = query("SELECT * FROM products WHERE product_id = " . escape_string($_GET['id']) . "");
+        $query = query("SELECT * FROM products INNER JOIN categories ON products.product_category_id=categories.cat_id ORDER BY product_id");
         confirm($query);
         while ($row = fetch_array($query)) {
-            $product_category_id = escape_string($row['product_category_id']);
+            $product_category_id = escape_string($row['cat_title']);
             return $product_category_id;
         }
     }
@@ -129,6 +129,7 @@ function extra_image()
 
     <form action="" method="post" enctype="multipart/form-data">
         <div class="col-md-8">
+            <a id="user-id" class="btn btn-danger" href="index.php?products">Quay lại</a>
             <div class="form-group">
                 <label for="product-title"><i class="fa fa-tag"></i> Tên sản phẩm</label>
                 <input type="text" name="product_title" class="form-control" value="<?php echo extra_title(); ?>">
@@ -159,7 +160,7 @@ function extra_image()
             <div class="form-group">
                 <label for="product-title"><i class="fa fa-list"></i>Phân loại</label>
                 <select name="product_category_id" id="" class="form-control">
-                    <option value="<?php echo $product_category_id; ?>">Chọn danh mục</option>
+                    <option value="<?php echo $product_category_id; ?>"><?php echo extra_category_id(); ?></option>
                     <?php show_categories_add_product(); ?>
                 </select>
             </div>

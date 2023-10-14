@@ -187,55 +187,7 @@ function buy_cart()
   }
 
 }
-function display_buy()
-{
-  $query = query("SELECT * FROM buy ORDER BY id DESC LIMIT 1");
 
-  // Kiểm tra xem có dữ liệu hay không
-  if (mysqli_num_rows($query) > 0) {
-    while ($row = fetch_array($query)) {
-      $status = $row['status'];
-      $photo = display_images($row['photo']);
-
-      echo "<div class='row justify-content-between'>";
-      //Cột hiển thị thông tin
-      echo "<div class='col-md-5'>";
-      echo "<table class='hero-feature' align='center'>
-          <tr>
-          <th><img align='center' width='200' src='../kresources/{$photo}'></th>
-          </tr>
-          <tr>
-          <td><h2 class='text center'>{$row['product_name']}</h2></td>
-          </tr>
-          <tr>
-          <td><h3><strong>Giá tiền:</strong> {$row['price']} KVND</h3></td>
-          </tr>
-          <tr>
-          <td><h4><strong>Số lượng :</strong>{$row['quantity']}</h4></td>
-          </tr>
-          <tr>
-          <td><h4><strong>Tổng tiền :</strong>{$row['amount']} KVND</h4></td>
-          </tr>
-          </table>";
-      echo "</div>";
-
-      //Cột hiển thị nút điều hướng
-      echo "<div class='col-md-5' style='border: 1px solid black; border-radius: 10px; width: 610px; height: 369px; margin: auto; display: flex; flex-direction: column; justify-content: center; align-items: center;'>";
-      echo "<div style='width: 100%; text-align: center;'>
-    <h2>Bạn muốn chuyển đi đâu?</h2>
-    <div>
-        <a href='index_user.php' class='btn btn-success' style='margin-right: 10px;'>Trang chủ</a>
-        <a href='..\public_user\user\index_user.php?order' class='btn btn-success'>Trang Đơn Hàng</a>
-    </div>
-</div>";
-      echo "</div>";
-
-      echo "</div>";
-
-      echo "</div>"; //Đóng thẻ div row
-    }
-  }
-}
 
 
 

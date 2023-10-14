@@ -1,6 +1,6 @@
 
 <?php
-edit1();
+edit_user();
 ?>
 <h1 >
     Sửa tài khoản

@@ -24,7 +24,13 @@
           <?php cart(); ?>
         </tbody>
       </table>
-      <?php buy()?>
+      
+        <form action="" method="post">
+            <?php buy(); ?>
+            <div class="form-group text-left">
+              <input type="submit" name="buy" class="btn btn-primary pull-left" value="MUA HÀNG" ></br>
+            </div>
+        </form>
     </form>
 
     <!--  ***********CART TOTALS*************-->
@@ -54,12 +60,14 @@
         </tr>
         </tbody>
       </table>
+      
+      
     </div>
+    
   </div>
-  <div class="form-group text-left">
-        <input type="submit" name="buy" class="btn btn-primary pull-left" value="MUA HÀNG" ></br>
-        </div>
+      
 </div>
+
 
 
 

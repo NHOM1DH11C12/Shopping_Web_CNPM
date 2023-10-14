@@ -19,7 +19,7 @@
 
 <!-- search box -->
 <div class="search-box">
-        <form action="display_product.php" method="post" enctype="multipart/form-data">
+        <form action="display_ad_product.php" method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm ">
                     <div class="input-group-btn">
