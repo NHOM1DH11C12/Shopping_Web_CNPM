@@ -639,7 +639,7 @@ function get_products_in_admin()
         $products = <<<DELIMETER
         <tr>
             <td> {$row['product_id']}</td>
-            <td><a href="index.php?edit_product&product_id={$row['product_id']}">
+            <td><a href="index.php?edit_product&id={$row['product_id']}">
             <p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
             <td>{$category}</td>
             <td >{$product_price} Đồng</td>
@@ -1109,17 +1109,17 @@ function display_adorder()
             echo "<tr>";
             echo "<td>Tổng tiền: {$row['amount']} VND</td>";
             if ($status == 'Đang xử lý') {
-                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
                 
                 Trạng thái: <div class='status-processing text-center'><i class='fa fa-spinner'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đã xác nhận') {
-                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
                 Trạng thái: <div class='status-confirmed text-center'><i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
-                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
                 Trạng thái: <div class='status-shipping text-center'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
             } else {
-                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
                 Trạng thái: <div class='status-delivered text-center'><i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
             }
             echo "</tr>";
@@ -1133,9 +1133,9 @@ function edit_status()
             $connection = mysqli_connect("localhost", "root", "", "toy");
 
             // Kiểm tra nếu nhận được yêu cầu
-            if (isset($_POST['edit_status']) && isset($_GET['id'])) {
+            if (isset($_POST['edit_status']) && isset($_GET['address_id'])) {
                 $status = $_POST['status'];
-                $id = $_GET['id'];
+                $id = $_GET['address_id'];
 
                 $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
                 $result = mysqli_query($connection, $query);
