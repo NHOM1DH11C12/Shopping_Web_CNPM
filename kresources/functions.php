@@ -1133,9 +1133,9 @@ function edit_status()
             $connection = mysqli_connect("localhost", "root", "", "toy");
 
             // Kiểm tra nếu nhận được yêu cầu
-            if (isset($_POST['edit_status']) && isset($_GET['address_id'])) {
+            if (isset($_POST['edit_status']) && isset($_GET['order_id'])) {
                 $status = $_POST['status'];
-                $id = $_GET['address_id'];
+                $id = $_GET['order_id'];
 
                 $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
                 $result = mysqli_query($connection, $query);
