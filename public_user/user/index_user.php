@@ -26,6 +26,9 @@
         if (isset($_GET['user'])) {
             include(TEMPLATE_BACK_USER  . '\user.php');
         }
+        if (isset($_GET['id'])) {
+            include(TEMPLATE_BACK_USER  . '\edit_address.php');
+        }
         if (isset($_GET['address'])) {
             include(TEMPLATE_BACK_USER  . '\address.php');
         }

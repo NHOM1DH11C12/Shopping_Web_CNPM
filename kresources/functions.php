@@ -434,8 +434,8 @@ function cat_product()
         echo "<tbody ";
         while ($row = fetch_array($query)) {
             $product_photo = display_images($row['product_image']);
-            
-        $product_price = number_format($row['product_price']);
+
+            $product_price = number_format($row['product_price']);
             //************************************************************
             $products = <<<DELIMETER
         <tr>
@@ -568,6 +568,195 @@ DELIMETER;
         }
     }
 }
+
+//*************************Adding Products in Admin*************************************************************************8
+function add_product()
+{
+    if (isset($_POST['publish'])) {
+
+        $product_title = escape_string($_POST['product_title']);
+        $product_category_id = escape_string($_POST['product_category_id']);
+        $product_price = escape_string($_POST['product_price']);
+        $product_quantity = escape_string($_POST['product_quantity']);
+        $product_description = escape_string($_POST['product_description']);
+        $short_desc = escape_string($_POST['short_desc']);
+        //********************************************************************************special zone the image uploading zone ******************
+
+
+        $product_image = ($_FILES['file']['name']);
+        $image_temp_location = ($_FILES['file']['tmp_name']);
+        $final_destination = UPLOAD_DIRECTORY . DS . $product_image;
+        move_uploaded_file($image_temp_location, $final_destination);
+
+        //****************************************************************************************************************************************
+        $query = query("INSERT INTO products(product_title,product_category_id,product_price,product_description,short_desc,product_quantity,product_image)VALUES('{$product_title}','{$product_category_id}','{$product_price}','{$product_description}','{$short_desc}','{$product_quantity}','{$product_image}')");
+        $last_id = last_id();
+        confirm($query);
+        set_message("New Product with id : {$last_id}  was Added");
+        redirect("index.php?products");
+
+    }
+
+}
+//hiện loại sản phẩm
+function show_product_category_title($product_category_id)
+{
+    $category_query = query("SELECT * FROM categories WHERE cat_id = '{$product_category_id}' ");
+    confirm($category_query);
+
+    while ($categories_row = fetch_array($category_query)) {
+        return $categories_row['cat_title'];
+    }
+}
+//hiển thị sản phẩm admin
+function get_products_in_admin()
+{
+
+    $query = query("SELECT * FROM products");
+    confirm($query);
+    //$category = show_product_category_title['product_category_id'];
+    echo "
+    <thead>
+
+    <tr>
+           <th>Id</th>
+           <th>Tên sản phẩm</th>
+           <th>Phân loại</th>
+           <th>Giá</th>
+           <th>Số lượng</th>
+      </tr>
+    </thead>";
+    echo "<tbody ";
+    while ($row = fetch_array($query)) {
+
+        //***********************************************************
+        $result_product = $row['product_category_id'];
+        $category = show_product_category_title($result_product);
+        $product_price = number_format($row['product_price']);
+
+        $product_photo = display_images($row['product_image']);
+        //************************************************************
+        $products = <<<DELIMETER
+        <tr>
+            <td> {$row['product_id']}</td>
+            <td><a href="index.php?edit_product&id={$row['product_id']}">
+            <p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
+            <td>{$category}</td>
+            <td >{$product_price} Đồng</td>
+            <td>{$row['product_quantity']}</td>
+            <td>
+            <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}"
+            onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><span class = " glyphicon glyphicon-remove"></span></a>
+            </td>
+       </tr>
+      
+DELIMETER;
+        echo $products;
+    }
+    echo "</tbody>";
+}
+
+
+//hiển thị danh mục sp đã có
+function show_categories_add_product()
+{
+    $query = query("SELECT * FROM categories");
+    confirm($query);
+    while ($row = fetch_array($query)) {
+        $category_options = <<<DELIMETER
+    <option value="{$row['cat_id']}">{$row['cat_title']}</option>
+           
+DELIMETER;
+        echo $category_options;
+    }
+}
+//***************************************************Updating Products Code In Admin Page  ***************************************
+function update_product()
+{
+    if (isset($_POST['update'])) {
+        $product_title = escape_string($_POST['product_title']);
+        if (empty($product_category_id)) {
+            $get_cat = query("SELECT product_category_id FROM products WHERE product_id =" . escape_string($_GET['id']) . "");
+            confirm($get_cat);
+            $row = fetch_array($get_cat);
+            $product_category_id = $row['product_category_id'];
+        } else {
+            $product_category_id = escape_string($_POST['product_category_id']);
+        }
+        $product_price = escape_string($_POST['product_price']);
+        $product_quantity = escape_string($_POST['product_quantity']);
+        $product_description = escape_string($_POST['product_description']);
+        $short_desc = escape_string($_POST['short_desc']);
+        $product_image = $_FILES['file']['name'];
+        $image_temp_location = $_FILES['file']['tmp_name'];
+        $final_destination = UPLOAD_DIRECTORY . DS . $product_image;
+        move_uploaded_file($image_temp_location, $final_destination);
+
+        if (empty($product_image)) {
+            $get_pic = query("SELECT product_image FROM products WHERE product_id =" . escape_string($_GET['id']) . "");
+            confirm($get_pic);
+            $row = fetch_array($get_pic);
+            $product_image = $row['product_image'];
+        }
+        $query = "UPDATE products SET ";
+        $query .= "product_title          = '{$product_title}'            , ";
+        $query .= "product_category_id    = '{$product_category_id}'      , ";
+        $query .= "product_price          = '{$product_price}'            , ";
+        $query .= "product_quantity       = '{$product_quantity}'         , ";
+        $query .= "product_description    = '{$product_description}'      , ";
+        $query .= "short_desc             = '{$short_desc}'               , ";
+        $query .= "product_image          = '{$product_image}'              ";
+        $query .= "WHERE product_id= " . escape_string($_GET['id']);
+        $send_update_query = query($query);
+        confirm($send_update_query);
+        set_message("Products has been updated !");
+        redirect("index.php?products");
+
+    }
+
+}
+
+//*************************************************Category Zone Under The Admin Page ********************************************************//
+//hiển thị danh mục sp
+function show_categories_in_admin()
+{
+
+
+
+    $query = "SELECT * FROM categories";
+    $category_query = query($query);
+    confirm($query);
+    while ($row = fetch_array($category_query)) {
+        $cat_id = $row['cat_id'];
+        $cat_title = $row['cat_title'];
+        $category_admin = <<<DELIMETER
+<tr>
+    <td>{$cat_id}</td>
+    <td>{$cat_title}</td>
+    <td><a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_category.php?id={$row['cat_id']}"
+    onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><span class = " glyphicon glyphicon-remove"></span></a></td>
+</tr>
+DELIMETER;
+
+        echo $category_admin;
+    }
+}
+// thêm danh mục
+function add_category()
+{
+    if (isset($_POST['add_category'])) {
+        $cat_title = escape_string($_POST['cat_title']);
+        if (empty($cat_title) || $cat_title == "") {
+            echo "<p class= 'bg-danger' >kHÔNG THỂ ĐỂ TRỐNG, THỬ LẠI! </p> ";
+        } else {
+            $query = query("INSERT INTO categories(cat_title) VALUES('{$cat_title}')");
+            confirm($query);
+            set_message("Category Created !");
+        }
+    }
+}
+
+
 //tim kiem sản phẩm ở admin
 function search_product($keyword)
 {
@@ -763,7 +952,9 @@ function add_order()
     if (isset($_POST['add_order'])) {
         $total = 0;
         $item_quantity = 0;
-        $query_user = query("SELECT * FROM buy INNER JOIN users ON buy.user_name=users.username ORDER BY id");
+        $user_name = "";
+        $user_id = $_SESSION['user_id']; 
+        $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
         confirm($query_user);
         while ($row_user = fetch_array($query_user)) {
             $user_name = $row_user['username'];
@@ -841,6 +1032,9 @@ function display_order()
             $status = $row['status'];
             $photo = display_images($row['photo']);
             echo "<tr>";
+            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+            echo "</tr>";
+            echo "<tr>";
             echo "<th>Sản phẩm</th>";
             echo "<th>Số lượng</th>";
             echo "<th>Giá</th>";
@@ -850,7 +1044,7 @@ function display_order()
             echo "<td>{$row['quantity']}</td>";
             echo "<td>";
             echo number_format($row['price']);
-            echo" VND</td>";
+            echo " VND</td>";
             echo "</tr>";
             echo "<tr>";
             echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
@@ -863,7 +1057,7 @@ function display_order()
             echo "<tr>";
             echo "<td>Tổng tiền: ";
             echo number_format($row['amount']);
-            echo" VND</td>";
+            echo " VND</td>";
             echo "<td>Trạng thái: {$row['status']}</td>";
             echo "</tr>";
         }
@@ -1041,7 +1235,7 @@ function add_user()
 function register_user()
 {
     if (isset($_POST['register_user'])) {
-        $user_level = isset($_POST['user_level']) ? escape_string($_POST['user_level']) : 1; // Thêm mặc định cho user_level là 1 nếu không có giá trị được gửi lên
+        $user_level = 1; // Thêm mặc định cho user_level là 1 nếu không có giá trị được gửi lên
         $first_name = escape_string($_POST['first_name']);
         $last_name = escape_string($_POST['last_name']);
         $username = escape_string($_POST['username']);
@@ -1125,14 +1319,34 @@ function display_user()
         // Add condition to only display the currently logged-in user
         if ($username === $_SESSION['username']) {
             $user = <<<DELIMETER
-                <tr>
-                <td>{$username}<br>
-                <img width='100'src='../../kresources/uploads/{$user_photo}'></td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                 <td>{$email}</td>
-                    </tr>
-            DELIMETER;
+            <tr>
+            <td style="width:60%; text-align:left;">
+            <div class="panel panel-login">
+            <table>
+            <tr>
+                <td><strong><a href="index_user.php?edit_user&user_id={$row['user_id']}">Tên tài khoản: </strong>
+                <input type="text" class="form-control" value="{$username}" readonly></td>
+            </tr>
+            <tr>
+                <td><strong>Tên: </strong>
+                <input type="text" class="form-control" value="{$first_name}" readonly></td>
+            </tr>
+            <tr>
+                <td><strong>Họ: </strong>
+                <input type="text" class="form-control" value="{$last_name}" readonly></td>
+            </tr>
+            <tr>
+                <td><strong>Email: </strong>
+                <input class="form-control" value="{$email}" readonly></td>
+            </tr>
+        </table></div>
+        
+            </td>
+            <td style="width:40%; text-align:right;">
+            <strong>Hình ảnh </strong> <br><img width='300'src='../../kresources/uploads/{$user_photo}'>
+            </td>
+        </tr>
+        DELIMETER;
 
             echo $user;
         }
@@ -1192,7 +1406,12 @@ function edit_user()
         $image_temp_location = ($_FILES['file']['tmp_name']);
         $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
         move_uploaded_file($image_temp_location, $final_destination);
-
+        if (empty($user_photo)) {
+            $get_pic = query("SELECT user_photo FROM users WHERE user_id =" . escape_string($_GET['user_id']) . "");
+            confirm($get_pic);
+            $row = fetch_array($get_pic);
+            $user_photo = $row['user_photo'];
+        }
         $query = "UPDATE users SET 
                     username = '{$username}',
                     first_name = '{$first_name}',
@@ -1314,245 +1533,85 @@ function display_images($pictures)
 
     return $upload_path . DS . $pictures;
 }
-
-//*************************Adding Products in Admin*************************************************************************8
-function add_product()
-{
-    if (isset($_POST['publish'])) {
-
-        $product_title = escape_string($_POST['product_title']);
-        $product_category_id = escape_string($_POST['product_category_id']);
-        $product_price = escape_string($_POST['product_price']);
-        $product_quantity = escape_string($_POST['product_quantity']);
-        $product_description = escape_string($_POST['product_description']);
-        $short_desc = escape_string($_POST['short_desc']);
-        //********************************************************************************special zone the image uploading zone ******************
-
-
-        $product_image = ($_FILES['file']['name']);
-        $image_temp_location = ($_FILES['file']['tmp_name']);
-        $final_destination = UPLOAD_DIRECTORY . DS . $product_image;
-        move_uploaded_file($image_temp_location, $final_destination);
-
-        //****************************************************************************************************************************************
-        $query = query("INSERT INTO products(product_title,product_category_id,product_price,product_description,short_desc,product_quantity,product_image)VALUES('{$product_title}','{$product_category_id}','{$product_price}','{$product_description}','{$short_desc}','{$product_quantity}','{$product_image}')");
-        $last_id = last_id();
-        confirm($query);
-        set_message("New Product with id : {$last_id}  was Added");
-        redirect("index.php?products");
-
-    }
-
-}
-//hiện loại sản phẩm
-function show_product_category_title($product_category_id)
-{
-    $category_query = query("SELECT * FROM categories WHERE cat_id = '{$product_category_id}' ");
-    confirm($category_query);
-
-    while ($categories_row = fetch_array($category_query)) {
-        return $categories_row['cat_title'];
-    }
-}
-//hiển thị sản phẩm admin
-function get_products_in_admin()
-{
-
-    $query = query("SELECT * FROM products");
-    confirm($query);
-    //$category = show_product_category_title['product_category_id'];
-    echo "
-    <thead>
-
-    <tr>
-           <th>Id</th>
-           <th>Tên sản phẩm</th>
-           <th>Phân loại</th>
-           <th>Giá</th>
-           <th>Số lượng</th>
-      </tr>
-    </thead>";
-    echo "<tbody ";
-    while ($row = fetch_array($query)) {
-
-        //***********************************************************
-        $result_product = $row['product_category_id'];
-        $category = show_product_category_title($result_product);
-        $product_price = number_format($row['product_price']);
-
-        $product_photo = display_images($row['product_image']);
-        //************************************************************
-        $products = <<<DELIMETER
-        <tr>
-            <td> {$row['product_id']}</td>
-            <td><a href="index.php?edit_product&id={$row['product_id']}">
-            <p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
-            <td>{$category}</td>
-            <td >{$product_price} Đồng</td>
-            <td>{$row['product_quantity']}</td>
-            <td>
-            <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}"
-            onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><span class = " glyphicon glyphicon-remove"></span></a>
-            </td>
-       </tr>
-      
-DELIMETER;
-        echo $products;
-    }
-    echo "</tbody>";
-}
-
-
-//hiển thị danh mục sp đã có
-function show_categories_add_product()
-{
-    $query = query("SELECT * FROM categories");
-    confirm($query);
-    while ($row = fetch_array($query)) {
-        $category_options = <<<DELIMETER
-    <option value="{$row['cat_id']}">{$row['cat_title']}</option>
-           
-DELIMETER;
-        echo $category_options;
-    }
-}
-//***************************************************Updating Products Code In Admin Page  ***************************************
-function update_product()
-{
-    if (isset($_POST['update'])) {
-        $product_title = escape_string($_POST['product_title']);
-        if (empty($product_category_id)) {
-            $get_cat = query("SELECT product_category_id FROM products WHERE product_id =" . escape_string($_GET['id']) . "");
-            confirm($get_cat);
-            $row = fetch_array($get_cat);
-            $product_category_id = $row['product_category_id'];
-        } else {
-            $product_category_id = escape_string($_POST['product_category_id']);
-        }
-        $product_price = escape_string($_POST['product_price']);
-        $product_quantity = escape_string($_POST['product_quantity']);
-        $product_description = escape_string($_POST['product_description']);
-        $short_desc = escape_string($_POST['short_desc']);
-        //******************************************************special zone the image uploading zone ************************************
-        $product_image = $_FILES['file']['name'];
-        $image_temp_location = $_FILES['file']['tmp_name'];
-        $final_destination = UPLOAD_DIRECTORY . DS . $product_image;
-        move_uploaded_file($image_temp_location, $final_destination);
-
-        if (empty($product_image)) {
-            $get_pic = query("SELECT product_image FROM products WHERE product_id =" . escape_string($_GET['id']) . "");
-            confirm($get_pic);
-            $row = fetch_array($get_pic);
-            $product_image = $row['product_image'];
-        }
-
-
-
-        //********************************************************************************************************************************
-        $query = "UPDATE products SET ";
-        $query .= "product_title          = '{$product_title}'            , ";
-        $query .= "product_category_id    = '{$product_category_id}'      , ";
-        $query .= "product_price          = '{$product_price}'            , ";
-        $query .= "product_quantity       = '{$product_quantity}'         , ";
-        $query .= "product_description    = '{$product_description}'      , ";
-        $query .= "short_desc             = '{$short_desc}'               , ";
-        $query .= "product_image          = '{$product_image}'              ";
-        $query .= "WHERE product_id= " . escape_string($_GET['id']);
-        $send_update_query = query( $query);
-        confirm($send_update_query);
-        set_message("Products has been updated !");
-        redirect("index.php?products");
-
-    }
-
-}
-
-//*************************************************Category Zone Under The Admin Page {Editting Category ,Deleting and other Options in Admin } **********
-//hiển thị danh mục sp
-function show_categories_in_admin()
-{
-
-
-
-    $query = "SELECT * FROM categories";
-    $category_query = query($query);
-    confirm($query);
-    while ($row = fetch_array($category_query)) {
-        $cat_id = $row['cat_id'];
-        $cat_title = $row['cat_title'];
-        $category_admin = <<<DELIMETER
-<tr>
-    <td>{$cat_id}</td>
-    <td>{$cat_title}</td>
-    <td><a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_category.php?id={$row['cat_id']}"
-    onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><span class = " glyphicon glyphicon-remove"></span></a></td>
-</tr>
-DELIMETER;
-
-        echo $category_admin;
-    }
-}
-// thêm danh mục
-function add_category()
-{
-    if (isset($_POST['add_category'])) {
-        $cat_title = escape_string($_POST['cat_title']);
-        if (empty($cat_title) || $cat_title == "") {
-            echo "<p class= 'bg-danger' >kHÔNG THỂ ĐỂ TRỐNG, THỬ LẠI! </p> ";
-        } else {
-            $query = query("INSERT INTO categories(cat_title) VALUES('{$cat_title}')");
-            confirm($query);
-            set_message("Category Created !");
-        }
-    }
-}
-
-
 /******************ADDRESS Functions *******************/
 //hiển thị địa chỉ, thông tin nhận hàng
 function display_address()
 {
-    $category_query = query("SELECT * FROM address");
-    confirm($category_query);
+    $username = "";
+    $user_id = $_SESSION['user_id']; // Giả sử user_id đã được lưu trữ trong session
+    $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
+    confirm($query_user);
 
-    while ($row = fetch_array($category_query)) {
+    while ($row_user = fetch_array($query_user)) {
+        $user_name = $row_user['username'];
+    }
 
-        $fullname = $row['fullname'];
-        $phone = $row['phone'];
-        $province = $row['province'];
-        $district = $row['district'];
-        $ward = $row['ward'];
-        $address = $row['address'];
+    if (isset($_SESSION['username']) && $_SESSION['username'] == $user_name) {
+        $query_address = query("SELECT * FROM address WHERE username = '{$user_name}'");
+        confirm($query_address);
+        echo "<tr>
+        <th>Họ và tên</th>
+          <th>Số điện thoại</th>
+          <th>Tỉnh/Thành phố</th>
+          <th>Huyện</th>
+          <th>Xã/Phường</th>
+          <th>Địa chỉ cụ thể</th>
+          <th>Xóa</th>
+          <th>Lên đầu</th></tr>";
+        if (mysqli_num_rows($query_address) > 0) {
+            while ($row = fetch_array($query_address)) {
+                // Lấy thông tin địa chỉ từ cột
+                $fullname = $row['fullname'];
+                $phone = $row['phone'];
+                $province = $row['province'];
+                $district = $row['district'];
+                $ward = $row['ward'];
+                $address = $row['address'];
 
-        $fulladdress = <<<DELIMETER
-        <tr>
-            <td>{$fullname}</td>
-            <td>{$phone}</td>
-            <td>{$province}</td>
-            <td>{$district}</td>
-            <td>{$ward}</td>
-            <td>{$address}</td>
-            <td><a class="btn btn-danger" href="..\..\kresources\ktemplates\backend_user\delete_address.php?id={$row['id']}"
-            onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
-            <span class="fa fa-fw fa-remove"></span></a></td>
-            <td><a class="btn btn-success" href="..\..\kresources\ktemplates\backend_user\change_location.php?id={$row['id']}"
-            onclick="return confirm('Bạn có chắc chắn muốn đẩy địa chỉ này lên đầu không?')">
-             <span class="fa fa-fw fa-arrow-circle-up"></span></a></td>
-        </tr>
+                // Hiển thị thông tin địa chỉ
+                $fulladdress = <<<DELIMETER
+                  <tr>
+                  <td><a href="index_user.php?edit_address&id={$row['id']}">{$fullname}</td>
+                  <td>{$phone}</td>
+                  <td>{$province}</td>
+                  <td>{$district}</td>
+                  <td>{$ward}</td>
+                  <td>{$address}</td>
+                  <td><a class="btn btn-danger" href="..\..\kresources\ktemplates\backend_user\delete_address.php?id={$row['id']}"
+                  onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                  <span class="fa fa-fw fa-remove"></span></a></td>
+                  <td><a class="btn btn-success" href="..\..\kresources\ktemplates\backend_user\change_location.php?id={$row['id']}"
+                  onclick="return confirm('Bạn có chắc chắn muốn đẩy địa chỉ này lên đầu không?')">
+                  <span class="fa fa-fw fa-arrow-circle-up"></span></a></td>
+                  </tr>
 DELIMETER;
 
-        echo $fulladdress;
+                echo $fulladdress;
+            }
+        } else {
+            echo "<h2 class='text-center'>Chưa thêm thông tin đơn hàng</h2>";
+        }
     }
 }
+
+
 
 // hiện địa chỉ trong trang đặt hàng
 function buy_address()
 {
-    $category_query = query("SELECT * FROM address");
-    confirm($category_query);
-    $row = fetch_array($category_query);
+    $username = "";
+    $user_id = $_SESSION['user_id']; // Giả sử user_id đã được lưu trữ trong session
+    $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
+    confirm($query_user);
 
-    if ($row) {
+    while ($row_user = fetch_array($query_user)) {
+        $user_name = $row_user['username'];
+    }
+
+    if (isset($_SESSION['username']) && $_SESSION['username'] == $user_name) {
+        $query_address = query("SELECT * FROM address WHERE username = '{$user_name}'");
+        confirm($query_address);
+    if ($row= fetch_array($query_address)) {
         $fullname = $row['fullname'];
         $phone = $row['phone'];
         $province = $row['province'];
@@ -1574,7 +1633,7 @@ function buy_address()
         echo $fulladdress;
         $fulladdress = $fullname . ";" . $phone . "\n" . $province . ";" . $district . ";" . $ward . "\n" . $address;
         $_SESSION['fulladdress'] = $fulladdress;
-    } else {
+    }} else {
         $addAddressLink = <<<DELIMETER
 
         <tr>
@@ -1591,6 +1650,15 @@ function buy_address()
 function add_address()
 {
     if (isset($_POST['add_address'])) {
+        // Lấy tên người dùng từ bảng users
+        
+        $user_name = "";
+        $user_id = $_SESSION['user_id']; 
+        $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
+        confirm($query_user);
+        while ($row_user = fetch_array($query_user)) {
+            $user_name = $row_user['username'];
+        }
         $fullname = escape_string($_POST['fullname']);
         $phone = escape_string($_POST['phone']);
         $province = escape_string($_POST['province']);
@@ -1601,13 +1669,42 @@ function add_address()
         if (empty($fullname) || empty($phone) || empty($province) || empty($district) || empty($ward) || empty($address)) {
             echo "<h2 class='text-center bg-danger'>Các trường không được để trống</h2>";
         } else {
-            $query = query("INSERT INTO address(fullname,phone, province, district, ward, address) VALUES('{$fullname}','{$phone}', '{$province}', '{$district}', '{$ward}', '{$address}')");
+            // Thực hiện INSERT vào bảng address
+            $query = query("INSERT INTO address(username, fullname, phone, province, district, ward, address) 
+                            VALUES('{$user_name}', '{$fullname}', '{$phone}', '{$province}', '{$district}', '{$ward}', '{$address}')");
             confirm($query);
-            set_message("Địa chỉ đã được thêm");
-            redirect("index_user.php?address");
+            echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index_user.php?address';</script>";
+
         }
     }
 }
+
+function update_address()
+{
+    if (isset($_POST['update_address'])) {
+        $fullname = escape_string($_POST['fullname']);
+        $phone = escape_string($_POST['phone']);
+        $province = escape_string($_POST['province']);
+        $district = escape_string($_POST['district']);
+        $ward = escape_string($_POST['ward']);
+        $address = escape_string($_POST['address']);
+        $query = "UPDATE address SET 
+                        fullname = '{$fullname}',
+                        phone = '{$phone}',
+                        province = '{$province}',
+                        district = '{$district}',
+                        ward = '{$ward}',
+                        address = '{$address}'
+                        WHERE id = " . escape_string($_GET['id']) . "";
+
+        $send_update_query = query($query);
+        confirm($send_update_query);
+
+        set_message("Địa chỉ đã được cập nhật");
+        redirect("index_user.php?address");
+    }
+}
+
 /******************SLIDES Functions *******************/
 
 //thêm slides
