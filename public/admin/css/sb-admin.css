@@ -6,16 +6,9 @@
 
 /* Global Styles */
 
-
-*{
-    font-family: 'AR One Sans', sans-serif;
-    
-}
-
-
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color:  #222;
 }
 
 @media(min-width:768px) {
@@ -32,7 +25,9 @@ body {
     width: 100%;
     padding: 0;
     background-color: #fff;
+    padding-right: 500px;
 }
+
 
 .huge {
     font-size: 50px;
@@ -45,7 +40,7 @@ body {
     }
 
     #page-wrapper {
-        padding: 10px;
+        padding: 20px;
     }
 }
 
@@ -64,7 +59,7 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
     line-height: 20px;
-    color: #999;
+    color: #0d9ae6;
 }
 
 .top-nav>li>a:hover,
@@ -73,7 +68,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #000;
+    background-color: #e16a6a;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -85,7 +80,7 @@ body {
     border-top-right-radius: 0;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(9, 78, 175, 0.485);
 }
 
 .top-nav>.open>.dropdown-menu>li>a {
@@ -151,7 +146,7 @@ ul.alert-dropdown {
     display: block;
     padding: 10px 15px 10px 38px;
     text-decoration: none;
-    color: #999;
+    color: #f5f0f0;
 }
 
 .side-nav>li>ul>li>a:hover {
@@ -191,7 +186,7 @@ ul.alert-dropdown {
 }
 
 .panel-green a:hover {
-    color: #0d880d;
+    color: #47ed47;
 }
 .panel-blue {
     border-color: #0aeca4;
@@ -208,7 +203,7 @@ ul.alert-dropdown {
 }
 
 .panel-blue a:hover {
-    color: #095e43;
+    color: #0aeca4;
 }
 .panel-red {
     border-color: #f03a34;
@@ -243,7 +238,7 @@ ul.alert-dropdown {
 }
 
 .panel-yellow a:hover {
-    color: #715308;
+    color: #fbb607;
 }
 .panel-pink {
     border-color: #f60323;
@@ -260,5 +255,5 @@ ul.alert-dropdown {
 }
 
 .panel-pink a:hover {
-    color:#830012;
+    color:#f60323;
 }

@@ -953,7 +953,7 @@ function add_order()
         $total = 0;
         $item_quantity = 0;
         $user_name = "";
-        $user_id = $_SESSION['user_id']; 
+        $user_id = $_SESSION['user_id'];
         $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
         confirm($query_user);
         while ($row_user = fetch_array($query_user)) {
@@ -1058,7 +1058,15 @@ function display_order()
             echo "<td>Tổng tiền: ";
             echo number_format($row['amount']);
             echo " VND</td>";
-            echo "<td>Trạng thái: {$row['status']}</td>";
+            if ($status == 'Đang xử lý') {
+                echo "<td>Trạng thái: <div class='status-processing '>{$row['status']}</div></td>";
+            } elseif ($status == 'Đã xác nhận') {
+                echo "<td>Trạng thái: <div class='status-confirmed'>{$row['status']}</div></td>";
+            } elseif ($status == 'Đang giao hàng') {
+                echo "<td>Trạng thái: <div class='status-shipping'>{$row['status']}</div></td>";
+            } else {
+                echo "<td>Trạng thái: <div class='status-delivered'>{$row['status']}</div></td>";
+            }
             echo "</tr>";
         }
     } else {
@@ -1080,7 +1088,10 @@ function display_adorder()
             $price = number_format($row['price']);
             $id = $row['id'];
             $status = $row['status'];
-            echo "<tr>";
+            echo "<tr> ";
+            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+            echo "</tr>";
+            echo "<tr> ";
             echo "<th>ID</th>";
             echo "<th>Sản phẩm</th>";
             echo "<th>Số lượng</th>";
@@ -1092,18 +1103,54 @@ function display_adorder()
             echo "<td>{$row['product_name']}<br/>
             <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
             echo "<td>{$row['quantity']}</td>";
-            echo "<td>{$price} VND</td>";
+            echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
+                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
             echo "</tr>";
             echo "<tr>";
             echo "<td>Tổng tiền: {$row['amount']} VND</td>";
-            echo "<td>
-            <label>Trạng thái:</label>{$status}</td>";
+            if ($status == 'Đang xử lý') {
+                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                
+                Trạng thái: <div class='status-processing text-center'><i class='fa fa-check-circle-o'></i> {$row['status']}</div></td>";
+            } elseif ($status == 'Đã xác nhận') {
+                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                Trạng thái: <div class='status-confirmed text-center'><i class='fa fa fa-check-square-o'></i> {$row['status']}</div></td>";
+            } elseif ($status == 'Đang giao hàng') {
+                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                Trạng thái: <div class='status-shipping text-center'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
+            } else {
+                echo "<td><a href='index.php?edit_status&id={$row['id']}'>
+                Trạng thái: <div class='status-delivered text-center'><i class='fa fa-spinner'></i> {$row['status']}</div></td>";
+            }
             echo "</tr>";
         }
     } else {
         echo "<br><h4 class='text-center' colspan='4'><strong>Không có đơn hàng</strong></h4>";
     }
 }
+function edit_status()
+        {
+            $connection = mysqli_connect("localhost", "root", "", "toy");
+
+            // Kiểm tra nếu nhận được yêu cầu
+            if (isset($_POST['edit_status']) && isset($_GET['id'])) {
+                $status = $_POST['status'];
+                $id = $_GET['id'];
+
+                $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
+                $result = mysqli_query($connection, $query);
+
+                $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
+                $result_orders = mysqli_query($connection, $query_orders);
+
+                if ($result && $result_orders) {
+                    set_message("Cập nhật trạng thái thành công");
+                    redirect("../admin/index.php?admin_order");
+                } else {
+                    echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
+                }
+            }
+        }
 function update_status()
 {
     $connection = mysqli_connect("localhost", "root", "", "toy");
@@ -1320,8 +1367,7 @@ function display_user()
         if ($username === $_SESSION['username']) {
             $user = <<<DELIMETER
             <tr>
-            <td style="width:60%; text-align:left;">
-            <div class="panel panel-login">
+            <td style="text-align:left;">
             <table>
             <tr>
                 <td><strong><a href="index_user.php?edit_user&user_id={$row['user_id']}">Tên tài khoản: </strong>
@@ -1332,18 +1378,18 @@ function display_user()
                 <input type="text" class="form-control" value="{$first_name}" readonly></td>
             </tr>
             <tr>
-                <td><strong>Họ: </strong>
-                <input type="text" class="form-control" value="{$last_name}" readonly></td>
+                <td><div class="form-group"><strong>Họ: </strong>
+                <input type="text" class="form-control" value="{$last_name}" readonly></div></td>
             </tr>
             <tr>
                 <td><strong>Email: </strong>
                 <input class="form-control" value="{$email}" readonly></td>
             </tr>
-        </table></div>
+        </table>
         
             </td>
-            <td style="width:40%; text-align:right;">
-            <strong>Hình ảnh </strong> <br><img width='300'src='../../kresources/uploads/{$user_photo}'>
+            <td style="text-align:right;">
+            <img src='../../kresources/uploads/{$user_photo}' style="width: 300px;height: 300px;border: 1px solid black;border-radius: 15%;overflow: hidden;">
             </td>
         </tr>
         DELIMETER;
@@ -1611,15 +1657,15 @@ function buy_address()
     if (isset($_SESSION['username']) && $_SESSION['username'] == $user_name) {
         $query_address = query("SELECT * FROM address WHERE username = '{$user_name}'");
         confirm($query_address);
-    if ($row= fetch_array($query_address)) {
-        $fullname = $row['fullname'];
-        $phone = $row['phone'];
-        $province = $row['province'];
-        $district = $row['district'];
-        $ward = $row['ward'];
-        $address = $row['address'];
+        if ($row = fetch_array($query_address)) {
+            $fullname = $row['fullname'];
+            $phone = $row['phone'];
+            $province = $row['province'];
+            $district = $row['district'];
+            $ward = $row['ward'];
+            $address = $row['address'];
 
-        $fulladdress = <<<DELIMETER
+            $fulladdress = <<<DELIMETER
 
         <tr>
             <td><strong>{$fullname}</strong> {$phone}</td>
@@ -1630,10 +1676,11 @@ function buy_address()
 
         DELIMETER;
 
-        echo $fulladdress;
-        $fulladdress = $fullname . ";" . $phone . "\n" . $province . ";" . $district . ";" . $ward . "\n" . $address;
-        $_SESSION['fulladdress'] = $fulladdress;
-    }} else {
+            echo $fulladdress;
+            $fulladdress = $fullname . ";" . $phone . "\n" . $province . ";" . $district . ";" . $ward . "\n" . $address;
+            $_SESSION['fulladdress'] = $fulladdress;
+        }
+    } else {
         $addAddressLink = <<<DELIMETER
 
         <tr>
@@ -1651,9 +1698,9 @@ function add_address()
 {
     if (isset($_POST['add_address'])) {
         // Lấy tên người dùng từ bảng users
-        
+
         $user_name = "";
-        $user_id = $_SESSION['user_id']; 
+        $user_id = $_SESSION['user_id'];
         $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
         confirm($query_user);
         while ($row_user = fetch_array($query_user)) {

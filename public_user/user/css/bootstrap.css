@@ -5265,6 +5265,16 @@ a.list-group-item-danger.active:focus {
 .panel-body {
   padding: 15px;
 }
+.panel-login{
+  border: 1px solid black; 
+  padding: 10px;
+  border-radius: 12px;
+}
+.panel-login{
+  border: 1px solid black; 
+  padding: 10px;
+  border-radius: 12px;
+}
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
@@ -6532,3 +6542,18 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+.status-processing {
+  color: gray;
+}
+
+.status-confirmed {
+  color: red; /* Màu đỏ cho trạng thái đã xác nhận */
+}
+
+.status-shipping {
+  color: green; /* Màu xanh lá cho trạng thái đang vận chuyển */
+}
+
+.status-delivered {
+  color: blue; /* Màu xanh dương cho trạng thái đã giao hàng */
+}

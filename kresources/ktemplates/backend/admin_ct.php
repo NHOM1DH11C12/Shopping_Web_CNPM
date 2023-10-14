@@ -1,5 +1,15 @@
-
-    <div class="row">
+<?php 
+function total_id(){
+    $query= query("SELECT COUNT(user_id) as total FROM users");
+    confirm($query);
+        // Xuất dữ liệu của mỗi hàng
+        while($row = fetch_array($query)) {
+           $total= $row["total"];
+           return $total;
+        }
+    } 
+?>
+    <div class="row"><?php echo total_id() ?>
                    <h1>Bộ công cụ</h1>
                 <!-- /.row -->
                 <!-- /.row -->

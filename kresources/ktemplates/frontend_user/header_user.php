@@ -26,7 +26,20 @@
        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
        
 </head>
+<style>
+    *{
+        font-family: 'AR One Sans', sans-serif;
+    }
+    .container{
+        font-family: 'AR One Sans', sans-serif;
+    }
 
+    .search-box{
+        padding-right:100px;
+        justify-content:right;
+        overflow: hidden;
+    }
+</style>
 <body>
 
     <!-- Navigation -->

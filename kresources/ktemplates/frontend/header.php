@@ -42,8 +42,9 @@
     }
 
     .search-box{
-        padding-right: 30px;
+        padding-right:100px;
         justify-content:right;
+        overflow: hidden;
     }
 </style>
 

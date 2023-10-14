@@ -1,6 +1,8 @@
-  <div class="container">
+         
+<hr style='border: 3px solid black; width:100%;'> 
+</div>
+<div class="container">
 
-        <hr>
 
         <!-- Footer -->
         <footer>

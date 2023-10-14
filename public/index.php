@@ -15,11 +15,6 @@
 
 <!-- Page Content -->
 <div class="container">
-        <?php if (isset($_POST['submit'])) {
-            $keyword = $_POST['search'];
-            search($keyword);
-        }
-        ?><br><br>
         <!--Categories here-->
         <?php include(TEMPLATE_FRONT . DS . 'side_nav.php'); ?>
 

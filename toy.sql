@@ -21,6 +21,7 @@ SET time_zone = "+07:00";
 
 CREATE TABLE `address` (
   `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `province` varchar(50) NOT NULL,
