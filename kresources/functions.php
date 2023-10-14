@@ -639,7 +639,7 @@ function get_products_in_admin()
         $products = <<<DELIMETER
         <tr>
             <td> {$row['product_id']}</td>
-            <td><a href="index.php?edit_product&id={$row['product_id']}">
+            <td><a href="index.php?edit_product&product_id={$row['product_id']}">
             <p>{$row['product_title']}</p></a><div><img width='100' src="../../kresources/uploads/{$product_photo}" alt=""></div></td>
             <td>{$category}</td>
             <td >{$product_price} Đồng</td>
