@@ -228,6 +228,7 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
+  `sex` varchar(10) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_photo` text NOT NULL

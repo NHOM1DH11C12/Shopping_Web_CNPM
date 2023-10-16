@@ -125,6 +125,14 @@ function extra_photo()
         </select>
         <br>
     </div>
+    
+    <div class="form-group">
+            <label for="sex">Giới tính :</label><br />
+            <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-fw fa-male">  Nam</label>
+            &ensp;<input type="radio" name="sex" id="nu"value="nu"><label class="fa fa-fw fa-female">  Nữ</label>
+            &ensp;<input type="radio" name="sex" id="khac" value="khac"><label class="fa fa-fw fa-fa fa-slideshare"> Khác</label>
+            <br>
+        </div>
     <div class="form-group">
         <label class="fa fa-fw fa-photo"></label>
         <input type="file" name="file"><br>

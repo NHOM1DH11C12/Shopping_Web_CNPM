@@ -956,7 +956,6 @@ function add_order()
 {
     global $connection;
     if (isset($_POST['add_order'])) {
-        $total = 0;
         $item_quantity = 0;
         $user_name = "";
         $user_id = $_SESSION['user_id'];
@@ -978,18 +977,6 @@ function add_order()
                 confirm($query2);
                 $result = mysqli_query($connection, $query2);
                 if (!$result) {
-                    die('Query FAILED' . mysqli_error($connection));
-                }
-
-                // Get the ID of the last inserted record
-                $last_id = mysqli_insert_id($connection);
-
-                // Insert into 'orders'
-                $query3 = "INSERT INTO orders(order_name, order_quantity, order_amount, order_status, order_currency) 
-                VALUES('{$row['product_title']}', '{$_SESSION["product_" . $selected_product]}', '{$sub}', 'Đang xử lý', 'VND')";
-                confirm($query3);
-                $result2 = mysqli_query($connection, $query3);
-                if (!$result2) {
                     die('Query FAILED' . mysqli_error($connection));
                 }
 
@@ -1035,6 +1022,7 @@ function display_order()
     if (mysqli_num_rows($query) > 0) {
 
         while ($row = fetch_array($query)) {
+            $date = $row['add_date'];
             $status = $row['status'];
             $photo = display_images($row['photo']);
             echo "<tr>";
@@ -1065,14 +1053,20 @@ function display_order()
             echo number_format($row['amount']);
             echo " VND</td>";
             if ($status == 'Đang xử lý') {
-                echo "<td>Trạng thái: <div class='status-processing '>{$row['status']}</div></td>";
+                echo "<td>Trạng thái: <div class='status-processing text-center '>
+                <i class='fa fa-spinner'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đã xác nhận') {
-                echo "<td>Trạng thái: <div class='status-confirmed'>{$row['status']}</div></td>";
+                echo "<td>Trạng thái: <div class='status-confirmed text-center'>
+                <i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
-                echo "<td>Trạng thái: <div class='status-shipping'>{$row['status']}</div></td>";
+                echo "<td>Trạng thái: <div class='status-shipping text-center'>
+                <i class='fa fa-truck'></i> {$row['status']}</div></td>";
             } else {
-                echo "<td>Trạng thái: <div class='status-delivered'>{$row['status']}</div></td>";
+                echo "<td>Trạng thái: <div class='status-delivered text-center'>
+                <i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
             }
+
+            echo "<td>Ngày đặt: {$date}</td>";
             echo "</tr>";
         }
     } else {
@@ -1093,7 +1087,9 @@ function display_adorder()
             $photo = display_images($row['photo']);
             $price = number_format($row['price']);
             $id = $row['id'];
+            $date = $row['add_date'];
             $status = $row['status'];
+            $get_date = $row['receive_date'];
             echo "<tr> ";
             echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
             echo "</tr>";
@@ -1115,21 +1111,25 @@ function display_adorder()
             echo "<tr>";
             echo "<td>Tổng tiền: {$row['amount']} VND</td>";
 
-                        
+
             if ($status == 'Đang xử lý') {
                 echo "<td>Trạng thái: <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-spinner'></i> {$row['status']}</div>
                 </td>";
             } elseif ($status == 'Đã xác nhận') {
                 echo "<td>
-                Trạng thái: <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
+                Trạng thái: <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
                 echo "<td>
-                Trạng thái: <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
+                Trạng thái: <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
             } else {
                 echo "<td>
-                Trạng thái: <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
-            }            echo "<td>
+                Trạng thái: <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
+            }
+            echo "<td>
             <form id='form{$row['id']}' style='display: none;' action='index.php?update_status&order_id={$row['id']}' method='post' enctype='multipart/form-data'>
                 <label>Chỉnh sửa trạng thái đơn hàng : </label><br/>
                 <select name='status'>
@@ -1155,57 +1155,51 @@ function display_adorder()
             }
             </script>
         </td>";
+
+            echo "<td>Ngày đặt: {$date}</td>";
+            if ($status == 'Đã hoàn thành') {
+                echo "<td>Ngày giao : {$get_date}</td>";
+            }
             echo "</tr>";
-            
+
         }
     } else {
         echo "<br><h4 class='text-center' colspan='4'><strong>Không có đơn hàng</strong></h4>";
     }
 }
-function edit_status()
-{
-    $connection = mysqli_connect("localhost", "root", "", "toy");
-
-    // Kiểm tra nếu nhận được yêu cầu
-    if (isset($_POST['edit_status']) && isset($_GET['order_id'])) {
-        $status = $_POST['status'];
-        $id = $_GET['order_id'];
-
-        $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
-        $result = mysqli_query($connection, $query);
-
-        $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
-        $result_orders = mysqli_query($connection, $query_orders);
-
-        if ($result && $result_orders) {
-            set_message("Cập nhật trạng thái thành công");
-            redirect("../admin/index.php?admin_order");
-        } else {
-            echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
-        }
-    }
-}
 function update_status()
 {
-    $connection = mysqli_connect("localhost", "root", "", "toy");
-
-    // Kiểm tra nếu nhận được yêu cầu
     if (isset($_POST['update_status']) && isset($_POST['id'])) {
         $status = $_POST['status'];
         $id = $_POST['id'];
-
-        $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
-        $result = mysqli_query($connection, $query);
-
-        $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
-        $result_orders = mysqli_query($connection, $query_orders);
-
-        if ($result && $result_orders) {
-            set_message("Cập nhật trạng thái thành công");
-            redirect("../admin/index.php?admin_order");
+    
+        // Truy vấn dữ liệu từ cơ sở dữ liệu để lấy thông tin về đơn hàng
+        $query_order_info = query("SELECT add_date, user_name, product_name, price, quantity, amount, status, photo, buyad, receive_date FROM buy WHERE id = '{$id}'");
+        confirm($query_order_info);
+        $row = fetch_array($query_order_info);
+        $date = $row['add_date'];
+        $user_name = $row['user_name'];
+        $product_name = $row['product_name'];
+        $price = $row['price'];
+        $quantity = $row['quantity'];
+        $amount = $row['amount'];
+        $photo = $row['photo'];
+        $buyad = $row['buyad'];
+        $receive_date = $row['receive_date'];
+    
+        if ($status == 'Đã hoàn thành') {
+            $query = query("UPDATE buy SET status = '{$status}', add_date ='{$date}', receive_date = CURRENT_TIMESTAMP WHERE id = '{$id}'");
+            $query_orders = query("INSERT INTO orders (order_name, order_quantity, order_amount, order_status, order_currency, receive_date) 
+            VALUES ('{$product_name}', '{$quantity}', '{$amount}', '{$status}', 'VND', '{$receive_date}')");
         } else {
-            echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
+            $query = query("UPDATE buy SET status = '{$status}' WHERE id = '{$id}'");
+            $query_orders = query("UPDATE orders SET order_status = '{$status}' WHERE order_name = '{$product_name}'");
         }
+    
+        confirm($query);
+        confirm($query_orders);
+        set_message("Cập nhật trạng thái thành công");
+        redirect("../admin/index.php?admin_order");
     }
 }
 //Cập nhật trạng thái đơn hàng
@@ -1225,13 +1219,10 @@ function display_revenue()
         $order_status = $row['order_status'];
         $order_currency = $row['order_currency'];
 
-        // Kiểm tra xem đã có tên đơn hàng trong mảng revenue chưa
         if (array_key_exists($order_name, $revenue)) {
-            // Tên đơn hàng đã tồn tại trong mảng, cộng số lượng và giá tiền tương ứng
             $revenue[$order_name]['order_quantity'] += $order_quantity;
             $revenue[$order_name]['order_amount'] += $order_amount;
         } else {
-            // Tên đơn hàng chưa tồn tại trong mảng, thêm thông tin mới
             $revenue[$order_name] = array(
                 'order_id' => $order_id,
                 'order_quantity' => $order_quantity,
@@ -1268,7 +1259,7 @@ function display_revenue()
         <td>{$order_amount}</td>
         <td>{$order_currency}</td>
         <td>{$order_status}</td>
-        <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_revenue.php?id={$name}' 
+        <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_revenue.php?name={$name}' 
         onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a></td>
     </tr>";
 
@@ -1297,12 +1288,13 @@ function add_user()
         $password = escape_string($_POST['password']);
         $user_photo = ($_FILES['file']['name']);
         $image_temp_location = ($_FILES['file']['tmp_name']);
+        $user_sex = escape_string($_POST['sex']);
         $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
         move_uploaded_file($image_temp_location, $final_destination);
 
 
-        $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo) 
-        VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo') ");
+        $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
+        VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}') ");
         confirm($query);
 
         set_message("USER CREATED");
@@ -1323,6 +1315,7 @@ function register_user()
         $email = escape_string($_POST['email']);
         $password = escape_string($_POST['password']);
         $user_photo = ($_FILES['file']['name']);
+        $user_sex = escape_string($_POST['sex']);
         $image_temp_location = ($_FILES['file']['tmp_name']);
         $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
         move_uploaded_file($image_temp_location, $final_destination);
@@ -1345,8 +1338,8 @@ function register_user()
             set_message($error_message);
         } else {
             // Nếu dữ liệu không tồn tại, thêm mới người dùng và chuyển đến trang login.php
-            $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo) 
-            VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo')");
+            $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
+            VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}')");
             confirm($query);
             set_message("TẠO TÀI KHOẢN THÀNH CÔNG");
             redirect("login.php");
@@ -1393,6 +1386,7 @@ function display_user()
         $user_level = $row['user_level'];
         $username = $row['username'];
         $email = $row['email'];
+        $sex = $row['sex'];
         $password = $row['password'];
         // Retrieve the image path from the database
         $user_photo = $row['user_photo'];
@@ -1418,6 +1412,10 @@ function display_user()
             <tr>
                 <td><strong>Email: </strong>
                 <input class="form-control" value="{$email}" readonly></td>
+            </tr>
+            <tr>
+                <td><strong>Giới tính: </strong>
+                <input class="form-control" value="{$sex}" readonly></td>
             </tr>
         </table>
         
@@ -1450,7 +1448,7 @@ function display_users()
         $email = $row['email'];
         $password = $row['password'];
         $user_photo = $row['user_photo'];
-
+        $sex = $row['sex'];
         $user = <<<DELIMETER
 
 
@@ -1462,6 +1460,7 @@ function display_users()
     <td>{$first_name}</td>
     <td>{$last_name}</td>
      <td>{$email}</td>
+     <td>{$sex}</td>
     <td><a class="btn btn-danger" href="..\..\kresources\ktemplates\backend\delete_user.php?id={$row['user_id']}"
     onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><span class="glyphicon glyphicon-remove"></span></a></td>
 </tr>
@@ -1480,9 +1479,11 @@ function edit_user()
         $username = $_POST['username'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
+        $sex = $_POST['sex'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $user_photo = ($_FILES['file']['name']);
+
         $image_temp_location = ($_FILES['file']['tmp_name']);
         $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
         move_uploaded_file($image_temp_location, $final_destination);
@@ -1496,6 +1497,7 @@ function edit_user()
                     username = '{$username}',
                     first_name = '{$first_name}',
                     last_name = '{$last_name}',
+                    sex = '{$sex}',
                     email = '{$email}',
                     password = '{$password}',
                     user_photo = '{$user_photo}' 
@@ -1524,6 +1526,7 @@ function edit()
         $username = $_POST['username'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
+        $sex = $_POST['sex'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $user_photo = ($_FILES['file']['name']);
@@ -1541,6 +1544,7 @@ function edit()
                     username = '{$username}',
                     first_name = '{$first_name}',
                     last_name = '{$last_name}',
+                    sex = '{$sex}',
                     email = '{$email}',
                     password = '{$password}',
                     user_photo = '{$user_photo}'
@@ -1553,6 +1557,7 @@ function edit()
 
     }
 }
+
 
 
 //hiện tên người dùng trong trang quả lý

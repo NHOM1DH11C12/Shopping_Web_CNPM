@@ -16,7 +16,7 @@ if (!isset($_SESSION['username'])) {
         if($_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/" || $_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/index.php") {
             include(TEMPLATE_BACK . '/admin_ct.php');
         }
-        if ( isset($_GET['order_id'])) {include(TEMPLATE_BACK . '/edit_status.php'); }
+        if ( isset($_GET['order_id'])) {include(TEMPLATE_BACK . '/update_status.php'); }
         // Hiển thị trang orders
         if(isset($_GET['revenue'])){
             include(TEMPLATE_BACK . '/revenue.php'); 

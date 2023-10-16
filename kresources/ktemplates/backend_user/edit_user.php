@@ -69,46 +69,53 @@ function extra_photo()
 }
 ?>
 <div>
-<h1>
-    Sửa tài khoản
-</h1>
-<form action="" method="post" enctype="multipart/form-data">
-    <div class="col-md-6">
-        <span id="user_admin" class='fa fa-user fa-4x'></span>
-        <div class="form-group">
-            <label class="fa fa-fw fa-github-alt"></label>
-            <label for="username">Tên tài khoản</label>
-            <input type="text" name="username" class="form-control" value="<?php echo extra_name(); ?>">
+    <h1>
+        Sửa tài khoản
+    </h1>
+    <form action="" method="post" enctype="multipart/form-data">
+            <span id="user_admin" class='fa fa-user fa-4x'></span>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="fa fa-fw fa-github-alt"></label>
+                <label for="username">Tên tài khoản</label>
+                <input type="text" name="username" class="form-control" value="<?php echo extra_name(); ?>">
+            </div>
+            <div class="form-group">
+                <label class="fa fa-fw fa-user"></label>
+                <label for="first name">Tên</label>
+                <input type="text" name="first_name" class="form-control" value="<?php echo extra_first(); ?>">
+            </div>
+            <div class="form-group">
+                <label class="fa fa-fw fa-user"></label>
+                <label for="last name">Họ</label>
+                <input type="text" name="last_name" class="form-control" value="<?php echo extra_last(); ?>">
+            </div>
+            <div class="form-group">
+                <label class="fa fa-fw fa-envelope"></label>
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" value="<?php echo extra_email(); ?>">
+            </div>
+            <div class="form-group">
+                <label class="fa fa-fw fa-key"></label>
+                <label for="password">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" value="<?php echo extra_pwd(); ?>">
+            </div>
+            <div class="form-group">
+                <a id="user-id" class="btn btn-danger" href="index_user.php?user">Quay lại</a>
+                <input type="submit" name="update_user" class="btn btn-primary pull-right" value="Cập nhật">
+            </div>
         </div>
         <div class="form-group">
-            <label class="fa fa-fw fa-user"></label>
-            <label for="first name">Tên</label>
-            <input type="text" name="first_name" class="form-control" value="<?php echo extra_first(); ?>">
+            <label for="sex">Giới tính :</label><br />
+            <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-fw fa-male">  Nam</label>
+            &ensp;<input type="radio" name="sex" id="nu"value="nu"><label class="fa fa-fw fa-female">  Nữ</label>
+            &ensp;<input type="radio" name="sex" id="khac" value="khac"><label class="fa fa-fw fa-fa fa-slideshare"> Khác</label>
+            <br>
         </div>
         <div class="form-group">
-            <label class="fa fa-fw fa-user"></label>
-            <label for="last name">Họ</label>
-            <input type="text" name="last_name" class="form-control" value="<?php echo extra_last(); ?>">
-        </div>
-        <div class="form-group">
-            <label class="fa fa-fw fa-envelope"></label>
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" value="<?php echo extra_email(); ?>">
-        </div>
-        <div class="form-group">
-            <label class="fa fa-fw fa-key"></label>
-            <label for="password">Mật khẩu</label>
-            <input type="password" name="password" class="form-control" value="<?php echo extra_pwd(); ?>">
-        </div>
-        <div class="form-group">
-            <a id="user-id" class="btn btn-danger" href="index_user.php?user">Quay lại</a>
-            <input type="submit" name="update_user" class="btn btn-primary pull-right" value="Cập nhật">
-        </div>
-    </div>
-    <div class="form-group">
 
-        <label class="fa fa-fw fa-photo"></label>
-        <input type="file" name="file"><br>
-        <img width='450' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
-    </div>
-</form>
+            <label class="fa fa-fw fa-photo"></label>
+            <input type="file" name="file"><br>
+            <img width='200' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
+        </div>
+    </form>
