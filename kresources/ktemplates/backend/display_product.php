@@ -1,3 +1,4 @@
+<div>
 <form class="navbar-form navbar-right" action="index.php?display_product.php" method="post" enctype="multipart/form-data">
         <div class="input-group">
             <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm ">

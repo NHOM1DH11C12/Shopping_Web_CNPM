@@ -1,5 +1,5 @@
 
-  <div class="row">
+  <div><div class="row">
 
     <h3 class="bg-success"><?php display_message(); ?></h3>
 

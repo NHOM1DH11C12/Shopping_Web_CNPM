@@ -9,7 +9,8 @@ function total_id(){
         }
     } 
 ?>
-    <div class="row"><?php echo total_id() ?>
+
+    <div class="row">
                    <h1>Bộ công cụ</h1>
                 <!-- /.row -->
                 <!-- /.row -->

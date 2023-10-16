@@ -419,45 +419,51 @@ function get_products_in_category_page()
 function cat_product()
 {
     if (isset($_POST['up'])) {
-        $query = query("SELECT * FROM products WHERE product_category_id=" . escape_string($_POST['product_category_id']) . " ");
+        $product_category_id = escape_string($_POST['product_category_id']);
+        if (empty($product_category_id)) {
+            echo "<br/><h1 class='text-center'>Không có dữ liệu danh mục</h1>";
+            return;
+        }
+
+        $query = query("SELECT * FROM products WHERE product_category_id=" . $product_category_id . " ");
         confirm($query);
         echo "
     <thead>
-
-    <tr>
+        <tr>
            <th>Id</th>
            <th>Tên sản phẩm</th>
            <th>Giá</th>
            <th>Số lượng</th>
-      </tr>
+        </tr>
     </thead>";
+
         echo "<tbody ";
         while ($row = fetch_array($query)) {
             $product_photo = display_images($row['product_image']);
-
             $product_price = number_format($row['product_price']);
-            //************************************************************
+
             $products = <<<DELIMETER
         <tr>
-            <td> {$row['product_id']}</td>
+            <td>{$row['product_id']}</td>
             <td><a href="index.php?edit_product&id={$row['product_id']}&cat_id={$row['product_category_id']}"><p>{$row['product_title']}</p>
             </a><div><img src="../../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></div></td>
-            <td >{$product_price} VND</td>
+            <td>{$product_price} VND</td>
             <td>{$row['product_quantity']}</td>
             <td>
-            <a class="btn btn-danger" href = "..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}">
-            <span class = " glyphicon glyphicon-remove"></span></a>
+                <a class="btn btn-danger" href="..\..\kresources\ktemplates\backend\delete_product.php?id={$row['product_id']}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
             </td>
        </tr>
-      
 DELIMETER;
 
             echo $products;
         }
+        echo "</tbody>";
     }
-    echo "</tbody>";
 
 }
+
 //#########################################
 
 //#######################################
@@ -1108,49 +1114,77 @@ function display_adorder()
             echo "</tr>";
             echo "<tr>";
             echo "<td>Tổng tiền: {$row['amount']} VND</td>";
+
+                        
             if ($status == 'Đang xử lý') {
-                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
-                
-                Trạng thái: <div class='status-processing text-center'><i class='fa fa-spinner'></i> {$row['status']}</div></td>";
+                echo "<td>Trạng thái: <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <i class='fa fa-spinner'></i> {$row['status']}</div>
+                </td>";
             } elseif ($status == 'Đã xác nhận') {
-                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
-                Trạng thái: <div class='status-confirmed text-center'><i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
+                echo "<td>
+                Trạng thái: <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa fa-check-circle-o'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
-                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
-                Trạng thái: <div class='status-shipping text-center'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
+                echo "<td>
+                Trạng thái: <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa-fw fa-truck'></i> {$row['status']}</div></td>";
             } else {
-                echo "<td><a href='index.php?edit_status&order_id={$row['id']}'>
-                Trạng thái: <div class='status-delivered text-center'><i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
+                echo "<td>
+                Trạng thái: <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'><i class='fa fa-check-square-o'></i> {$row['status']}</div></td>";
+            }            echo "<td>
+            <form id='form{$row['id']}' style='display: none;' action='index.php?update_status&order_id={$row['id']}' method='post' enctype='multipart/form-data'>
+                <label>Chỉnh sửa trạng thái đơn hàng : </label><br/>
+                <select name='status'>
+                    <option value='Đang xử lý'>Đang xử lý</option>
+                    <option value='Đã xác nhận'>Đã xác nhận</option>
+                    <option value='Đang giao hàng'>Đang giao hàng</option>
+                    <option value='Đã hoàn thành'>Đã hoàn thành</option>
+                </select>
+                <div class='form-group text-left'>
+                    <input type='submit' name='edit_status' class='btn btn-success' value='Lưu'>
+                </div>
+            </form> 
+            <script>
+            function toggleForm(formId) 
+            {
+                var form = document.getElementById(formId);
+                if (form.style.display === 'none') 
+                {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
             }
+            </script>
+        </td>";
             echo "</tr>";
+            
         }
     } else {
         echo "<br><h4 class='text-center' colspan='4'><strong>Không có đơn hàng</strong></h4>";
     }
 }
 function edit_status()
-        {
-            $connection = mysqli_connect("localhost", "root", "", "toy");
+{
+    $connection = mysqli_connect("localhost", "root", "", "toy");
 
-            // Kiểm tra nếu nhận được yêu cầu
-            if (isset($_POST['edit_status']) && isset($_GET['order_id'])) {
-                $status = $_POST['status'];
-                $id = $_GET['order_id'];
+    // Kiểm tra nếu nhận được yêu cầu
+    if (isset($_POST['edit_status']) && isset($_GET['order_id'])) {
+        $status = $_POST['status'];
+        $id = $_GET['order_id'];
 
-                $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
-                $result = mysqli_query($connection, $query);
+        $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
+        $result = mysqli_query($connection, $query);
 
-                $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
-                $result_orders = mysqli_query($connection, $query_orders);
+        $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
+        $result_orders = mysqli_query($connection, $query_orders);
 
-                if ($result && $result_orders) {
-                    set_message("Cập nhật trạng thái thành công");
-                    redirect("../admin/index.php?admin_order");
-                } else {
-                    echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
-                }
-            }
+        if ($result && $result_orders) {
+            set_message("Cập nhật trạng thái thành công");
+            redirect("../admin/index.php?admin_order");
+        } else {
+            echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
         }
+    }
+}
 function update_status()
 {
     $connection = mysqli_connect("localhost", "root", "", "toy");
@@ -1366,12 +1400,12 @@ function display_user()
         // Add condition to only display the currently logged-in user
         if ($username === $_SESSION['username']) {
             $user = <<<DELIMETER
-            <tr>
-            <td style="text-align:left;">
+            <div class="container">
+            <div class="media-left col-sm-4">
             <table>
             <tr>
                 <td><strong><a href="index_user.php?edit_user&user_id={$row['user_id']}">Tên tài khoản: </strong>
-                <input type="text" class="form-control" value="{$username}" readonly></td>
+                <input type="text" class="form-control" value="{$username}" readonly style='cursor: pointer;'></td>
             </tr>
             <tr>
                 <td><strong>Tên: </strong>
@@ -1387,11 +1421,11 @@ function display_user()
             </tr>
         </table>
         
-            </td>
-            <td style="text-align:right;">
+            </div>
+            <div class='media-right col-sm-5'>
             <img src='../../kresources/uploads/{$user_photo}' style="width: 300px;height: 300px;border: 1px solid black;border-radius: 15%;overflow: hidden;">
-            </td>
-        </tr>
+            </div>
+            </div>
         DELIMETER;
 
             echo $user;

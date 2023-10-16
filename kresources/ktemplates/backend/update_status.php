@@ -1,43 +1,25 @@
 <?php 
-function up_sta(){
-if (isset($_POST['update_status']) && isset($_POST['id'])) {
-    $status = $_POST['status'];
-    $id = $_POST['id'];
+function update_ad_status()
+{
+    $connection = mysqli_connect("localhost", "root", "", "toy");
 
-    $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
-    $result = query( $query);
+    // Kiểm tra nếu nhận được yêu cầu
+    if (isset($_GET['order_id'])&& isset($_POST['edit_status']) ) {
+        $status = $_POST['status'];
+        $id = $_GET['order_id'];
 
-    $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
-    $result_orders =query( $query_orders);
+        $query = "UPDATE buy SET status = '{$status}' WHERE id = '{$id}'";
+        $result = mysqli_query($connection, $query);
 
-    if ($result && $result_orders) {
-        set_message("Cập nhật trạng thái thành công");
-        redirect("../admin/index.php?admin_order");
+        $query_orders = "UPDATE orders SET order_status = '{$status}' WHERE order_id = '{$id}'";
+        $result_orders = mysqli_query($connection, $query_orders);
+
+        if ($result && $result_orders) {
+            set_message("Cập nhật trạng thái thành công");
+            redirect("../admin/index.php?admin_order");
+        } else {
+            echo "Lỗi cập nhật trạng thái: " . mysqli_error($connection);
+        }
     }
 }
-}
 ?>
-<?php if (isset($_GET['buy_id'])) { ?>
-<form method="POST">
-         <table class="table table-hover">
-            <thead>
-                  <tr>
-                     <td>
-                        <label>Trạng thái:</label>
-                        <?php up_sta() ?>
-                        <select name='status'>
-                           <option value='Đang xử lý'>Đang xử lý</option>
-                           <option value='Đã xác nhận'>Đã xác nhận</option>
-                           <option value='Đã gửi hàng'>Đã gửi hàng</option>
-                           <option value='Đã hoàn thành'>Đã hoàn thành</option>
-                        </select>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td colspan="2"><input type='submit' name='update_status' class='btn btn-success' value='Lưu'></td>
-                  </tr>
-               </div>
-            </thead>
-         </table>
-      </form>
-<?php } ?>

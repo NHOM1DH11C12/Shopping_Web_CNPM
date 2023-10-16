@@ -1,6 +1,6 @@
 <?php add_category();?>
 
-
+<div>
 <h1 class="page-header">
   Danh mục sản phẩm
 </h1>

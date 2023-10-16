@@ -71,7 +71,7 @@ function extra_photo()
 }
 
 ?>
-
+<div class="container">
 <h1 class="page-header">
     Sửa tài khoản
 </h1>
@@ -109,8 +109,9 @@ function extra_photo()
         </div>
 
     </div>
+    <div>
     <div class="form-group">
-        <input type="submit" name="update_users" class="btn btn-primary pull-right" value="Cập nhật">
+        <input type="submit" name="update_users" class="btn btn-primary" value="Cập nhật">
     </div>
     <div class="col-md-6 user_image_box">
         <span id="user_admin" class='fa fa-user fa-4x'></span>
@@ -127,8 +128,8 @@ function extra_photo()
     <div class="form-group">
         <label class="fa fa-fw fa-photo"></label>
         <input type="file" name="file"><br>
-        <img width='450' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
+        <img width='200' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
     </div>
 
-
+    </div>
 </form>

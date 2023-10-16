@@ -7,25 +7,29 @@
 
 <!-- Page Content -->
 <div class="container">
+    <!--Categories here-->
 
-    <div >
 
-        <!--Categories here-->
-        <?php include(TEMPLATE_FRONT_USER . DS . 'user_side_nav.php'); ?>
+    <div class="col-md-12">
 
-        <div class="col-md-9">
+        <div class="row carousel-holder">
+            <?php include(TEMPLATE_FRONT_USER . DS . 'user_side_nav.php'); ?>
+            <div class="col-md-9">
 
-            <div class="row carousel-holder">
+                <!--Carouse-->
+                <?php include(TEMPLATE_FRONT_USER . DS . 'user_slider.php'); ?>
 
-                <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
 
-                    <!--Carouse-->
-                    <?php include(TEMPLATE_FRONT_USER . DS . 'user_slider.php'); ?>
+    <div class="col-md-12">
 
-                </div>
-
-                <!--Product Functon-->
-                <?php include(TEMPLATE_FRONT_USER . DS . 'user_products.php');
+        <div class="row carousel-holder">
+            <!--Product Functon-->
+            <?php include(TEMPLATE_FRONT_USER . DS . 'user_products.php');
                 if (isset($_GET['address'])) {
                     include(TEMPLATE_BACK_USER . '\address.php');
                 }
@@ -33,12 +37,11 @@
                 ;
                 ?>
 
-            </div>
-        </div>
-
         </div>
 
     </div>
+
+</div>
     <!-- /.container -->
 
     <?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>

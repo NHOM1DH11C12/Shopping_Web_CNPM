@@ -128,7 +128,7 @@ function extra_image()
     ?>
 
     <form action="" method="post" enctype="multipart/form-data">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <a id="user-id" class="btn btn-danger" href="index.php?products">Quay lại</a>
             <div class="form-group">
                 <label for="product-title"><i class="fa fa-tag"></i> Tên sản phẩm</label>

@@ -58,7 +58,7 @@
             </table>
             <?php return_cart()?>
             <div id="buy-button" class="form-group" style="width: 100%;">
-              <input type="submit" name="return_cart" class="btn btn-primary pull-left" value="Quay lại" >
+              <input type="submit" name="return_cart" class="btn btn-danger pull-left" value="Quay lại" >
                 <input type="submit" name="add_order" class="btn btn-primary pull-right" value="Đặt hàng">
             </div>
         </form>

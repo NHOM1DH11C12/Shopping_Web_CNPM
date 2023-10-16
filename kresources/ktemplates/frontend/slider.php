@@ -10,7 +10,7 @@
                                 <li data-target="#carousel-example-generic" data-slide-to="7"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="8"></li>
                             </ol>
-                            <div class="carousel-inner">
+                            <div class="carousel-inner" >
                                 <?php get_active_slide();?>
                                 <?php get_slides();?>
                             </div>

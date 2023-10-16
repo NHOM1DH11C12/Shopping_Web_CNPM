@@ -1,9 +1,7 @@
-</div><div class="container">
-
-<hr style='border: 2px solid white; width:300%;'>
+<div class="row" style="background-color:#c0c0c0">
 
 <!-- Footer -->
-<footer>
+<footer class="row">
     <!-- <div class="credit-left row">
         <div class="col-lg-12">
             <p>Sản phẩm của nhóm 1</p>
@@ -61,7 +59,7 @@
 
     </div>
 </footer>
-
+</div>
  
  </div>
     <!-- /#wrapper -->

@@ -1,4 +1,5 @@
 <?php add_user(); ?>
+<div>
   <h1 class="page-header">
       Thêm tài khoản
   </h1>

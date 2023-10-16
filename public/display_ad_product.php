@@ -9,7 +9,7 @@
 <div class="row">
 <?php if(isset($_POST['submit'])) {
     $keyword = $_POST['search'];
-    search($keyword);
+    search_ad($keyword);
 }
 ?>
 </div>

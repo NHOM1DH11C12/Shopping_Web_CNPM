@@ -1,9 +1,6 @@
-
+<div>
 <div class="row" id="productData">
 <table class="table table-hover" border="1px">
-
-</div>
-<div class="container">
 <form class="navbar-form navbar-right" action="index.php?cat_product.php" method="post" enctype="multipart/form-data">
 <div class="form-group">
          <label for="product-title"> Phân loại:
@@ -13,11 +10,10 @@
            $_SESSION['$product_category_id'] ;?>
         </select></label>
         
-        <input type="submit" name="up"value="Lọc">
+        <input type="submit" name="up" class="panel panel-blue" value="Lọc">
 
 </form>
-<?php cat_product()
-?>
-    </table>
+<?php cat_product()?>
+</table>
      
 </div>

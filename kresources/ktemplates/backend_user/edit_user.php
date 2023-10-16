@@ -68,6 +68,7 @@ function extra_photo()
     }
 }
 ?>
+<div>
 <h1>
     Sửa tài khoản
 </h1>

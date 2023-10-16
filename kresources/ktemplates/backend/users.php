@@ -1,46 +1,43 @@
-
-                    <div class="col-lg-12">
-                      
-
-                        <h1 class="page-header">
-                            Tài Khoản
-                         
-                        </h1>
-                          <p class="bg-success">
-                         
-                        </p>
-
-                        <td><a href="index.php?add_user" class="btn btn-primary">Thêm tài khoản</a></td>
+<div>
+    <div class="col-lg-12">
 
 
-                        <div class="col-md-12">
-                            <br/>
-                            <table class="table table-hover" border="1px">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Cấp bậc</th>
-                                        <th>Tên tài khoản</th>
-                                        <th>Tên</th>
-                                        <th>Họ</th>
-                                        <th>Email</th>
-                            
-                                    </tr>
-                                </thead>
-                                <tbody>
+        <h1 class="page-header">
+            Tài Khoản
 
-                                        <?php display_users(); ?>
+        </h1>
+        <p class="bg-success">
+
+        </p>
+
+        <td><a href="index.php?add_user" class="btn btn-primary">Thêm tài khoản</a></td>
 
 
-                                    
-                                </tbody>
-                            </table> <!--End of Table-->
-                        
+        <div class="col-md-12">
+            <br />
+            <table class="table table-hover" border="1px">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Cấp bậc</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tên</th>
+                        <th>Họ</th>
+                        <th>Email</th>
 
-                        </div>
+                    </tr>
+                </thead>
+                <tbody>
 
-                        
-                    </div>
-    
+                    <?php display_users(); ?>
 
 
+
+                </tbody>
+            </table> <!--End of Table-->
+
+
+        </div>
+
+
+    </div>
