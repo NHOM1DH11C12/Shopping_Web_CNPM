@@ -6,7 +6,7 @@ if (isset($_GET['order_id']) && isset($_POST['edit_status'])) {
     $id = $_GET['order_id'];
 
     // Truy vấn dữ liệu từ cơ sở dữ liệu để lấy thông tin về đơn hàng
-    $query_order_info = query("SELECT  user_name, product_name, price, quantity, amount, status, photo, buyad,add_date FROM buy WHERE id = '{$id}'");
+    $query_order_info = query("SELECT  buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad,add_date FROM buy WHERE id = '{$id}'");
     confirm($query_order_info);
     $row = fetch_array($query_order_info);
     $buy_code = $row['buy_code'];

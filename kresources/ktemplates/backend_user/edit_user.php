@@ -73,7 +73,7 @@ function extra_photo()
         Sửa tài khoản
     </h1>
     <form action="" method="post" enctype="multipart/form-data">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <span id="user_admin" class='fa fa-user fa-4x'></span>
             <div class="form-group">
                 <label for="sex">Giới tính :</label><br />

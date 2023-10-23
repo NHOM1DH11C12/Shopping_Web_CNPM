@@ -75,20 +75,20 @@
                                 </li>
                         </ul>
                 </ul>
-        <div class="nav navbar-right">
-                <form action="display_ad_product.php" method="post" enctype="multipart/form-data">
-                        <div class="input-group">
-                                <div class="form-group navbar-left">
-                                        <input type="search" class="form-control" name="search"
-                                                placeholder="Tìm kiếm sản phẩm "
-                                                style="background-color:white;width:500px;">
+                <div class="nav navbar-right">
+                        <form action="display_ad_product.php" method="post" enctype="multipart/form-data">
+                                <div class="input-group">
+                                        <div class="form-group navbar-left">
+                                                <input type="search" class="form-control" name="search"
+                                                        placeholder="Tìm kiếm sản phẩm "
+                                                        style="background-color:white;width:500px;">
+                                        </div>
+                                        <div class="form-group navbar-right">
+                                                <button type="submit" name="submit" class="now-ui-icons ui-1_zoom-bold btn-primary"
+                                                        style="height:37px;"></button>
+                                        </div>
                                 </div>
-                                <div class="form-group navbar-right">
-                                        <button type="submit" name="submit" class="now-ui-icons ui-1_zoom-bold"
-                                                style="height:37px;"></button>
-                                </div>
-                        </div>
-                </form>
-        </div>
+                        </form>
+                </div>
         </div>
 </div>

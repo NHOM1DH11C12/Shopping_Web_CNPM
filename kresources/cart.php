@@ -77,6 +77,8 @@ function cart()
 
         while ($row = fetch_array($query)) {
           $sub = $row['product_price'] * $value;
+          $s = number_format($sub);
+          $price=number_format($row['product_price']);
           $item_quantity += $value;
           $product_photo = display_images($row['product_image']);
           $product = <<<DELIMETER
@@ -89,9 +91,9 @@ function cart()
   {$row['product_title']}<br>
     <img width='100' src='../kresources/{$product_photo}'>
   </td>
-  <td>{$row['product_price']} VND</td>
+  <td>{$price} VND</td>
   <td>{$value}</td>
-  <td>{$sub} VND</td>
+  <td>{$s} VND</td>
   <td>
   <a class='btn btn-warning' href='..\kresources\cart.php?remove={$row['product_id']}'><span class='glyphicon glyphicon-minus'></span></a>   
   <a class='btn btn-success' href='..\kresources\cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
@@ -109,7 +111,6 @@ DELIMETER;
           echo $product;
           $item_name++;
           $item_number++;
-          $amount++;
           $quantity++;
         }
         $_SESSION['item_total'] = $total += $sub;
@@ -124,12 +125,36 @@ DELIMETER;
   }
 
   echo "<script>
-  document.getElementById('select-all').addEventListener('change', function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var selectAllCheckbox = document.getElementById('select-all');
     var checkboxes = document.getElementsByName('product_select[]');
+  
+    selectAllCheckbox.checked = true;
+  
     for (var i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].checked = this.checked;
+      checkboxes[i].checked = true;
+    }
+  
+    selectAllCheckbox.addEventListener('change', function() {
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = this.checked;
+      }
+    });
+  
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener('change', function() {
+        var isAllChecked = true;
+        for (var j = 0; j < checkboxes.length; j++) {
+          if (!checkboxes[j].checked) {
+            isAllChecked = false;
+            break;
+          }
+        }
+        selectAllCheckbox.checked = isAllChecked;
+      });
     }
   });
+  
 </script>";
 }
 function buy()
@@ -160,21 +185,24 @@ function buy_cart()
       $query = query("SELECT * FROM products WHERE product_id = " . escape_string($selected_product));
       confirm($query);
       while ($row = fetch_array($query)) {
+        $price=number_format($row['product_price']);
         $product_photo = display_images($row['product_image']);
         $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
+        $s=number_format($sub);
         $item_quantity += $_SESSION["product_" . $selected_product];
         echo "<tr>";
         echo "<td>{$row['product_title']}<br>
         <img width='100' src = '../kresources/{$product_photo}'>
       </td>";
-        echo "<td>{$row['product_price']} VND</td>";
+        echo "<td>{$price} VND</td>";
         echo "<td>{$_SESSION["product_" . $selected_product]}</td>";
-        echo "<td>{$sub} VND</td>";
+        echo "<td>{$s} VND</td>";
         echo "</tr>";
         $total += $sub;
       }
     }
-    echo "<tr><td>Tổng số lượng: {$item_quantity}</td><td>Tổng tiền: {$total} VND</td></tr>";
+    $t=number_format($total);
+    echo "<tr><td>Tổng số lượng: {$item_quantity}</td><td>Tổng tiền: {$t} VND</td></tr>";
   } else {
     echo "<script type='text/javascript'>";
     echo "var confirmResult = confirm('Không có sản phẩm được chọn trong giỏ hàng! Bạn có muốn đến gian hàng không( OK đến trang mua sắm || Cancel để trở lại giỏ hàng.)');";

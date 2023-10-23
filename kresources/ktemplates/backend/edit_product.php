@@ -137,11 +137,11 @@ function extra_image()
             </div>
             <div class="form-group">
             <label for="product-title"><i class="now-ui-icons location_bookmark"></i> Giới thiệu qua</label><br />
-            <textarea name="short_desc" id="" cols="30" rows="3" class="typography-line"></textarea>
+            <textarea name="short_desc" id="" cols="30" rows="3" class="typography-line" value="<?php echo extra_short_desc(); ?>"></textarea>
         </div>
         <div class="form-group">
             <label for="product-title"><i class="now-ui-icons travel_info"></i> Mô tả</label><br />
-            <textarea name="product_description" id="" cols="50" rows="10" class="typography-line"></textarea>
+            <textarea name="product_description" id="" cols="50" rows="10" class="typography-line" value="<?php echo extra_description(); ?>"></textarea>
         </div>
         </div>
         <aside id="admin_sidebar" class="col-md-4">

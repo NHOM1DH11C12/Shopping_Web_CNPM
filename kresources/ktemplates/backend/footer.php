@@ -1,6 +1,3 @@
-
-
-
 <hr style="width:100%; border:3px solid black;">
 <div class="row col-12 text-center">
     <h2>Sản phẩm của nhóm 1</h2>
@@ -44,33 +41,59 @@
         </div>
     </div>
 </footer>
-<section class="col-12" style="text-align:center; margin:10px auto;"><p>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm</p></section>
+<section class="col-12" style="text-align:center; margin:10px auto;">
+    <p>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm</p>
+</section>
 
 </div>
 
 
 </div>
 </footer>
- 
- 
-    <!-- /#wrapper -->
 
-    <script src="../assets/js/core/jquery.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+<!-- /#wrapper -->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+<script src="../assets/js/core/jquery.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="../assets/js/plugins/chartjs.min.js"></script>
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var data = [
+            { status: 'Đang xử lý', value: 20 },
+            { status: 'Đã xác nhận', value: 10 },
+            { status: 'Đang giao hàng', value: 5 },
+            { status: 'Đã hoàn thành', value: 5 }
+        ];
+
+        Morris.Donut({
+            element: 'chart',
+            data: data,
+            formatter: function (value, data) {
+                if (data !== null) {
+                    return data.status + ': ' + value ;
+                } else {
+                    return value ;
+                }
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

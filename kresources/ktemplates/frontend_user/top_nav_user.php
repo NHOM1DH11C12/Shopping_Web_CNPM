@@ -17,6 +17,7 @@
 
             <a href="shop.php"><i class="fa fa-briefcase"></i> GIAN HÀNG &NegativeThinSpace;</a>
 
+
             <a href="user/index_user.php"><i class="fa fa-cog"></i> QUẢN LÍ TÀI KHOẢN &NegativeThinSpace;</a>
 
 
@@ -25,20 +26,21 @@
 
             <a href="contact.php"><i class=" fa fa-mail-bulk"></i>LIÊN HỆ &NegativeThinSpace;</a>
 
+
         </ul>
-    <div class="nav navbar-right">
-        <form action="display_product.php" method="post" enctype="multipart/form-data">
-            <div class="input-group">
-                <div class="form-group navbar-left">
-                    <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm "
-                        style="background-color:white;width:500px;">
+        <div class="nav navbar-right">
+            <form action="display_product.php" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <div class="form-group navbar-left">
+                        <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm "
+                            style="background-color:white;width:500px;">
+                    </div>
+                    <div class="form-group navbar-right">
+                        <button type="submit" name="submit" class="now-ui-icons ui-1_zoom-bold btn-primary"
+                            style="height:37px;"></button>
+                    </div>
                 </div>
-                <div class="form-group navbar-right">
-                    <button type="submit" name="submit" class="fa-2x btn-orang" style="height:37px;"><i
-                            class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
     </div>
 </div>

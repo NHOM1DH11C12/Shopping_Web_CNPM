@@ -35,7 +35,7 @@ function total_id()
 <div class="row">
     <div class="col-lg-12">
         <h1>
-            Công cụ
+            Màn hình chủ
         </h1>
         <ol class="breadcrumb">
             <li class="active">
@@ -120,10 +120,29 @@ function total_id()
         </div>
     </div>
 </div>
-
-<!-- /.row -->
-<!-- SECOND ROW WITH TABLES-->
-
-
+<div class="col-md-6">
+    <div class="card card-chart">
+        <div class="card-header">
+            <h4 class="card-title">Biểu đồ đơn hàng dựa theo trạng thái </h4>
+        </div>
+        <div class="card-body">
+            <div id="chart"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <li class="active">
+            <i class="fa fa-dashboard"></i>Đơn mới hoàn thành
+        </li>
+    </ol>
+    <?php adct__revenue(); ?>
+    <a href="index.php?revenue">
+        <div class="panel-footer">
+            <span class="pull-left">Xem thêm</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+        </div>
+    </a>
 </div>
 <!-- /.row -->

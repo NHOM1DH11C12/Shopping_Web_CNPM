@@ -156,15 +156,29 @@ function get_product()
         $product_price = number_format($row['product_price']);
         $products = <<<DELIMETER
         <div class="col-sm-3 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <a  href="item.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
-                <div class="caption">
-                    <h4><a  href="item.php?id={$row['product_id']}" >{$row['product_title']}</a></h4><p>{$row['short_desc']}.</p>
-                    <h5 class="pull-left" style="color: #FFA500;">{$product_price} Đồng</h5><br/>
-                    
+                <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                
+                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <h4 class="card-title text-center">
+                                        <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                    </h4>
+                                
+                                <br>
+                                <div class="clearfix mb-3 text-center"> 
+                                    <span class="price-btn float-none badge rounded-pill bg-success">{$product_price} Đồng</span>
+                                </div>
+                                <br>
+                                <p>{$row['short_desc']}.</p>
+                                <div class="d-grid gap-2 my-4 text-center">
+                                    <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a>
-            </div>
         </div>
      DELIMETER;
         if ($count % 4 == 0) {
@@ -263,29 +277,59 @@ function get_user_product()
         if ($row['product_quantity'] > 0) {
             $products = <<<DELIMETER
             <div class="col-sm-3 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <a  href="item.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
-                <div class="caption">
-                    <h4><a  href="item.php?id={$row['product_id']}" >{$row['product_title']}</a></h4><p>{$row['short_desc']}.</p>
-                    <h5 class="pull-left" style="color: #FFA500;">{$product_price} Đồng</h5><br/>
-                    
+                <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                
+                                    <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <h4 class="card-title text-center">
+                                        <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                    </h4>
+                                
+                                <br>
+                                <div class="clearfix mb-3 text-center"> 
+                                    <span class="price-btn float-none badge rounded-pill bg-success">{$product_price} Đồng</span>
+                                </div>
+                                <br>
+                                <p>{$row['short_desc']}.</p>
+                                <div class="d-grid gap-2 my-4 text-center">
+                                    <a href="{$link}" class="btn btn-warning bold-btn">Đặt Mua Ngay</a>  
+                                    <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="{$link}" class="btn btn-primary">Đặt hàng</a> 
-                              </div>
-             </div>
+            </div>
             DELIMETER;
         } else {
             $products = <<<DELIMETER
             <div class="col-sm-3 col-lg-3 col-md-3">
-            <div class="thumbnail">
-                <a  href="item.php?id={$row['product_id']}" ><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
-                <div class="caption">
-                    <h4><a  href="item.php?id={$row['product_id']}" >{$row['product_title']}</a></h4><p>{$row['short_desc']}.</p>
-                    <h5 class="pull-left" style="color: #FFA500;">{$product_price} Đồng</h5><br/>
-                    
-                </div><a class="btn btn-primary">Đã hết hàng</a> 
-                              </div>
-             </div>
+                <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                
+                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <h4 class="card-title text-center">
+                                    <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                    </h4>
+                                
+                                <br>
+                                <div class="clearfix mb-3 text-center"> 
+                                    <span class="price-btn float-none badge rounded-pill bg-success">{$product_price} Đồng</span>
+                                </div>
+                                <br>
+                                <p>{$row['short_desc']}.</p>
+                                <div class="d-grid gap-2 my-4 text-center">
+                                    <a href="{$link}" class="btn btn-primary bold-btn">Hết hàng</a>   <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             DELIMETER;
         }
         if ($count % 4 == 0) {
@@ -337,18 +381,32 @@ function get_products_in_ad_category_page()
     while ($row = fetch_array($query)) {
         $product_photo = display_images($row['product_image']);
         $category_page = <<<DELIMETER
- <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
-                    <div >
-                        <h3>{$row['product_title']}</h3>
-                        <p>{$row['short_desc']}</p>
-                        <p>
-                            <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                        </p>
+        <div class="col-sm-3 col-lg-3 col-md-3">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                <div class="col pd-cart">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            
+                                <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                <h4 class="card-title text-center">
+                                    <a href="item.php?id={$row['product_id']}"</a>
+                                    <a href="item.php?id={$row['product_title']}"</a>
+                                </h4>
+                            
+                            <br>
+                            <div class="clearfix mb-3 text-center"> 
+                               
+                            </div>
+                            <br>
+                            <p>{$row['short_desc']}.</p>
+                            <div class="d-grid gap-2 my-4 text-center">
+                                <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 DELIMETER;
         if ($count % 4 == 0) {
             echo '<div class="row">';
@@ -372,35 +430,62 @@ function get_products_in_category_page()
         $product_photo = display_images($row['product_image']);
         if ($row['product_quantity'] > 0) {
             $category_page = <<<DELIMETER
-            <div class="col-md-3 col-sm-6 hero-feature">
-                           <div class="thumbnail">
-                               <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
-                               <div >
-                                   <h3>{$row['product_title']}</h3>
-                                   <p>{$row['short_desc']}</p>
-                                   <p>
-                                       <a href="..\kresources\cart.php?add={$row['product_id']}" class="btn btn-primary">Mua ngay</a>
-                                        <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                   </p>
-                               </div>
-                           </div>
-                       </div>
+            <div class="col-sm-3 col-lg-3 col-md-3">
+                <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                        <div class="col pd-cart">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    
+                                        <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <h4 class="card-title text-center">
+                                            <a href="item.php?id={$row['product_id']}"</a>
+                                            <a href="item.php?id={$row['product_title']}"</a>
+                                        </h4>
+                                    
+                                    <br>
+                                    <div class="clearfix mb-3 text-center"> 
+                                    
+                                    </div>
+                                    <br>
+                                    <p>{$row['short_desc']}.</p>
+                                    <div class="d-grid gap-2 my-4 text-center">
+                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
            DELIMETER;
         } else {
             $category_page = <<<DELIMETER
-            <div class="col-md-3 col-sm-6 hero-feature">
-                           <div class="thumbnail">
-                               <img src="../kresources/{$product_photo}" alt="">
-                               <div >
-                                   <h3>{$row['product_title']}</h3>
-                                   <p>{$row['short_desc']}</p>
-                                   <p>
-                                       <a  class="btn btn-primary">Đã hết hàng</a>
-                                        <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                   </p>
-                               </div>
-                           </div>
-                       </div>
+            <div class="col-sm-3 col-lg-3 col-md-3">
+                <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                        <div class="col pd-cart">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    
+                                        <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <h4 class="card-title text-center">
+                                            <a href="item.php?id={$row['product_id']}"</a>
+                                            <a href="item.php?id={$row['product_title']}"</a>
+                                        </h4>
+                                    
+                                    <br>
+                                    <div class="clearfix mb-3 text-center"> 
+                                    
+                                    </div>
+                                    <br>
+                                    <p>{$row['short_desc']}.</p>
+                                    <div class="d-grid gap-2 my-4 text-center">
+                                        <a class="btn btn-primary bold-btn">Hết hàng</a>
+                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
            DELIMETER;
         }
         if ($count % 4 == 0) {
@@ -486,35 +571,50 @@ function get_products_in_shop_page()
 
         if ($row['product_quantity'] <= 0) {
             $category_page = <<<DELIMETER
-                <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                        <img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;">
-                        <div>
-                            <h3>{$row['product_title']}</h3>
-                            <p>{$short_desc}</p>
-                            <p>
-                                <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                <a  class="btn btn-primary">Đã hết hàng</a>
-                            </p>
+            
+            <div class="col-sm-3 col-lg-3 col-md-3">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <h4 class="card-title text-center">
+                                        <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                        </h4>
+                                    <br>
+                                    <p>{$row['short_desc']}.</p>
+                                        <div class="d-grid gap-2 my-4 text-center">
+                                            <a  class="btn btn-primary">Đã hết hàng</a> 
+                                            <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                            </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
                 </div>
+            </div>
+                           
             DELIMETER;
         } else {
             $category_page = <<<DELIMETER
-                 <div class="col-md-3 col-sm-6 hero-feature">
-                    <div class="thumbnail">
-                         <img src="../kresources/{$product_photo}" alt="" alt="" style="width: 300px; height: 182px;">
-                         <div>
-                              <h3>{$row['product_title']}</h3>
-                                  <p>{$short_desc}</p>
-                                  <p>
-                                 <a href="{$link}" class="btn btn-primary">Đặt hàng</a> 
-                                 <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                 </p>
+            <div class="col-sm-3 col-lg-3 col-md-3">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <h4 class="card-title text-center">
+                                        <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                        </h4>
+                                    <br>
+                                    <p>{$row['short_desc']}.</p>
+                                        <div class="d-grid gap-2 my-4 text-center">
+                                            <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                        </div>
+                            </div>
                         </div>
-                     </div>
+                    </div>
                 </div>
+            </div>
 
             DELIMETER;
         }
@@ -549,18 +649,25 @@ function get_products_in_admin_shop_page()
 
 
         $category_page = <<<DELIMETER
-<div class="col-md-3 col-sm-6 hero-feature">
-    <div class="thumbnail">
-        <img src="../kresources/{$product_photo}" alt="" style="width: 300px; height: 182px;">
-        <div>
-            <h3>{$row['product_title']}</h3>
-            <p>{$short_desc}</p>
-            <p>
-                <a href="item.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-            </p>
+        <div class="col-sm-3 col-lg-3 col-md-3">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col pd-cart">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <h4 class="card-title text-center">
+                                            <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                        </h4>
+                                    <br>
+                                    <p>{$row['short_desc']}.</p>
+                                        <div class="d-grid gap-2 my-4 text-center">
+                                            <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         </div>
-    </div>
-</div>
 DELIMETER;
         if ($count % 4 == 0) {
             echo '<div class="row">';
@@ -858,37 +965,52 @@ function search($keyword)
 
                 if ($row['product_quantity'] <= 0) {
                     $category_page = <<<DELIMETER
-                        <div class="col-md-3 col-sm-6 hero-feature">
-                            <div class="thumbnail">
-                                <img src="../kresources/{$product_photo}" alt="" width="100" height="80">
-                                <div>
-                                    <h3>{$row['product_title']}</h3>
-                                    <p>{$short_desc}</p>
-                                    <p>
-                                        <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                        <a  class="btn btn-primary">Đã hết hàng</a>
-                                    </p>
+                        
+                        <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                                <div class="col pd-cart">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                                <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                                    <h4 class="card-title text-center">
+                                                    <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                                    </h4>
+                                                <br>
+                                                <p>{$row['short_desc']}.</p>
+                                                    <div class="d-grid gap-2 my-4 text-center">
+                                                        <a  class="btn btn-primary">Đã hết hàng</a> 
+                                                        <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                                       
+                        DELIMETER;
+                } else {
+                    $category_page = <<<DELIMETER
+                        <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                                <div class="col pd-cart">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                                <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                                    <h4 class="card-title text-center">
+                                                    <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                                    </h4>
+                                                <br>
+                                                <p>{$row['short_desc']}.</p>
+                                                    <div class="d-grid gap-2 my-4 text-center">
+                                                        <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
+                                                    </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    DELIMETER;
-                } else {
-                    $category_page = <<<DELIMETER
-                         <div class="col-md-3 col-sm-6 hero-feature">
-                            <div class="thumbnail">
-                                 <img src="../kresources/{$product_photo}" alt="" width="100" height="80">
-                                 <div>
-                                      <h3>{$row['product_title']}</h3>
-                                          <p>{$short_desc}</p>
-                                          <p>
-                                         <a href="{$link}" class="btn btn-primary">Đặt hàng</a> 
-                                         <a href="item_user.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                                         </p>
-                                </div>
-                             </div>
-                        </div>
-        
-                    DELIMETER;
+            
+                        DELIMETER;
                 }
                 echo $category_page;
             }
@@ -925,20 +1047,55 @@ function search_ad($keyword)
                 $product_photo = display_images($row['product_image']);
 
 
-                $category_page = <<<DELIMETER
- <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="../kresources/{$product_photo}" alt="">
-                    <div>
-                        <h3>{$row['product_title']}</h3>
-                        <p>{$row['short_desc']}</p>
-                        <p>
-                            <a href="item.php?id={$row['product_id']}" class="btn btn-default">Xem thêm</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-DELIMETER;
+                if ($row['product_quantity'] <= 0) {
+                    $category_page = <<<DELIMETER
+                        
+                        <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                                <div class="col pd-cart">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                                <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                                    <h4 class="card-title text-center">
+                                                    <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                                    </h4>
+                                                <br>
+                                                <p>{$row['short_desc']}.</p>
+                                                    <div class="d-grid gap-2 my-4 text-center">
+                                                        <a  class="btn btn-primary">Đã hết hàng</a> 
+                                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                                       
+                        DELIMETER;
+                } else {
+                    $category_page = <<<DELIMETER
+                        <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                                <div class="col pd-cart">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                                <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                                    <h4 class="card-title text-center">
+                                                    <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                                    </h4>
+                                                <br>
+                                                <p>{$row['short_desc']}.</p>
+                                                    <div class="d-grid gap-2 my-4 text-center">
+                                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        DELIMETER;
+                }
                 echo $category_page;
             }
 
@@ -1025,7 +1182,7 @@ function add_order()
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $total * 100;
         $vnp_Locale = 'vn';
-        $vnp_BankCode = 'NCB';
+        $vnp_BankCode = '';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $vnp_ExpireDate = $expire;
         $inputData = array(
@@ -1124,6 +1281,8 @@ function save_order()
                 }
             }
         }
+    } elseif ($_GET['vnp_ResponseCode'] != '00') {
+        echo "<script>alert('Thanh toán không thành công!trở lại giỏ hàng'); window.location='checkout.php';</script>";
     }
 }
 
@@ -1162,11 +1321,13 @@ function display_order()
             echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
             echo "</tr>";
             echo "<tr>";
+            echo "<th>Mã đơn hàng</th>";
             echo "<th>Sản phẩm</th>";
             echo "<th>Số lượng</th>";
             echo "<th>Giá</th>";
             echo "</tr>";
             echo "<tr>";
+            echo "<td>{$row['buy_code']}</td>";
             echo "<td>{$row['product_name']}</td>";
             echo "<td>{$row['quantity']}</td>";
             echo "<td>";
@@ -1174,6 +1335,7 @@ function display_order()
             echo " VND</td>";
             echo "</tr>";
             echo "<tr>";
+            echo "<td>&ensp;</td>";
             echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
             echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
 
@@ -1184,27 +1346,27 @@ function display_order()
 
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Tổng tiền: ";
+            echo "<td><strong>Tổng tiền:</strong> ";
             echo number_format($row['amount']);
             echo " VND</td>";
 
             if ($status == 'Đang xử lý') {
-                echo "<td>Trạng thái: 
+                echo "<td><strong>Trạng thái:</strong> 
                 <div class='status-processing text-center'>
                 <i class='fa fa-redo'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đã xác nhận') {
-                echo "<td>Trạng thái: <div class='status-confirmed text-center'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-confirmed text-center'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
-                echo "<td>Trạng thái: <div class='status-shipping text-center'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-shipping text-center'>
                 <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
             } else {
-                echo "<td>Trạng thái: <div class='status-delivered text-center'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-delivered text-center'>
                 <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
             }
-            echo "<td>Ngày đặt: {$date}</td>";
+            echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
             if ($status == 'Đã hoàn thành') {
-                echo "<td>Ngày giao : {$get_date}</td>";
+                echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
             }
             echo "</tr>";
         }
@@ -1240,11 +1402,13 @@ function display_process()
                 echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<th>Mã đơn hàng</th>";
                 echo "<th>Sản phẩm</th>";
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>{$row['buy_code']}</td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1252,6 +1416,7 @@ function display_process()
                 echo " VND</td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>&ensp;</td>";
                 echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
@@ -1262,9 +1427,9 @@ function display_process()
                 echo "<td>Tổng tiền: ";
                 echo number_format($row['amount']);
                 echo " VND</td>";
-                echo "<td>Trạng thái: <div class='status-processing text-center'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center'>
                 <i class='fa fa-redo'></i> {$row['status']}</div></td>";
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
             }
         }
@@ -1299,11 +1464,13 @@ function display_confirm()
                 echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<th>Mã đơn hàng</th>";
                 echo "<th>Sản phẩm</th>";
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>{$row['buy_code']}</td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1311,6 +1478,7 @@ function display_confirm()
                 echo " VND</td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>&ensp;</td>";
                 echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
@@ -1322,9 +1490,9 @@ function display_confirm()
                 echo number_format($row['amount']);
                 echo " VND</td>";
                 echo "<td>
-                Trạng thái: <div class='status-confirmed text-center'>
+                <strong>Trạng thái:</strong> <div class='status-confirmed text-center'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div></td>";
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
             }
         }
@@ -1361,11 +1529,13 @@ function display_ship()
                 echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<th>Mã đơn hàng</th>";
                 echo "<th>Sản phẩm</th>";
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>{$row['buy_code']}</td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1373,6 +1543,7 @@ function display_ship()
                 echo " VND</td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>&ensp;</td>";
                 echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
@@ -1383,9 +1554,9 @@ function display_ship()
                 echo "<td>Tổng tiền: ";
                 echo number_format($row['amount']);
                 echo " VND</td>";
-                echo "<td>Trạng thái: <div class='status-shipping text-center'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-shipping text-center'>
             <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
             }
         }
@@ -1424,11 +1595,13 @@ function display_delive()
                 echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<th>Mã đơn hàng</th>";
                 echo "<th>Sản phẩm</th>";
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>{$row['buy_code']}</td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1436,6 +1609,7 @@ function display_delive()
                 echo " VND</td>";
                 echo "</tr>";
                 echo "<tr>";
+                echo "<td>&ensp;</td>";
                 echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
@@ -1447,11 +1621,11 @@ function display_delive()
                 echo number_format($row['amount']);
                 echo " VND</td>";
                 echo "<td>
-                Trạng thái: <div class='status-delivered text-center'>
+                <strong>Trạng thái:</strong> <div class='status-delivered text-center'>
                 <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 if ($status == 'Đã hoàn thành') {
-                    echo "<td>Ngày giao : {$get_date}</td>";
+                    echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
                 }
                 echo "</tr>";
             }
@@ -1495,32 +1669,40 @@ function display_adorder()
             echo "</tr>";
 
             echo "<tr>";
-            echo "<td>&nbsp{$id}<br><img width='100' src='../../kresources/{$photo}'></td>";
-            echo "<td>{$row['product_name']}<br/>
-            <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+            echo "<td>&nbsp{$id}</td>";
+            echo "<td>{$row['product_name']}</td>";
             echo "<td>{$row['quantity']}</td>";
-            echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
+            echo "<td>";
+            echo number_format($row['price']);
+            echo " VND</td>";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                 onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+
             echo "</tr>";
             echo "<tr>";
             echo "<td>Tổng tiền: {$amount} VND</td>";
 
 
             if ($status == 'Đang xử lý') {
-                echo "<td>Trạng thái: <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-redo'></i> {$row['status']}</div>
                 </td>";
             } elseif ($status == 'Đã xác nhận') {
                 echo "<td>
-                Trạng thái: <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div></td>";
             } elseif ($status == 'Đang giao hàng') {
                 echo "<td>
-                Trạng thái: <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
             } else {
                 echo "<td>
-                Trạng thái: <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
             }
             echo "<td>
@@ -1551,9 +1733,9 @@ function display_adorder()
             </script>
         </td>";
 
-            echo "<td>Ngày đặt: {$date}</td>";
+            echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
             if ($status == 'Đã hoàn thành') {
-                echo "<td>Ngày giao : {$get_date}</td>";
+                echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
             }
             echo "</tr>";
 
@@ -1601,7 +1783,7 @@ function display_ad_process()
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
 
-                echo "<td>Trạng thái: <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-redo'></i> {$row['status']}</div></td>";
                 echo "<td>
             <form id='form{$row['id']}' style='display: none;
@@ -1631,7 +1813,7 @@ function display_ad_process()
             </script>
         </td>";
 
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
                 $count++;
 
@@ -1683,7 +1865,7 @@ function display_ad_confirm()
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
                 echo "<td>
-                Trạng thái: <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div>
                 </td>";
                 echo "<td>
@@ -1714,7 +1896,7 @@ function display_ad_confirm()
             </script>
         </td>";
 
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
                 $count++;
 
@@ -1765,7 +1947,7 @@ function display_ad_ship()
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
                 echo "<td>
-                Trạng thái: <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
                 echo "<td>
             <form id='form{$row['id']}' style='display: none;
@@ -1795,7 +1977,7 @@ function display_ad_ship()
             </script>
         </td>";
 
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 echo "</tr>";
                 $count++;
 
@@ -1846,7 +2028,7 @@ function display_ad_delive()
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
                 echo "<td>
-                Trạng thái: <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
+                <strong>Trạng thái:</strong> <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
                 echo "<td>
                 <form id='form{$row['id']}' style='display: none;
@@ -1876,9 +2058,9 @@ function display_ad_delive()
                 </script>
                 </td>";
 
-                echo "<td>Ngày đặt: {$date}</td>";
+                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
                 if ($status == 'Đã hoàn thành') {
-                    echo "<td>Ngày giao : {$get_date}</td>";
+                    echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
                 }
                 echo "</tr>";
 
@@ -1939,6 +2121,7 @@ function display_revenue()
             <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Mã đơn hàng</th>
                     <th>Tên</th>
                     <th>Số lượng</th>
                     <th>Số tiền</th>
@@ -1951,6 +2134,7 @@ function display_revenue()
 
     while ($row = fetch_array($query)) {
         $order_id = $row['order_id'];
+        $order_code = $row['order_code'];
         $order_name = $row['order_name'];
         $order_quantity = $row['order_quantity'];
         $order_amount = $row['order_amount'];
@@ -1973,6 +2157,7 @@ function display_revenue()
 
         echo "<tr>
          <td>{$order_id}</td>
+         <td>{$order_code}</td>
         <td>{$order_name}</td>
         <td>{$order_quantity}</td>
         <td>{$order_amount}</td>
@@ -1996,7 +2181,70 @@ function display_revenue()
     echo "</tbody></table>";
 }
 
+function adct__revenue()
+{
+    $query = query("SELECT * FROM orders ORDER BY order_id DESC LIMIT 5");
+    confirm($query);
 
+    $revenue = array(); // Mảng để lưu trữ thông tin của các đơn hàng
+    echo "<table class='table table-hover' border='1px'>
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên</th>
+                    <th>Số lượng</th>
+                    <th>Số tiền</th>
+                    <th>Đơn vị</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày cập nhật </th>
+                </tr>
+            </thead>
+            <tbody>";
+
+    while ($row = fetch_array($query)) {
+        $order_code = $row['order_code'];
+        $order_name = $row['order_name'];
+        $order_quantity = $row['order_quantity'];
+        $order_amount = $row['order_amount'];
+        $order_status = $row['order_status'];
+        $order_currency = $row['order_currency'];
+        $get_date = $row['get_date'];
+
+        if (array_key_exists($order_name, $revenue)) {
+            $revenue[$order_name]['order_quantity'] += $order_quantity;
+            $revenue[$order_name]['order_amount'] += $order_amount;
+        } else {
+            $revenue[$order_name] = array(
+                'order_quantity' => $order_quantity,
+                'order_amount' => $order_amount,
+                'order_status' => $order_status,
+                'order_currency' => $order_currency,
+            );
+        }
+
+        echo "<tr>
+         <td>{$order_code}</td>
+        <td>{$order_name}</td>
+        <td>{$order_quantity}</td>
+        <td>{$order_amount}</td>
+        <td>{$order_currency}</td>
+        <td>{$order_status}</td>
+        <td>{$get_date}</td>
+        <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_revenue.php?name={$order_name}' 
+        onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a></td>
+    </tr>";
+    }
+
+    foreach ($revenue as $name => $data) {
+        $order_quantity = $data['order_quantity'];
+        $order_amount = number_format($data['order_amount']);
+        $order_status = $data['order_status'];
+        $order_currency = $data['order_currency'];
+
+    }
+
+    echo "</tbody></table>";
+}
 //#########################################
 //**********************************************************************USER FUNCTIONS************************************
 //#######################################
@@ -2087,7 +2335,7 @@ function login_user()
         $query = query("SELECT * FROM users WHERE username ='{$username}' AND password='{$password}' ");
         confirm($query);
         if (mysqli_num_rows($query) == 0) {
-            set_message("TÀI KHOẢN HƠCJ MẬT KHẨU KHÔNG CHÍNH XÁC, VUI LÒNG ĐĂNG NHẬP LẠI!");
+            set_message("TÀI KHOẢN HOẶC MẬT KHẨU KHÔNG CHÍNH XÁC, VUI LÒNG ĐĂNG NHẬP LẠI!");
             redirect("login.php");
         } else {
             $row = fetch_array($query);
@@ -2320,31 +2568,6 @@ function user_name()
 
 //#######################################
 //gửi hỗ trợ đến admin
-function send_message()
-{
-    if (isset($_POST['submit'])) {
-        $to = "ndt87864@gmail.com";
-        $from_name = $_POST['name'];
-        $from_email = $_POST['email'];
-        $from_subject = $_POST['subject'];
-        $from_message = $_POST['message'];
-
-        $headers = "From: {$from_name} <{$from_email}>";
-        $headers .= "Reply-To: {$from_email}";
-        $headers .= "MIME-Version: 1.0";
-        $headers .= "Content-Type: text/html; charset=UTF-8";
-
-        $result = mail($to, $from_subject, $from_message, $headers);
-
-        if (!$result) {
-            set_message('LỖI! Tin nhắn chưa được gửi , vui lòng thử lại');
-            redirect("contact.php");
-        } else {
-            set_message('Tin nhắn của bạn đã được gửi , vui lòng đợi phản hồi');
-            redirect("contact.php");
-        }
-    }
-}
 
 
 
