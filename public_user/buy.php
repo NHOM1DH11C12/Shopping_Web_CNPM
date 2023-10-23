@@ -1,7 +1,7 @@
 <?php require_once('..\kresources\config.php'); ?>
 <?php include(TEMPLATE_FRONT_USER . DS . 'header_user.php'); ?>
 <?php if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  add_order();
+    add_order();
 }
 ?>
 <!-- Page Content -->
@@ -11,10 +11,14 @@
     <!-- /.row -->
 
     <div class="row">
+        <br />
         <h4 class="text-center bg-danger">
             <?php display_message(); ?>
         </h4>
+        <header>
+        <br />
         <h1 class="text-center ">Đặt hàng</h1>
+        </header>
         <div class="col-lg-4 col-md-6">
             <div>
                 <div class="panel-heading">
@@ -41,7 +45,6 @@
             <input type="hidden" name="amount">
             <input type="hidden" name="photo">
 
-
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -56,12 +59,23 @@
                     <?php buy_cart(); ?>
                 </tbody>
             </table>
-            <?php return_cart()?>
+
+            <?php return_cart() ?>
+
+            <!-- Thêm 2 thẻ radio vào đây -->
+            <div class="form-group">
+                 <label><input type="radio" name="payment" id="direct" value="direct"> Thanh toán
+                    trực tiếp</label><br>
+                <label><input type="radio" name="redirect" id="zalopay" value="zalopay"> Thanh toán bằng VNPAY</label>
+            </div>
+
             <div id="buy-button" class="form-group" style="width: 100%;">
-              <input type="submit" name="return_cart" class="btn btn-danger pull-left" value="Quay lại" >
+
+                <input type="submit" name="return_cart" class="btn btn-danger pull-left" value="Quay lại">
                 <input type="submit" name="add_order" class="btn btn-primary pull-right" value="Đặt hàng">
             </div>
         </form>
+
     </div>
     <!-- /.container -->
 

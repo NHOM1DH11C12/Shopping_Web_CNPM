@@ -1,8 +1,8 @@
 <?php require_once('..\kresources\config.php'); ?>
 
 <?php require_once ('..\kresources\cart.php');?>
-<?php include(TEMPLATE_FRONT_USER . DS . 'header_user.php');
-?>
+<?php include(TEMPLATE_FRONT_USER . DS . 'header_user.php');?>
+<?php save_order();?>
 <div class="container" style="max-width: 70%;margin: auto; display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <h1 class="text-center">Cảm ơn bạn đã mua hàng</h1>
 

@@ -1,7 +1,15 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 20, 2023 lúc 07:54 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+07:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -10,13 +18,13 @@ SET time_zone = "+07:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `toy`
+-- Cơ sở dữ liệu: `toy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `address`
+-- Cấu trúc bảng cho bảng `address`
 --
 
 CREATE TABLE `address` (
@@ -30,14 +38,25 @@ CREATE TABLE `address` (
   `address` varchar(170) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `address`
+--
+
+INSERT INTO `address` (`id`, `username`, `fullname`, `phone`, `province`, `district`, `ward`, `address`) VALUES
+(1, 'user', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '151234567'),
+(2, '12', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ hòa', '15'),
+(3, '1', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '15'),
+(6, 'user', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '15ghjkkfjfjgjjjxsdfg');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `buy`
+-- Cấu trúc bảng cho bảng `buy`
 --
 
 CREATE TABLE `buy` (
   `id` int(11) NOT NULL,
+  `buy_code` varchar(50) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `price` float NOT NULL,
@@ -45,13 +64,25 @@ CREATE TABLE `buy` (
   `amount` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `buyad` varchar(255) NOT NULL,
-  `photo` varchar(255) NOT NULL
+  `photo` varchar(255) NOT NULL,
+  `add_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `receive_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `buy`
+--
+
+INSERT INTO `buy` (`id`, `buy_code`, `user_name`, `product_name`, `price`, `quantity`, `amount`, `status`, `buyad`, `photo`, `add_date`, `receive_date`) VALUES
+(6, '', '1', 'diend', 950000, 1, '950000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-20 16:25:01', '2023-10-20 16:25:01'),
+(7, '', '1', 'decade', 9500000, 1, '9500000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-20 16:25:01', '2023-10-20 16:25:01'),
+(13, '', '1', 'double', 9500000, 1, '9500000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'double.jpg', '2023-10-20 17:53:39', '2023-10-20 17:53:39'),
+(14, '', '1', 'diend', 950000, 1, '950000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-20 17:53:39', '2023-10-20 17:53:39');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Cấu trúc bảng cho bảng `categories`
 --
 
 CREATE TABLE `categories` (
@@ -60,7 +91,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `categories`
+-- Đang đổ dữ liệu cho bảng `categories`
 --
 
 INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
@@ -75,27 +106,29 @@ INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
 (16, 'Trading Card Game'),
 (17, 'LEGO Tổng Hợp'),
 (18, 'Phụ Kiện Sưu Tập'),
-(19, 'Hobby Tools');
+(20, 'hobby-toy');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
+  `order_code` varchar(50) NOT NULL,
   `order_name` varchar(255) NOT NULL,
   `order_quantity` int(11) NOT NULL,
   `order_amount` float NOT NULL,
   `order_status` varchar(255) NOT NULL,
-  `order_currency` varchar(255) NOT NULL
+  `order_currency` varchar(255) NOT NULL,
+  `get_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
@@ -110,28 +143,28 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `products`
+-- Đang đổ dữ liệu cho bảng `products`
 --
 
 INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `product_price`, `product_quantity`, `product_description`, `short_desc`, `product_image`) VALUES
-(1, 'decade', 3, 950000000, 10, '', 'Mô hình kamenrider decade', 'decade.jpg'),
-(2, 'diend', 3, 950000000, 30, '', 'Mô hình kamenrider diend', 'diend.jpg'),
-(3, 'double', 3, 950000000, 30, '', 'Mô hình kamenrider double', 'double.jpg'),
-(4, 'ooo', 3, 950000000, 30, '', 'Mô hình kamenrider ooo', 'ooo.jpg'),
-(5, 'fourze', 3, 950000000, 30, '', 'Mô hình kamenrider fourze', 'fourze.jpg'),
-(6, 'wizard', 3, 950000000, 30, '', 'Mô hình kamenrider wizard', 'wizard.jpg'),
-(7, 'gaim', 3, 950000000, 30, '', 'Mô hình kamenrider gaim', 'gaim.jpg'),
-(8, 'drive', 3, 950000000, 30, '', 'Mô hình kamenrider drive', 'drive.jpg'),
-(9, 'ghost', 3, 950000000, 30, '', 'Mô hình kamenrider ghost', 'ghost.jpg'),
-(10, 'exaid', 3, 950000000, 10, '', 'Mô hình kamenrider exaid', 'exaid.jpg'),
-(11, 'build', 3, 950000000, 10, '', 'Mô hình kamenrider build', 'build.jpg'),
-(12, 'zi-o', 3, 950000000, 10, '', 'Mô hình kamenrider zi-o', 'zi-o.jpg'),
+(1, 'decade', 3, 9500000, 989, '', '', 'decade.jpg'),
+(2, 'diend', 3, 950000, 987, '', '', 'diend.jpg'),
+(3, 'double', 3, 9500000, 14, '', '', 'double.jpg'),
+(4, 'ooo', 3, 9500000, 26, '', '', 'ooo.jpg'),
+(5, 'fourze', 3, 9500000, 28, '', '', 'fourze.jpg'),
+(6, 'wizard', 3, 950000, 13, '', '', 'wizard.jpg'),
+(7, 'gaim', 3, 950000000, 0, '', 'Mô hình kamenrider gaim', 'gaim.jpg'),
+(8, 'drive', 3, 950000000, 26, '', 'Mô hình kamenrider drive', 'drive.jpg'),
+(9, 'ghost', 3, 950000000, 28, '', 'Mô hình kamenrider ghost', 'ghost.jpg'),
+(10, 'exaid', 3, 950000000, 8, '', 'Mô hình kamenrider exaid', 'exaid.jpg'),
+(11, 'build', 3, 950000000, 9, '', 'Mô hình kamenrider build', 'build.jpg'),
+(12, 'zi-o', 3, 950000000, 9, '', 'Mô hình kamenrider zi-o', 'zi-o.jpg'),
 (13, 'zero-one', 3, 950000000, 10, '', 'Mô hình kamenrider zero-one', 'zero-one.jpg'),
 (14, 'saber', 3, 950000000, 10, '', 'Mô hình kamenrider saber', 'saber.jpg'),
 (15, 'revice', 3, 950000000, 10, '', 'Mô hình kamenrider revice', 'revice.jpg'),
 (16, 'kuuga', 3, 950000000, 10, '', 'Mô hình kamenrider kuuga', 'kuuga.jpg'),
 (17, 'agito', 3, 950000000, 10, '', 'Mô hình kamenrider agito', 'agito.jpg'),
-(18, 'ryuki', 3, 950000000, 10, '', 'Mô hình kamenrider ryuki', 'ryuki.jpg'),
+(18, 'ryuki', 3, 950000000, 9, '', 'Mô hình kamenrider ryuki', 'ryuki.jpg'),
 (19, 'goku', 4, 950000000, 40, '', 'Mô hình Goku', 'goku.jpg'),
 (20, 'vegeta', 4, 950000000, 40, '', 'Mô hình Vegeta', 'vegeta.jpg'),
 (21, 'gohan', 4, 950000000, 40, '', 'Mô hình Gohan', 'gohan.jpg'),
@@ -154,7 +187,7 @@ INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reports`
+-- Cấu trúc bảng cho bảng `reports`
 --
 
 CREATE TABLE `reports` (
@@ -167,7 +200,7 @@ CREATE TABLE `reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `reports`
+-- Đang đổ dữ liệu cho bảng `reports`
 --
 
 INSERT INTO `reports` (`report_id`, `product_id`, `order_id`, `product_price`, `product_title`, `product_quantity`) VALUES
@@ -193,7 +226,7 @@ INSERT INTO `reports` (`report_id`, `product_id`, `order_id`, `product_price`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slides`
+-- Cấu trúc bảng cho bảng `slides`
 --
 
 CREATE TABLE `slides` (
@@ -203,23 +236,17 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `slides`
+-- Đang đổ dữ liệu cho bảng `slides`
 --
 
 INSERT INTO `slides` (`slide_id`, `slide_title`, `slide_image`) VALUES
-(10, 'Passer 01', 'slider_1.jpg'),
-(11, 'Passer 02', 'slider_2.jpg'),
-(12, 'Passer 03', 'slider_3.jpg'),
-(13, 'Passer 04', 'slider_4.jpg'),
-(14, 'Passer 05', 'slider_5.jpg'),
-(15, 'Passer 06', 'slider_6.jpg'),
-(19, 'Passer 07', 'slider_10.png'),
-(20, 'Passer 08', 'slider_11.png');
+(21, '555', 'shin.jpg'),
+(22, '3456', 'bandai.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -235,116 +262,152 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_level`, `username`, `first_name`, `last_name`, `email`, `password`, `user_photo`) VALUES
-(1, '2', 'admin', 'ad', 'min', 'tendai@gmail.com', '1234', ''),
-(2, '1', 'user', 'us', 'er', 'ashley@support.com', '1234', '');
+INSERT INTO `users` (`user_id`, `user_level`, `username`, `first_name`, `last_name`, `sex`, `email`, `password`, `user_photo`) VALUES
+(1, '2', 'admin', 'adxx', 'min', 'nam', 'tendai@gmail.com', '1234', 'gaim.jpg'),
+(2, '1', 'user', 'trung', 'nguyen', 'nam', 'tapnham1502@gmail.com', '1234', 'agito.jpg'),
+(5, '1', '1', 'trung', 'nguyen1', 'nam', 'tapnham1502@gmail.com', '1', 'dragonranger.jpg'),
+(6, '2', '2', 'trung1', 'nguyen', 'nam', 'tapnham1502@gmail.com', '1', 'diend.jpg'),
+(7, '1', '12', 'trungq', 'trung', 'nam', 'lemann78783457@gmail.com', '1', 'decade.jpg'),
+(8, '1', 'tendai1', 'asdfgh', 'asdfghjkl', 'nu', 'sdfghjk@dsfghj.sdfgh', '1234', 'shin.jpg'),
+(9, '1', 'ashy1234', 'wesdrtfhghuijok', 'nguyen', 'nu', 'tapnham1502@gmail.com', '', '_a616f20d-5e2a-414b-864f-5af7f1886ed9.jfif');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Cấu trúc bảng cho bảng `vnpay`
+--
+
+CREATE TABLE `vnpay` (
+  `id` int(11) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
+  `buy_code` varchar(50) NOT NULL,
+  `money` float NOT NULL,
+  `note` varchar(50) NOT NULL,
+  `vnp_reponse_code` varchar(50) NOT NULL,
+  `code_vnpay` varchar(255) NOT NULL,
+  `code_blank` varchar(255) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `address`
+-- Chỉ mục cho bảng `address`
 --
 ALTER TABLE `address`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `buy`
+-- Chỉ mục cho bảng `buy`
 --
 ALTER TABLE `buy`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categories`
+-- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`cat_id`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`);
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `product_category_id` (`product_category_id`);
 
 --
--- Indexes for table `reports`
+-- Chỉ mục cho bảng `reports`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`report_id`);
 
 --
--- Indexes for table `slides`
+-- Chỉ mục cho bảng `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`slide_id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Chỉ mục cho bảng `vnpay`
+--
+ALTER TABLE `vnpay`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `address`
+-- AUTO_INCREMENT cho bảng `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `buy`
+-- AUTO_INCREMENT cho bảng `buy`
 --
 ALTER TABLE `buy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
--- AUTO_INCREMENT for table `reports`
+-- AUTO_INCREMENT cho bảng `reports`
 --
 ALTER TABLE `reports`
   MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `slides`
+-- AUTO_INCREMENT cho bảng `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `slide_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `slide_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT cho bảng `vnpay`
+--
+ALTER TABLE `vnpay`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

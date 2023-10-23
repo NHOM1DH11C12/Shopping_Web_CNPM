@@ -73,10 +73,26 @@ function extra_photo()
         Sửa tài khoản
     </h1>
     <form action="" method="post" enctype="multipart/form-data">
+        <div class="col-md-3">
             <span id="user_admin" class='fa fa-user fa-4x'></span>
+            <div class="form-group">
+                <label for="sex">Giới tính :</label><br />
+                <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-mars"> Nam </label>
+                &ensp;<input type="radio" name="sex" id="nu" value="nu"><label class="fa fa-venus"> Nữ </label>
+                &ensp;<input type="radio" name="sex" id="khac" value="khac"><label class="fa fa-transgender-alt">
+                    Khác&ensp;</label>
+                <br>
+            </div>
+            <div>
+
+                <label class="fa fa-fw fa-photo"></label>
+                <input type="file" name="file"><br>
+                <img width='250' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="fa fa-fw fa-github-alt"></label>
+                <label class="fa fa-id-card-alt"></label>
                 <label for="username">Tên tài khoản</label>
                 <input type="text" name="username" class="form-control" value="<?php echo extra_name(); ?>">
             </div>
@@ -100,22 +116,12 @@ function extra_photo()
                 <label for="password">Mật khẩu</label>
                 <input type="password" name="password" class="form-control" value="<?php echo extra_pwd(); ?>">
             </div>
-            <div class="form-group">
+            <div class="form-group d-flex justify-content-between">
                 <a id="user-id" class="btn btn-danger" href="index_user.php?user">Quay lại</a>
-                <input type="submit" name="update_user" class="btn btn-primary pull-right" value="Cập nhật">
+                <input type="submit" name="update_user " class="btn btn-primary" value="Cập nhật">
             </div>
-        </div>
-        <div class="form-group">
-            <label for="sex">Giới tính :</label><br />
-            <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-fw fa-male">  Nam</label>
-            &ensp;<input type="radio" name="sex" id="nu"value="nu"><label class="fa fa-fw fa-female">  Nữ</label>
-            &ensp;<input type="radio" name="sex" id="khac" value="khac"><label class="fa fa-fw fa-fa fa-slideshare"> Khác</label>
-            <br>
-        </div>
-        <div class="form-group">
 
-            <label class="fa fa-fw fa-photo"></label>
-            <input type="file" name="file"><br>
-            <img width='200' src="..\..\kresources\<?php echo extra_photo(); ?>" alt="">
         </div>
+
     </form>
+</div>

@@ -13,7 +13,7 @@
         <div class="credit-right">
             <div class="container">
                 <section style="height:80px;"></section>
-                <div class="row" style="text-align:center;">
+                <div class="row text-center">
                     <h2>Sản phẩm của nhóm 1</h2>
                 </div>
                 <!----------- Footer ------------>
@@ -80,6 +80,12 @@
 
 </div>
 <!-- /.container -->
+
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>

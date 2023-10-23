@@ -33,247 +33,97 @@ function total_id()
 
 
 <div class="row">
-    <h1>Bộ công cụ</h1>
-    <!-- /.row -->
-    <!-- /.row -->
-    <div class="row">
+    <div class="col-lg-12">
+        <h1>
+            Công cụ
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-dashboard"></i>Công cụ
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
 
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-table fa-5x"></i>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-table fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            <?php echo total_buy(); ?>
                         </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">
-                                <?php echo total_buy() ?>
-                            </div>
-                            <div>Đơn hàng mới !</div>
-                        </div>
+                        <div>Đơn hàng mới !</div>
                     </div>
                 </div>
-                <a href="index.php?admin_order">
-                    <div class="panel-footer">
-                        <span class="pull-left">Xem thêm </span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
-        </div>
-
-
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-list-ol fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo total_product() ?></div>
-                            <div>Products!</div>
-                        </div>
-                    </div>
+            <a href="index.php?admin_order">
+                <div class="panel-footer">
+                    <span class="pull-left">Xem thêm </span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
                 </div>
-                <a href="index.php?products">
-                    <div class="panel-footer">
-                        <span class="pull-left">Xem thêm</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
+            </a>
         </div>
-
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-group fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo total_id() ?></div>
-                            <div>Tài khoản!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="index.php?users">
-                    <div class="panel-footer">
-                        <span class="pull-left">Xem thêm </span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-
     </div>
 
-    <!-- /.row -->
-
-
-    <!-- SECOND ROW WITH TABLES-->
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Order #</th>
-                                    <th>Order Date</th>
-                                    <th>Order Time</th>
-                                    <th>Amount (CNY)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>3326</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:29 PM</td>
-                                    <td>&#165;321.33</td>
-                                </tr>
-                                <tr>
-                                    <td>3325</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:20 PM</td>
-                                    <td>&#165;234.34</td>
-                                </tr>
-                                <tr>
-                                    <td>3324</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:03 PM</td>
-                                    <td>&#165;724.17</td>
-                                </tr>
-                                <tr>
-                                    <td>3323</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:00 PM</td>
-                                    <td>&#165;23.71</td>
-                                </tr>
-                                <tr>
-                                    <td>3322</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:49 PM</td>
-                                    <td>&#165;8345.23</td>
-                                </tr>
-                                <tr>
-                                    <td>3321</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:23 PM</td>
-                                    <td>&#165;245.12</td>
-                                </tr>
-                                <tr>
-                                    <td>3320</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:15 PM</td>
-                                    <td>&#165;5663.54</td>
-                                </tr>
-                                <tr>
-                                    <td>3319</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:13 PM</td>
-                                    <td>&#165;943.45</td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-list-ol fa-5x"></i>
                     </div>
-                    <div class="text-right">
-                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            <?php echo total_product(); ?>
+                        </div>
+                        <div>Sản phẩm!</div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
-
-
-
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
+            <a href="index.php?products">
+                <div class="panel-footer">
+                    <span class="pull-left">Xem thêm</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Order #</th>
-                                    <th>Order Date</th>
-                                    <th>Order Time</th>
-                                    <th>Amount (CNY)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>3326</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:29 PM</td>
-                                    <td>&#165;321.33</td>
-                                </tr>
-                                <tr>
-                                    <td>3325</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:20 PM</td>
-                                    <td>&#165;234.34</td>
-                                </tr>
-                                <tr>
-                                    <td>3324</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:03 PM</td>
-                                    <td>&#165;724.17</td>
-                                </tr>
-                                <tr>
-                                    <td>3323</td>
-                                    <td>10/21/2020</td>
-                                    <td>3:00 PM</td>
-                                    <td>&#165;23.71</td>
-                                </tr>
-                                <tr>
-                                    <td>3322</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:49 PM</td>
-                                    <td>&#165;8345.23</td>
-                                </tr>
-                                <tr>
-                                    <td>3321</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:23 PM</td>
-                                    <td>&#165;245.12</td>
-                                </tr>
-                                <tr>
-                                    <td>3320</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:15 PM</td>
-                                    <td>&#165;5663.54</td>
-                                </tr>
-                                <tr>
-                                    <td>3319</td>
-                                    <td>10/21/2020</td>
-                                    <td>2:13 PM</td>
-                                    <td>&#165;943.45</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text-right">
-                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
-
     </div>
-    <!-- /.row -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user-cog fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            <?php echo total_id(); ?>
+                        </div>
+                        <div>Tài khoản!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="index.php?products">
+                <div class="panel-footer">
+                    <span class="pull-left">Xem thêm</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- /.row -->
+<!-- SECOND ROW WITH TABLES-->
+
+
+</div>
+<!-- /.row -->

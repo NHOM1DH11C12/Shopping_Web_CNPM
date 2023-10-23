@@ -17,10 +17,11 @@
 <div class="container">
     <!--Categories here-->
 
-
+    <br />
     <div class="col-md-12">
-
+        <br />
         <div class="row carousel-holder">
+
             <?php include(TEMPLATE_FRONT . DS . 'side_nav.php'); ?>
             <div class="col-md-9">
 

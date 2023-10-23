@@ -71,7 +71,7 @@ function extra_address()
 }
 ?>
 
-<h1 class="page-header">
+<h1 class="">
     Thêm thông tin nhận hàng
 </h1>
 <?php update_address() ?>

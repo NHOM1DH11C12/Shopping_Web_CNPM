@@ -3,17 +3,19 @@
 if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
     include(TEMPLATE_FRONT_USER . DS . 'header_user.php');
 } else {
-    include(TEMPLATE_FRONT. DS . 'header.php');
+    include(TEMPLATE_FRONT . DS . 'header.php');
 }
 ?>
 
 
 <!-- Page Content -->
 <div class="container">
-
+    </br />
+    <br />
     <!-- Title -->
     <div class="row">
         <div class="col-lg-12">
+            <br />
             <h1>Toàn bộ sản phẩm</h1>
         </div>
     </div>
@@ -23,7 +25,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
     <div class="row ">
 
 
-        <?php get_products_in_shop_page() ?>
+        <?php get_products_in_shop_page(); ?>
     </div>
     <!-- /.row -->
 </div>

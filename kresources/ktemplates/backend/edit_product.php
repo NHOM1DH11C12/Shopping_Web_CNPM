@@ -116,7 +116,7 @@ function extra_image()
 <div class="col-md-12">
 
     <div class="row">
-        <h1 class="page-header">
+        <h1 class="">
             Chỉnh sửa sản phẩm
         </h1>
     </div>
@@ -136,26 +136,27 @@ function extra_image()
 
             </div>
             <div class="form-group">
-                <label for="product-title"><i class="fa fa-file-text-o"></i>Mô tả</label>
-                <textarea name="product_description" id="" cols="30" rows="10"
-                    class="form-control"><?php echo extra_description(); ?></textarea>
-            </div>
+            <label for="product-title"><i class="now-ui-icons location_bookmark"></i> Giới thiệu qua</label><br />
+            <textarea name="short_desc" id="" cols="30" rows="3" class="typography-line"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="product-title"><i class="now-ui-icons travel_info"></i> Mô tả</label><br />
+            <textarea name="product_description" id="" cols="50" rows="10" class="typography-line"></textarea>
+        </div>
+        </div>
+        <aside id="admin_sidebar" class="col-md-4">
             <div class="form-group row">
 
-                <div class="col-xs-3">
+                <div class="col-xs-6">
                     <label for="product-price"><i class="fa fa-usd"></i>Giá</label>
                     <input name="product_price" class="form-control" value="<?php echo extra_price(); ?>">
                 </div>
             </div>
-
-
             <div class="form-group">
-                <label for="product-title"><i class="fa fa-pencil"></i>Giới thiệu qua</label>
-                <textarea name="short_desc" id="" cols="30" rows="3"
-                    class="form-control"><?php echo extra_short_desc(); ?></textarea>
+                <label for="product-title"><i class="fa fa-sort-numeric-asc"></i> Số lượng</label>
+                <input type="number" name="product_quantity" class="form-control"
+                    value="<?php echo extra_quantity(); ?>">
             </div>
-        </div>
-        <aside id="admin_sidebar" class="col-md-4">
 
             <div class="form-group">
                 <label for="product-title"><i class="fa fa-list"></i>Phân loại</label>
@@ -164,21 +165,17 @@ function extra_image()
                     <?php show_categories_add_product(); ?>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="product-title"><i class="fa fa-sort-numeric-asc"></i> Số lượng</label>
-                <input type="number" name="product_quantity" class="form-control"
-                    value="<?php echo extra_quantity(); ?>">
-            </div>
-            <div class="form-group">
+            <div>
                 <label for="product-title"><i class="fa fa-picture-o"></i> Hình ảnh</label>
                 <input type="file" name="file"><br>
-                <img width="200" src="..\..\kresources\<?php echo extra_image(); ?>" alt="">
+                <img width="300" src="..\..\kresources\<?php echo extra_image(); ?>" alt="">
 
             </div>
             <div class="form-group">
-                <input type="submit" name="draft" class="btn btn-warning btn-lg" value="Lưu dưới dạng bản nháp">
                 <input type="submit" name="update" class="btn btn-primary btn-lg" value="Cập nhật">
+                <input type="submit" name="draft" class="btn btn-warning btn-lg" value="Lưu dưới dạng bản nháp">
             </div>
         </aside>
 
     </form>
+</div>

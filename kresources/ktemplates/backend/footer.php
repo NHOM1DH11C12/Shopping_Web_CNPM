@@ -1,23 +1,15 @@
-<div class="row" style="background-color:#c0c0c0">
 
-<!-- Footer -->
-<footer class="row">
-    <!-- <div class="credit-left row">
-        <div class="col-lg-12">
-            <p>Sản phẩm của nhóm 1</p>
-        </div>
-    </div> -->
-<div class="credit-right">
-<div class="container">
-<section style="height:80px;"></section>
-<div class="row" style="text-align:center;">
+
+
+<hr style="width:100%; border:3px solid black;">
+<div class="row col-12 text-center">
     <h2>Sản phẩm của nhóm 1</h2>
 </div>
 <!----------- Footer ------------>
-<footer class="footer-bs">
+
+<footer class="footer-bs col-12">
     <div class="row">
         <div class="col-md-3 footer-brand animated fadeInLeft">
-            <h2></h2>
             <p>Sản phẩm của nhóm 1</p>
             <p>Kì Học 1/2023 Công Nghệ Phần Mềm DH11C12</p>
         </div>
@@ -52,17 +44,21 @@
         </div>
     </div>
 </footer>
-<section style="text-align:center; margin:10px auto;"><p>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm</p></section>
+<section class="col-12" style="text-align:center; margin:10px auto;"><p>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm</p></section>
 
 </div>
 
 
-    </div>
+</div>
 </footer>
-</div>
  
- </div>
+ 
     <!-- /#wrapper -->
+
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

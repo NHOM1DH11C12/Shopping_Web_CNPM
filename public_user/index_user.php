@@ -7,12 +7,11 @@
 
 <!-- Page Content -->
 <div class="container">
-    <!--Categories here-->
-
-
+    </br />
+    <br />
     <div class="col-md-12">
-
         <div class="row carousel-holder">
+            </br />
             <?php include(TEMPLATE_FRONT_USER . DS . 'user_side_nav.php'); ?>
             <div class="col-md-9">
 
@@ -30,18 +29,18 @@
         <div class="row carousel-holder">
             <!--Product Functon-->
             <?php include(TEMPLATE_FRONT_USER . DS . 'user_products.php');
-                if (isset($_GET['address'])) {
-                    include(TEMPLATE_BACK_USER . '\address.php');
-                }
+            if (isset($_GET['address'])) {
+                include(TEMPLATE_BACK_USER . '\address.php');
+            }
 
-                ;
-                ?>
+            ;
+            ?>
 
         </div>
 
     </div>
 
 </div>
-    <!-- /.container -->
+<!-- /.container -->
 
-    <?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>
+<?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>

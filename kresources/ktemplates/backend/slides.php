@@ -1,57 +1,54 @@
+<div>
+  <div class="row">
 
-  <div><div class="row">
+    <h3 class="bg-success">
+      <?php display_message(); ?>
+    </h3>
 
-    <h3 class="bg-success"><?php display_message(); ?></h3>
+    <div class="col-xs-3">
 
- <div class="col-xs-3">
-
- <form action="" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
 
 
- <?php add_slides(); ?>
-  
-<div class="form-group">
+        <?php add_slides(); ?>
 
-<input type="file" name="file">
+        <div>
 
+          <input type="file" name="file">
+
+        </div>
+
+        <div class="form-group">
+          <label for="title">Tên Slide</label>
+          <input type="text" name="slide_title" class="form-control">
+
+        </div>
+
+        <div class="form-group">
+
+          <input type="submit" class="btn btn-primary btn-lg" name="add_slide" value="Lưu">
+
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <div class="col-xs-8">
+
+      <?php get_current_slide_in_admin() ?>
+
+
+    </div>
+
+  </div><!-- ROW-->
+
+  <hr>
+
+  <h1>Danh sách Slide</h1>
+
+  <div class="row">
+    <?php get_slide_thumbnails(); ?>
+  </div>
 </div>
-
-<div class="form-group">
-<label for="title">Tên Slide</label>
-<input type="text" name="slide_title" class="form-control">
-
-</div>
-
-<div class="form-group">
-
-<input type="submit" class="btn btn-primary btn-lg" name="add_slide" value="Lưu" >
-
-</div>
-
- </form>
-
- </div>
-
-
- <div class="col-xs-8">
-   
-	<?php get_current_slide_in_admin() ?>
-
-
- </div>
-
-</div><!-- ROW-->
-
-<hr>
-
-<h1>Danh sách Slide</h1>
-
-<div class="row">
-  
-
- <?php get_slide_thumbnails(); ?>
-
-
-</div>
-
-

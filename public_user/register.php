@@ -6,7 +6,10 @@ include(TEMPLATE_FRONT . DS . 'header.php');
 ?>
 
 <div class="container">
+<br />
     <header>
+    <br />
+    <br />
         <h1 class="text-center">Đăng Ký</h1>
         <h2 class="text-center bg-warning">
             <?php display_message(); ?>
@@ -17,35 +20,41 @@ include(TEMPLATE_FRONT . DS . 'header.php');
             <div class="panel-body">
                 <form action="" method="post" enctype="multipart/form-data">
                     <?php register_user(); ?>
-                    <div class="form-group"><label for="first_name">Tên:</label>
+                    <div class="form-group"><label for="first_name">
+                            <label class="fa fa-user"></label>Tên:</label>
                         <input type="text" name="first_name" class="form-control">
                     </div>
-                    <div class="form-group"><label for="last_name">Họ:</label>
+                    <div class="form-group"><label for="last_name">
+                            <label class="fa fa-user"></label>Họ:</label>
                         <input type="text" name="last_name" class="form-control">
                     </div>
 
                     <div class="form-group">
+                        <label class="fa fa-transgender-alt"></label>
                         <label for="sex">Giới tính :</label><br />
-                        <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-fw fa-male"> Nam</label>
-                        &ensp;<input type="radio" name="sex" id="nu" value="nu"><label class="fa fa-fw fa-female">
-                            Nữ</label>
+                        <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-mars"> Nam </label>
+                        &ensp;<input type="radio" name="sex" id="nu" value="nu"><label class="fa fa-venus"> Nữ </label>
                         &ensp;<input type="radio" name="sex" id="khac" value="khac"><label
-                            class="fa fa-fw fa-fa fa-slideshare"> Khác</label>
+                            class="fa fa-transgender-alt">
+                            Khác&ensp;</label>
                         <br>
                     </div>
                     <div class="form-group">
+                        <label class="fa fa-user-alt"></label>
                         <label for="username">Tên tài khoản:</label>
                         <input type="text" name="username" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label class="fa fa-fw fa-envelope"></label>
                         <label for="email">Email:</label>
                         <input type="email" name="email" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label class="fa fa-fw fa-key"></label>
                         <label for="password">Mật khẩu:</label>
                         <input type="password" name="password" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group fa fa-file-image">
                         <label for="file">Hình ảnh:</label>
                         <input type="file" name="file">
                     </div>

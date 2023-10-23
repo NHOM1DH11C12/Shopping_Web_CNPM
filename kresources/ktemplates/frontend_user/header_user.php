@@ -9,37 +9,26 @@
     <meta name="description" content="Shopping website developed in Dec 2020">
     <meta name="author" content="Ashley Tendai Muzuro">
 
-    <title>Trang Chủ</title>
+    <title>Trang Chủ </title>
 
-    <!-- google font import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@500&display=swap" rel="stylesheet">
-    
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-       <!-- Custom Fonts -->
-       <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-       
-</head>
-<style>
-    *{
-        font-family: 'AR One Sans', sans-serif;
-    }
-    .container{
-        font-family: 'AR One Sans', sans-serif;
-    }
 
-    .search-box{
-        padding-right:100px;
-        justify-content:right;
-        overflow: hidden;
-    }
-</style>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="https://sjs.zalopay.com.vn/mini-app/sdk/1.0.1/sdk.js"></script>
+
+
+</head>
+
 <body>
 
     <!-- Navigation -->

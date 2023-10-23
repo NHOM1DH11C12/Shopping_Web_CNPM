@@ -17,35 +17,19 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 
 </head>
-<style>
-    *{
-        font-family: 'AR One Sans', sans-serif;
-    }
-    .container{
-        font-family: 'AR One Sans', sans-serif;
-    }
-
-    .search-box{
-        padding-right:100px;
-        justify-content:right;
-        overflow: hidden;
-    }
-</style>
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <?php include(TEMPLATE_FRONT . DS . 'top_nav_admin.php'); ?>
-        <!-- /.container -->
-    </nav>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top col-12" role="navigation">
+            <?php include(TEMPLATE_FRONT . DS . 'top_nav_admin.php'); ?>
+        </nav>
+        <br />

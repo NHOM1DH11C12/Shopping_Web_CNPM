@@ -19,7 +19,21 @@
         if (isset($_GET['order'])) {
             include(TEMPLATE_BACK_USER  . '\order.php');
         }
-
+        if (isset($_GET['process'])) {
+            include(TEMPLATE_BACK_USER  . '\process.php');
+        }
+        
+        if (isset($_GET['confirm'])) {
+            include(TEMPLATE_BACK_USER  . '\confirm.php');
+        }
+        
+        if (isset($_GET['ship'])) {
+            include(TEMPLATE_BACK_USER  . '\ship.php');
+        }
+        
+        if (isset($_GET['delive'])) {
+            include(TEMPLATE_BACK_USER  . '\delive.php');
+        }
         //adding products**********************************************************************
         //users*******************************************************************************
         if (isset($_GET['user'])) {

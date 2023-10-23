@@ -7,16 +7,17 @@
 
 <!-- Page Content -->
 <div class="container">
-
-
-  <!-- /.row -->
-
+</br />
+  <br />
   <div class="row">
+    <header>
+    </br />
+    <h1 class="text-center ">Giỏ hàng</h1>
+    </header>
+  </br />
     <h4 class="text-center bg-danger">
       <?php display_message(); ?>
     </h4>
-    <h1 class="text-center ">Giỏ hàng</h1>
-
     <form action="" method="post">
 
       <table class="table table-striped">
