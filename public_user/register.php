@@ -12,7 +12,7 @@ include(TEMPLATE_FRONT . DS . 'header.php');
     <br />
         <h1 class="text-center">Đăng Ký</h1>
         <h2 class="text-center bg-warning">
-            <?php display_message(); ?>
+        <?php display_message(); ?>
         </h2>
     </header>
     <div class="col-sm-4 col-sm-offset-4">
@@ -59,7 +59,7 @@ include(TEMPLATE_FRONT . DS . 'header.php');
                         <input type="file" name="file">
                     </div>
                     <div class="form-group text-left">
-                        <input type="submit" name="register_user" class="btn btn-primary" value="Đăng kí">
+                        <input type="submit" name="register" class="btn btn-primary" value="Đăng kí">
                     </div>
                     <div class="text-left">
                         Bạn đã có tài khoản? <a href="login.php">Đăng nhập</a>
@@ -70,3 +70,5 @@ include(TEMPLATE_FRONT . DS . 'header.php');
     </div>
 
 </div>
+
+<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>

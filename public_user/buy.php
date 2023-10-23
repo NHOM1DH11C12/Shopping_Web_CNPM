@@ -16,8 +16,8 @@
             <?php display_message(); ?>
         </h4>
         <header>
-        <br />
-        <h1 class="text-center ">Đặt hàng</h1>
+            <br />
+            <h1 class="text-center ">Đặt hàng</h1>
         </header>
         <div class="col-lg-4 col-md-6">
             <div>
@@ -38,7 +38,7 @@
 
 
         </div>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="product_name">
             <input type="hidden" name="price">
             <input type="hidden" name="quantity">
@@ -64,10 +64,23 @@
 
             <!-- Thêm 2 thẻ radio vào đây -->
             <div class="form-group">
-                 <label><input type="radio" name="payment" id="direct" value="direct"> Thanh toán
-                    trực tiếp</label><br>
-                <label><input type="radio" name="redirect" id="zalopay" value="zalopay"> Thanh toán bằng VNPAY</label>
+                <label for="direct"><input type="checkbox" name="payment"> Thanh toán trực
+                    tiếp</label><br>
+                <label for="redirect"><input type="checkbox" name="redirect"> Thanh toán
+                    bằng VNPAY</label>
             </div>
+            <script>
+                const checkboxes = document.querySelectorAll('input[name="payment"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.addEventListener('change', (event) => {
+                        checkboxes.forEach((c) => {
+                            if (c !== event.target) {
+                                c.checked = false;
+                            }
+                        });
+                    });
+                });
+            </script>
 
             <div id="buy-button" class="form-group" style="width: 100%;">
 
@@ -79,6 +92,4 @@
     </div>
     <!-- /.container -->
 
-
-
-    <?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>
+    <?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>

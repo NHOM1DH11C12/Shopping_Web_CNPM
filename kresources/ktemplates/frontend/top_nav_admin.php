@@ -26,7 +26,7 @@
                 <ul class="nav navbar-left">
                         <a href="shop_admin.php"><i class="fa fa-fa fa-shopping-cart"></i> GIAN HÀNG
                                 &NegativeThinSpace;</a>
-                        <a href="..\public_user\login.php"><i class="fa fa-user"></i> ĐĂNG NHẬP &NegativeThinSpace;</a>
+                        <a href="login.php"><i class="fa fa-user"></i> ĐĂNG NHẬP &NegativeThinSpace;</a>
                         <a href="admin"><i class="fa fa-cogs"></i> QUẢN TRỊ TRANG WEB &NegativeThinSpace;</a>
                         <a href="#" class="dropdown-toggle " data-toggle="dropdown">
                                 <i class="fa fa-chevron-circle-down"></i></a>

@@ -21,4 +21,4 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
 </div>
 
 
-<?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>
+<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>

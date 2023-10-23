@@ -33,4 +33,4 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
 
 <!-- Footer -->
 
-<?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>
+<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>

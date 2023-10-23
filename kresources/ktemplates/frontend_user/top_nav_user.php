@@ -24,7 +24,7 @@
             <a href="checkout.php"><i class="fa fa-shopping-cart"></i> GIỎ HÀNG &NegativeThinSpace;</a>
 
 
-            <a href="contact.php"><i class=" fa fa-mail-bulk"></i>LIÊN HỆ &NegativeThinSpace;</a>
+            <a href="contact.php"><i class="fa fa-paper-plane"></i>LIÊN HỆ &NegativeThinSpace;</a>
 
 
         </ul>

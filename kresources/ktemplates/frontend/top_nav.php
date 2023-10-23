@@ -15,7 +15,7 @@
             <a href="shop.php"><i class="fa fa-briefcase"></i> GIAN HÀNG</a>
             <a href="login.php"><i class="fa fa-user"></i> ĐĂNG NHẬP</a>
             <a href="checkout.php"><i class="fa fa-shopping-cart"></i> GIỎ HÀNG</a>
-            <a href="contact.php"><i class="fa fa-fa fa-mail"></i>LIÊN HỆ</a>
+            <a href="contact.php"><i class="fa fa-paper-plane"></i>LIÊN HỆ</a>
         </ul>
         <div class="nav navbar-right">
             <form action="display_ad_product.php" method="post" enctype="multipart/form-data">

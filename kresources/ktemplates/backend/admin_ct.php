@@ -123,10 +123,20 @@ function total_id()
 <div class="col-md-6">
     <div class="card card-chart">
         <div class="card-header">
-            <h4 class="card-title">Biểu đồ đơn hàng dựa theo trạng thái </h4>
+            <h4 class="card-title">Biểu đồ đơn hàng dựa theo sản phẩm </h4>
         </div>
         <div class="card-body">
             <div id="chart"></div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="card card-chart">
+        <div class="card-header">
+            <h4 class="card-title">Biểu đồ đơn hàng dựa theo trạng thái </h4>
+        </div>
+        <div class="card-body">
+            <div id="tchart"></div>
         </div>
     </div>
 </div>

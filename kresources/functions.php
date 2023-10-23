@@ -36,6 +36,7 @@ function display_message()
         echo $_SESSION['message'];
         unset($_SESSION['message']);
     }
+
 }
 //########################################
 
@@ -389,8 +390,7 @@ function get_products_in_ad_category_page()
                             
                                 <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                                 <h4 class="card-title text-center">
-                                    <a href="item.php?id={$row['product_id']}"</a>
-                                    <a href="item.php?id={$row['product_title']}"</a>
+                                    <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
                                 </h4>
                             
                             <br>
@@ -436,10 +436,9 @@ function get_products_in_category_page()
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body">
                                     
-                                        <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                                         <h4 class="card-title text-center">
-                                            <a href="item.php?id={$row['product_id']}"</a>
-                                            <a href="item.php?id={$row['product_title']}"</a>
+                                        <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
                                         </h4>
                                     
                                     <br>
@@ -449,7 +448,7 @@ function get_products_in_category_page()
                                     <br>
                                     <p>{$row['short_desc']}.</p>
                                     <div class="d-grid gap-2 my-4 text-center">
-                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                        <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
                                     </div>
                                 </div>
                             </div>
@@ -465,10 +464,10 @@ function get_products_in_category_page()
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body">
                                     
-                                        <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                        <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                                         <h4 class="card-title text-center">
-                                            <a href="item.php?id={$row['product_id']}"</a>
-                                            <a href="item.php?id={$row['product_title']}"</a>
+                                            <a href="item_user.php?id={$row['product_id']}"</a>
+                                            <a href="item_user.php?id={$row['product_title']}"</a>
                                         </h4>
                                     
                                     <br>
@@ -479,7 +478,7 @@ function get_products_in_category_page()
                                     <p>{$row['short_desc']}.</p>
                                     <div class="d-grid gap-2 my-4 text-center">
                                         <a class="btn btn-primary bold-btn">Hết hàng</a>
-                                        <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                        <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
                                     </div>
                                 </div>
                             </div>
@@ -577,15 +576,15 @@ function get_products_in_shop_page()
                     <div class="col pd-cart">
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
-                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                                         <h4 class="card-title text-center">
-                                        <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                        <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
                                         </h4>
                                     <br>
                                     <p>{$row['short_desc']}.</p>
                                         <div class="d-grid gap-2 my-4 text-center">
                                             <a  class="btn btn-primary">Đã hết hàng</a> 
-                                            <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                            <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
                                             </div>
                                 </div>
                             </div>
@@ -601,14 +600,15 @@ function get_products_in_shop_page()
                     <div class="col pd-cart">
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
-                                    <a href="item.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
                                         <h4 class="card-title text-center">
-                                        <a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
+                                        <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
                                         </h4>
                                     <br>
                                     <p>{$row['short_desc']}.</p>
                                         <div class="d-grid gap-2 my-4 text-center">
-                                            <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                        <a href="{$link}" class="btn btn-warning bold-btn">Đặt Mua Ngay</a>  
+                                            <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
                                         </div>
                             </div>
                         </div>
@@ -1161,7 +1161,7 @@ function add_order()
         $vnp_TmnCode = "N7VY01PV"; //Mã định danh merchant kết nối (Terminal Id)
         $vnp_HashSecret = "AAGIGCPBFGUVLTRZBYUSGNVHDHLEGINL"; //Secret key
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost/Shopping_Web_CNPM/public_user/thank_you.php";
+        $vnp_Returnurl = "http://localhost/Shopping_Web_CNPM/public_user/sucess_pay.php";
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
         $startTime = date("YmdHis");
@@ -1240,54 +1240,6 @@ function add_order()
         }
     }
 }
-function save_order()
-{
-    if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
-        global $connection;
-        $item_quantity = 0;
-        $user_name = "";
-        $user_id = $_SESSION['user_id'];
-        $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
-        confirm($query_user);
-        while ($row_user = fetch_array($query_user)) {
-            $user_name = $row_user['username'];
-        }
-        foreach ($_SESSION['selected_products'] as $selected_product) {
-            $query = query("SELECT * FROM products WHERE product_id = " . escape_string($selected_product));
-            confirm($query);
-            while ($row = fetch_array($query)) {
-                $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
-                $item_quantity += $_SESSION["product_" . $selected_product];
-                $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad)
-                VALUES('{$_SESSION['buy_code']}','{$user_name}', '{$row['product_title']}', '{$row['product_price']}', '{$_SESSION["product_" . $selected_product]}',
-               '{$sub}', 'Đang xử lý', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
-
-                confirm($query2);
-                $result = mysqli_query($connection, $query2);
-                if (!$result) {
-                    die('Query FAILED' . mysqli_error($connection));
-                }
-                unset($_SESSION['item_quantity']);
-                unset($_SESSION['item_total']);
-                // Trừ số lượng sản phẩm trong cơ sở dữ liệu
-                $query4 = "UPDATE products 
-                SET product_quantity = product_quantity - {$_SESSION["product_" . $selected_product]} 
-                WHERE product_id = {$selected_product}";
-                unset($_SESSION["product_" . $selected_product]);
-                confirm($query4);
-                $result3 = mysqli_query($connection, $query4);
-                if (!$result3) {
-                    die('Query FAILED' . mysqli_error($connection));
-                }
-            }
-        }
-    } elseif ($_GET['vnp_ResponseCode'] != '00') {
-        echo "<script>alert('Thanh toán không thành công!trở lại giỏ hàng'); window.location='checkout.php';</script>";
-    }
-}
-
-
-
 //hiển thị đơn hàng
 
 function display_order()
@@ -1763,25 +1715,34 @@ function display_ad_process()
             $amount = number_format($row['amount']);
             if ($status == 'Đang xử lý') {
                 echo "<tr> ";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
-                echo "</tr>";
-                echo "<tr> ";
-                echo "<th>ID</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
+            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+            echo "</tr>";
+            echo "<tr> ";
+            echo "<th>ID</th>";
+            echo "<th>Sản phẩm</th>";
+            echo "<th>Số lượng</th>";
+            echo "<th>Giá</th>";
+            echo "</tr>";
 
-                echo "<tr>";
-                echo "<td>&nbsp{$id}<br><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td>{$row['product_name']}<br/>
-            <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
+            echo "<tr>";
+            echo "<td>&nbsp{$id}</td>";
+            echo "<td>{$row['product_name']}</td>";
+            echo "<td>{$row['quantity']}</td>";
+            echo "<td>";
+            echo number_format($row['price']);
+            echo " VND</td>";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                 onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>Tổng tiền: {$amount} VND</td>";
+
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td>Tổng tiền: {$amount} VND</td>";
+
 
                 echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-redo'></i> {$row['status']}</div></td>";
@@ -1853,17 +1814,26 @@ function display_ad_confirm()
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
-
+    
                 echo "<tr>";
-                echo "<td>&nbsp{$id}<br><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td>{$row['product_name']}<br/>
-            <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td>&nbsp{$id}</td>";
+                echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
-                echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+                echo "<td>";
+                echo number_format($row['price']);
+                echo " VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                    onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+    
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
+    
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div>
@@ -1935,17 +1905,26 @@ function display_ad_ship()
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
-
+    
                 echo "<tr>";
-                echo "<td>&nbsp{$id}<br><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td>{$row['product_name']}<br/>
-            <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td>&nbsp{$id}</td>";
+                echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
-                echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+                echo "<td>";
+                echo number_format($row['price']);
+                echo " VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                    onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+    
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
+    
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
@@ -2008,25 +1987,34 @@ function display_ad_delive()
             $amount = number_format($row['amount']);
             if ($status == 'Đã hoàn thành') {
                 echo "<tr> ";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
-                echo "</tr>";
-                echo "<tr> ";
-                echo "<th>ID</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
+            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+            echo "</tr>";
+            echo "<tr> ";
+            echo "<th>ID</th>";
+            echo "<th>Sản phẩm</th>";
+            echo "<th>Số lượng</th>";
+            echo "<th>Giá</th>";
+            echo "</tr>";
 
-                echo "<tr>";
-                echo "<td>&nbsp{$id}<br><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td>{$row['product_name']}<br/>
-                <strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>{$price} VND<br><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_ad_order.php?id={$row['id']}'
+            echo "<tr>";
+            echo "<td>&nbsp{$id}</td>";
+            echo "<td>{$row['product_name']}</td>";
+            echo "<td>{$row['quantity']}</td>";
+            echo "<td>";
+            echo number_format($row['price']);
+            echo " VND</td>";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                 onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>Tổng tiền: {$amount} VND</td>";
+
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td>Tổng tiền: {$amount} VND</td>";
+
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
@@ -2081,10 +2069,10 @@ function update_status()
         $id = $_POST['id'];
 
         // Truy vấn dữ liệu từ cơ sở dữ liệu để lấy thông tin về đơn hàng
-        $query_order_info = query("SELECT add_date, user_name, product_name, price, quantity, amount, status, photo, buyad, receive_date FROM buy WHERE id = '{$id}'");
+        $query_order_info = query("SELECT  buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad,add_date FROM buy WHERE id = '{$id}'");
         confirm($query_order_info);
         $row = fetch_array($query_order_info);
-        $date = $row['add_date'];
+        $buy_code = $row['buy_code'];
         $user_name = $row['user_name'];
         $product_name = $row['product_name'];
         $price = $row['price'];
@@ -2092,22 +2080,22 @@ function update_status()
         $amount = $row['amount'];
         $photo = $row['photo'];
         $buyad = $row['buyad'];
-        $receive_date = $row['receive_date'];
-
+        $date = $row['add_date'];
+    
         if ($status == 'Đã hoàn thành') {
             $query = query("UPDATE buy SET status = '{$status}', add_date ='{$date}', receive_date = CURRENT_TIMESTAMP WHERE id = '{$id}'");
-            $query_orders = query("INSERT INTO orders (order_name, order_quantity, order_amount, order_status, order_currency, receive_date) 
-            VALUES ('{$product_name}', '{$quantity}', '{$amount}', '{$status}', 'VND', '{$receive_date}')");
+            $query_orders = query("INSERT INTO orders (order_code,order_name, order_quantity, order_amount, order_status, order_currency) 
+            VALUES ('{$buy_code}','{$product_name}', '{$quantity}', '{$amount}', '{$status}', 'VND')");
+            $query_date = query("UPDATE orders SET get_date = CURRENT_TIMESTAMP WHERE order_id = '{$product_name}'");
+            confirm($query_orders);
         } else {
             $query = query("UPDATE buy SET status = '{$status}' WHERE id = '{$id}'");
-            $query_orders = query("UPDATE orders SET order_status = '{$status}' WHERE order_name = '{$product_name}'");
         }
-
         confirm($query);
-        confirm($query_orders);
         set_message("Cập nhật trạng thái thành công");
         redirect("../admin/index.php?admin_order");
     }
+
 }
 //Cập nhật trạng thái đơn hàng
 //hiện doanh thu
@@ -2283,7 +2271,7 @@ function add_user()
 // người dùng đăng kí tài khoản mới
 function register_user()
 {
-    if (isset($_POST['register_user'])) {
+    if (isset($_POST['register'])) {
         $user_level = 1; // Thêm mặc định cho user_level là 1 nếu không có giá trị được gửi lên
         $first_name = escape_string($_POST['first_name']);
         $last_name = escape_string($_POST['last_name']);
@@ -2313,12 +2301,18 @@ function register_user()
             $error_message = implode(' và ', $existing_info) . " đã tồn tại, vui lòng nhập lại.";
             set_message($error_message);
         } else {
-            // Nếu dữ liệu không tồn tại, thêm mới người dùng và chuyển đến trang login.php
-            $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
-            VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}')");
-            confirm($query);
-            set_message("TẠO TÀI KHOẢN THÀNH CÔNG");
-            redirect("login.php");
+            // Kiểm tra các trường bắt buộc có giá trị hay không
+            if (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password)) {
+                // Nếu có trường bắt buộc để trống, hiển thị thông báo lỗi
+                set_message("Vui lòng điền đầy đủ thông tin.");
+            } else {
+                // Nếu dữ liệu không tồn tại, thêm mới người dùng và chuyển đến trang login.php
+                $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
+                VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}')");
+                confirm($query);
+                set_message("TẠO TÀI KHOẢN THÀNH CÔNG");
+                redirect("login.php");
+            }
         }
     }
 }
@@ -2600,15 +2594,6 @@ function display_address()
     if (isset($_SESSION['username']) && $_SESSION['username'] == $user_name) {
         $query_address = query("SELECT * FROM address WHERE username = '{$user_name}'");
         confirm($query_address);
-        echo "<tr>
-        <th>Họ và tên</th>
-          <th>Số điện thoại</th>
-          <th>Tỉnh/Thành phố</th>
-          <th>Huyện</th>
-          <th>Xã/Phường</th>
-          <th>Địa chỉ cụ thể</th>
-          <th>Xóa</th>
-          <th>POP UP</th></tr>";
         if (mysqli_num_rows($query_address) > 0) {
             while ($row = fetch_array($query_address)) {
                 // Lấy thông tin địa chỉ từ cột
@@ -2618,6 +2603,15 @@ function display_address()
                 $district = $row['district'];
                 $ward = $row['ward'];
                 $address = $row['address'];
+                echo "<tr>
+        <th>Họ và tên</th>
+          <th>Số điện thoại</th>
+          <th>Tỉnh/Thành phố</th>
+          <th>Huyện</th>
+          <th>Xã/Phường</th>
+          <th>Địa chỉ cụ thể</th>
+          <th>Xóa</th>
+          <th>POP UP</th></tr>";
 
                 // Hiển thị thông tin địa chỉ
                 echo "

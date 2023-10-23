@@ -118,7 +118,7 @@ function extra_photo()
             </div>
             <div class="form-group d-flex justify-content-between">
                 <a id="user-id" class="btn btn-danger" href="index_user.php?user">Quay lại</a>
-                <input type="submit" name="update_user " class="btn btn-primary" value="Cập nhật">
+                <input type="submit" name="update_user" class="btn btn-primary" value="Cập nhật">
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 <?php require_once('..\kresources\config.php'); ?>
-<?php include(TEMPLATE_FRONT . DS . 'header.php');?>
+<?php include(TEMPLATE_FRONT . DS . 'header_admin.php'); ?>
 
 <!-- Page Content -->
 <div class="container">
@@ -32,5 +32,3 @@
     </div>
   </div>
 </div>
-
-<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>

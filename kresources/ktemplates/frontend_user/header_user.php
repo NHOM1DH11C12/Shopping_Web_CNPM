@@ -22,7 +22,6 @@
     <link href="css/shop-homepage.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
     <!-- Custom Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />

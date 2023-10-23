@@ -146,4 +146,4 @@ function extra_email()
 </div>
 <!-- /.container -->
 
-<?php include(TEMPLATE_FRONT . DS . 'footer.php'); ?>
+<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>
