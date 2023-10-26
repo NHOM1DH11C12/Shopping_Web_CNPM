@@ -1,4 +1,7 @@
-<?php require_once('config.php'); ?>
+<?php require_once('config.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception; ?>
 <?php
 //Helper Function
 
@@ -282,8 +285,8 @@ function get_user_product()
                     <div class="col pd-cart">
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
-                                
-                                    <a href="item_user.php?id={$row['product_id']}"><img src="../kresources/{$product_photo}" alt="" style="width: 282px; height: 182px;"></a>
+                                    <a href="item_user.php?id={$row['product_id']}">
+                                    <img src="../kresources/{$product_photo}" alt="" class="center-block" style="width: 80%; height: 182px;"></a>
                                     <h4 class="card-title text-center">
                                         <a href="item_user.php?id={$row['product_id']}">{$row['product_title']}</a>
                                     </h4>
@@ -1129,9 +1132,9 @@ function add_order()
             while ($row = fetch_array($query)) {
                 $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
                 $item_quantity += $_SESSION["product_" . $selected_product];
-                $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad)
+                $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status,payment , photo, buyad)
                 VALUES('{$buy_code}','{$user_name}', '{$row['product_title']}', '{$row['product_price']}', '{$_SESSION["product_" . $selected_product]}',
-               '{$sub}', 'Đang xử lý', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
+               '{$sub}', 'Đang xử lý', 'Thanh toán trực tiếp', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
 
                 confirm($query2);
                 $result = mysqli_query($connection, $query2);
@@ -1279,7 +1282,7 @@ function display_order()
             echo "<th>Giá</th>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>{$row['buy_code']}</td>";
+            echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
             echo "<td>{$row['product_name']}</td>";
             echo "<td>{$row['quantity']}</td>";
             echo "<td>";
@@ -1326,7 +1329,104 @@ function display_order()
         echo "<tr><td colspan='3'>Không có đơn hàng</td></tr>";
     }
 }
+//hiển thị chi tiết đơn hàng
+function detail_order()
+{
+    if (isset($_GET['buy_code'])) {
+        $id = $_GET['buy_code'];
+        $query = query("SELECT  buy_code,user_name, product_name, price, quantity, amount, status,payment, photo, buyad,add_date,receive_date FROM buy WHERE buy_code = '{$id}'");
+        confirm($query);
+        $row = fetch_array($query);
+        $date = $row['add_date'];
+        $get_date = $row['receive_date'];
+        $status = $row['status'];
+        $payment = $row['payment'];
+        $photo = display_images($row['photo']);
 
+        echo "<table style='width:100%;'>";
+        echo "<tr>";
+        echo "<th style='text-align:left;'><h3><a href='index_user.php?order'>< QUAY LẠI</a></h3></th>";
+        echo "<th style='text-align:right;'><h3>Mã đơn hàng:{$row['buy_code']} | Trạng thái:<i class='text-success'>{$row['status']}</i></h3></th>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<td colspan='2'><hr style='border: 1px solid gray;'> </td>";
+        echo "</tr>";
+        echo "</table>";
+        echo "<table style='width:100%;'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th style='text-align:left;'><h4>&ensp;Địa chỉ nhận hàng:</h4></th>";
+        echo "<th  style='text-align:center;'><h4>Ngày đặt hàng :</h4></th>";
+        if ($status == 'Đã hoàn thành') {
+            echo "<th style='text-align:right;'><h4>Ngày nhận hàng :</h4></th>";
+        }
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        echo "<tr>";
+        echo "<td style='text-align:left;'>&ensp;" . nl2br($row['buyad']) . "</td>";
+        echo "<td style='text-align:center;'> &ensp;{$date}</td>";
+        if ($status == 'Đã hoàn thành') {
+            echo "<td style='text-align:right;'>&ensp;{$get_date}</td>";
+        }
+        echo "</tr>";
+        echo "<tr>";
+        echo "<td colspan='2'><hr style='border: 0,1px solid gray;width:150%;'> </td>";
+        echo "</tr>";
+        echo "</tbody>";
+        
+        echo "</table>";
+        echo "<table style='width:100%;'>";
+        echo "<tr><h4><strong>{$row['product_name']}</strong></h4></tr>";
+        echo "<tr>";
+        echo "<td><img width='100' src='../../kresources/{$photo}'>&ensp;
+        x{$row['quantity']}</td>";
+        echo "<td class='text-right text-warning'><h5>";
+        echo number_format($row['price']);
+        echo " VND&ensp;</h5></td>";
+        echo "</tr>";
+        echo "</table>";
+        echo "<table class='table'>";
+        echo "<tr>";
+        echo "<th>Tiền hàng:</th>";
+        echo "<th  class='text-right  text-success'>";
+        echo number_format($row['amount']);
+        echo " VND</th>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<th>Phí vận chuyển:</th><th  class='text-right text-success'> 0 VND</th>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<th>Thành tiền: </th><th  class='text-right text-warning'>";
+        echo number_format($row['amount']);
+        echo " VND </th>";
+        echo "</tr>";
+        echo "</table>";
+        echo "<table style='width:100%;background-color:#cbc7c7;'>";
+        echo "<tr>";
+        if ($status != "Đã hoàn thành" && $payment != "vnpay" ) {
+            echo "<td class='text-center bg-warning' style='width:100%;'>
+            <h4 style='display: inline;'>
+            Vui lòng trả </h4>
+            <h3 class='text-danger' style='display: inline;'> " . number_format($row['amount']) . " VND</h3>
+            <h4 style='display: inline;'> khi nhận hàng!</h4></td>";
+        }
+        elseif ($status == "Đã hoàn thành" && $payment != "vnpay" ) {
+            echo "<td class='text-center bg-warning' style='width:100%;'>
+            <h4>Cảm  ơn bạn đã mua hàng!</h4></td>";
+        }
+        else{
+            echo "<td class='text-center bg-warning' style='width:100%;'>
+            <h4 style='display: inline;'>
+            Đã thanh toán </h4>
+            <h3 class='text-danger' style='display: inline;'> " . number_format($row['amount']) . " VND</h3>
+            <h4 style='display: inline;'> qua VNPay!</h4></td>"; 
+        }
+        echo "</tr>";
+        echo "</table>";
+
+    }
+}
 //hiển thị đơn hàng chờ hoặc đã xác nhận 
 function display_process()
 {
@@ -1360,7 +1460,7 @@ function display_process()
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>{$row['buy_code']}</td>";
+                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1422,7 +1522,7 @@ function display_confirm()
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>{$row['buy_code']}</td>";
+                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1487,7 +1587,7 @@ function display_ship()
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>{$row['buy_code']}</td>";
+                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1553,7 +1653,7 @@ function display_delive()
                 echo "<th>Giá</th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>{$row['buy_code']}</td>";
+                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
                 echo "<td>{$row['product_name']}</td>";
                 echo "<td>{$row['quantity']}</td>";
                 echo "<td>";
@@ -1715,33 +1815,33 @@ function display_ad_process()
             $amount = number_format($row['amount']);
             if ($status == 'Đang xử lý') {
                 echo "<tr> ";
-            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
-            echo "</tr>";
-            echo "<tr> ";
-            echo "<th>ID</th>";
-            echo "<th>Sản phẩm</th>";
-            echo "<th>Số lượng</th>";
-            echo "<th>Giá</th>";
-            echo "</tr>";
+                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "</tr>";
+                echo "<tr> ";
+                echo "<th>ID</th>";
+                echo "<th>Sản phẩm</th>";
+                echo "<th>Số lượng</th>";
+                echo "<th>Giá</th>";
+                echo "</tr>";
 
-            echo "<tr>";
-            echo "<td>&nbsp{$id}</td>";
-            echo "<td>{$row['product_name']}</td>";
-            echo "<td>{$row['quantity']}</td>";
-            echo "<td>";
-            echo number_format($row['price']);
-            echo " VND</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
-            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                echo "<tr>";
+                echo "<td>&nbsp{$id}</td>";
+                echo "<td>{$row['product_name']}</td>";
+                echo "<td>{$row['quantity']}</td>";
+                echo "<td>";
+                echo number_format($row['price']);
+                echo " VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                 onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
 
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Tổng tiền: {$amount} VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td>Tổng tiền: {$amount} VND</td>";
 
 
                 echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center' onclick='toggleForm(\"form{$row['id']}\")'>
@@ -1814,7 +1914,7 @@ function display_ad_confirm()
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
-    
+
                 echo "<tr>";
                 echo "<td>&nbsp{$id}</td>";
                 echo "<td>{$row['product_name']}</td>";
@@ -1829,11 +1929,11 @@ function display_ad_confirm()
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                     onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-    
+
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
-    
+
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-confirmed text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-check-circle'></i> {$row['status']}</div>
@@ -1905,7 +2005,7 @@ function display_ad_ship()
                 echo "<th>Số lượng</th>";
                 echo "<th>Giá</th>";
                 echo "</tr>";
-    
+
                 echo "<tr>";
                 echo "<td>&nbsp{$id}</td>";
                 echo "<td>{$row['product_name']}</td>";
@@ -1920,11 +2020,11 @@ function display_ad_ship()
                 echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
                 echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                     onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-    
+
                 echo "</tr>";
                 echo "<tr>";
                 echo "<td>Tổng tiền: {$amount} VND</td>";
-    
+
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-shipping text-center' onclick='toggleForm(\"form{$row['id']}\")'>
                 <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
@@ -1987,33 +2087,33 @@ function display_ad_delive()
             $amount = number_format($row['amount']);
             if ($status == 'Đã hoàn thành') {
                 echo "<tr> ";
-            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
-            echo "</tr>";
-            echo "<tr> ";
-            echo "<th>ID</th>";
-            echo "<th>Sản phẩm</th>";
-            echo "<th>Số lượng</th>";
-            echo "<th>Giá</th>";
-            echo "</tr>";
+                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "</tr>";
+                echo "<tr> ";
+                echo "<th>ID</th>";
+                echo "<th>Sản phẩm</th>";
+                echo "<th>Số lượng</th>";
+                echo "<th>Giá</th>";
+                echo "</tr>";
 
-            echo "<tr>";
-            echo "<td>&nbsp{$id}</td>";
-            echo "<td>{$row['product_name']}</td>";
-            echo "<td>{$row['quantity']}</td>";
-            echo "<td>";
-            echo number_format($row['price']);
-            echo " VND</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
-            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-            echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                echo "<tr>";
+                echo "<td>&nbsp{$id}</td>";
+                echo "<td>{$row['product_name']}</td>";
+                echo "<td>{$row['quantity']}</td>";
+                echo "<td>";
+                echo number_format($row['price']);
+                echo " VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td><strong>Mã đơn hàng :</strong><br>{$row['buy_code']}</td>";
+                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
+                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
+                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
                 onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
 
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Tổng tiền: {$amount} VND</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td>Tổng tiền: {$amount} VND</td>";
 
                 echo "<td>
                 <strong>Trạng thái:</strong> <div class='status-delivered text-center' onclick='toggleForm(\"form{$row['id']}\")'>
@@ -2081,7 +2181,7 @@ function update_status()
         $photo = $row['photo'];
         $buyad = $row['buyad'];
         $date = $row['add_date'];
-    
+
         if ($status == 'Đã hoàn thành') {
             $query = query("UPDATE buy SET status = '{$status}', add_date ='{$date}', receive_date = CURRENT_TIMESTAMP WHERE id = '{$id}'");
             $query_orders = query("INSERT INTO orders (order_code,order_name, order_quantity, order_amount, order_status, order_currency) 
@@ -2255,16 +2355,35 @@ function add_user()
         $user_sex = escape_string($_POST['sex']);
         $final_destination = UPLOAD_DIRECTORY . DS . $user_photo;
         move_uploaded_file($image_temp_location, $final_destination);
-
-
-        $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
-        VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}') ");
+        $query = query("SELECT * FROM users WHERE email = '{$email}' OR username = '{$username}'");
         confirm($query);
+        if (mysqli_num_rows($query) > 0) {
+            // Nếu dữ liệu đã tồn tại, hiển thị thông báo yêu cầu nhập lại
+            $existing_info = [];
+            while ($row = fetch_array($query)) {
+                if ($row['email'] == $email) {
+                    $existing_info[] = 'Địa chỉ email';
+                }
+                if ($row['username'] == $username) {
+                    $existing_info[] = 'Tên tài khoản';
+                }
+            }
+            $error_message = implode(' và ', $existing_info) . " đã tồn tại, vui lòng nhập lại.";
+            set_message($error_message);
+        } else {
+            if (empty($first_name) || empty($last_name) || empty($username) || empty($email) || empty($password)) {
+                // Nếu có trường bắt buộc để trống, hiển thị thông báo lỗi
+                set_message("Vui lòng điền đầy đủ thông tin.");
+            } else {
+                $query = query("INSERT INTO users(user_level,first_name,last_name,username,email,password,user_photo,sex) 
+                VALUES('{$user_level}','{$first_name}','{$last_name}','{$username}','{$email}','{$password}','$user_photo','{$user_sex}') ");
+                confirm($query);
 
-        set_message("USER CREATED");
+                set_message("USER CREATED");
 
-        redirect("index.php?users");
-
+                redirect("index.php?users");
+            }
+        }
     }
 
 }
@@ -2344,26 +2463,148 @@ function login_user()
         }
     }
 }
+//gửi otp
+function send_otp()
+{
+
+    if (isset($_POST['forgot'])) {
+
+        require 'PHPMailer/src/Exception.php';
+        require 'PHPMailer/src/PHPMailer.php';
+        require 'PHPMailer/src/SMTP.php';
+        $mail = new PHPMailer(true);
+        global $connection;
+        $forgot_code = rand(1000, 9999);
+        $_SESSION['forgot_code'] = $forgot_code;
+        $email = escape_string($_POST['email']);
+        $message = $forgot_code;
+        $query = query("SELECT * FROM users WHERE email='{$email}' ");
+        confirm($query);
+        if (mysqli_num_rows($query) == 0) {
+            set_message("EMAIL KHÔNG CHÍNH XÁC, VUI LÒNG ĐĂNG NHẬP LẠI!");
+            redirect("forgot.php");
+        } else {
+            try {
+                //Server settings
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP(); // Sử dụng SMTP để gửi mail
+                $mail->Host = 'smtp.gmail.com'; // Server SMTP của gmail
+                $mail->SMTPAuth = true; // Bật xác thực SMTP
+                $mail->Username = '21111064263@hunre.edu.vn'; // Tài khoản email
+                $mail->Password = 'nnik jinu bgus qeyz'; // Mật khẩu ứng dụng ở bước 1 hoặc mật khẩu email
+                $mail->SMTPSecure = 'ssl'; // Mã hóa SSL
+                $mail->Port = 465; // Cổng kết nối SMTP là 465
+
+                //Recipients
+                $mail->setFrom('21111064263@hunre.edu.vn', 'ADMIN'); // Địa chỉ email và tên người gửi
+                $mail->addAddress($email); // Địa chỉ mail và tên người nhận
+
+                //Content
+                $mail->isHTML(true); // Set email format to HTML
+                $mail->Subject = 'Mã OTP lấy lại mật khẩu:'; // Tiêu đề
+                $mail->Body = $message; // Nội dung
+                $mail->send();
+                echo "<script>window.location='OTP.php';</script>";
+            } catch (Exception $e) {
+                echo 'Gửi không thành công!Lỗi: ', $mail->ErrorInfo;
+            }
+        }
+        $_SESSION['email'] = $email;
+    }
+}
+
+// kiểm tra OTP
+function otp_check()
+{
+    if (isset($_POST['submit'])) {
+        global $connection;
+        $otp = escape_string($_POST['otp']);
+        if ($otp != $_SESSION['forgot_code']) {
+            set_message("MÃ OTP KHÔNG CHÍNH XÁC , VUI LÒNG NHẬP LẠI!");
+            redirect("OTP.php");
+        } else {
+
+            redirect("create_pw.php");
+        }
+    } elseif (isset($_POST['re_otp'])) {
+        require 'PHPMailer/src/Exception.php';
+        require 'PHPMailer/src/PHPMailer.php';
+        require 'PHPMailer/src/SMTP.php';
+        $mail = new PHPMailer(true);
+        global $connection;
+        $forgot_code = rand(1000, 9999);
+        $_SESSION['forgot_code'] = $forgot_code;
+        $email = $_SESSION['email'];
+        $message = $forgot_code;
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP(); // Sử dụng SMTP để gửi mail
+            $mail->Host = 'smtp.gmail.com'; // Server SMTP của gmail
+            $mail->SMTPAuth = true; // Bật xác thực SMTP
+            $mail->Username = '21111064263@hunre.edu.vn'; // Tài khoản email
+            $mail->Password = 'nnik jinu bgus qeyz'; // Mật khẩu ứng dụng ở bước 1 hoặc mật khẩu email
+            $mail->SMTPSecure = 'ssl'; // Mã hóa SSL
+            $mail->Port = 465; // Cổng kết nối SMTP là 465
+
+            //Recipients
+            $mail->setFrom('21111064263@hunre.edu.vn', 'ADMIN'); // Địa chỉ email và tên người gửi
+            $mail->addAddress($email); // Địa chỉ mail và tên người nhận
+
+            //Content
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = 'Mã OTP lấy lại mật khẩu:'; // Tiêu đề
+            $mail->Body = $message; // Nội dung
+            $mail->send();
+            echo "<h3 class='text-center'>Đã gửi lại mã</h2>";
+            redirect('OTP.php');
+        } catch (Exception $e) {
+            echo 'Gửi không thành công!Lỗi: ', $mail->ErrorInfo;
+        }
+    }
+}
+//tạo mật khẩu mới 
+function create_pw()
+{
+    if (isset($_POST['up_pw'])) {
+        $email = $_SESSION['email'];
+        $password = escape_string($_POST['password']);
+        $re_pw = escape_string($_POST['re_pw']);
+        if ($password != $re_pw) {
+            set_message("MẬT KHẨU  VÀ MẬT KHẨU NHẬP LẠI PHẢI GIỐNG NHAU  , VUI LÒNG NHẬP LẠI!");
+            redirect("create_pw.php");
+        } else {
+            if (empty($re_pw) || empty($password)) {
+                set_message("Vui lòng điền đầy đủ thông tin.");
+            } else {
+                $query = "UPDATE users SET 
+                        password = '{$password}' 
+                        WHERE email='{$email}'";
+
+                $update_query = query($query);
+                confirm($update_query);
+                echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='login.php';</script>";
+            }
+        }
+    }
+}
 //hiển thị người dùng
 function display_user()
 {
-    $category_query = query("SELECT * FROM users");
-    confirm($category_query);
+    $username = $_SESSION['username'];
+    $query = query("SELECT * FROM users WHERE username = '{$username}' ");
+    confirm($query);
 
-    while ($row = fetch_array($category_query)) {
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $user_level = $row['user_level'];
-        $username = $row['username'];
-        $email = $row['email'];
-        $sex = $row['sex'];
-        $password = $row['password'];
-        // Retrieve the image path from the database
-        $user_photo = $row['user_photo'];
-
-        // Add condition to only display the currently logged-in user
-        if ($username === $_SESSION['username']) {
-            $user = <<<DELIMETER
+    $row = fetch_array($query);
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
+    $user_level = $row['user_level'];
+    $email = $row['email'];
+    $sex = $row['sex'];
+    $password = $row['password'];
+    // Retrieve the image path from the database
+    $user_photo = $row['user_photo'];
+    $user = <<<DELIMETER
             <div class="row justify-content-center">
             <div class="media-left  col-sm-3">
             <table>
@@ -2376,8 +2617,8 @@ function display_user()
                 <input type="text" class="form-control" value="{$first_name}" readonly></td>
             </tr>
             <tr>
-                <td><div class="form-group"><strong>Họ: </strong>
-                <input type="text" class="form-control" value="{$last_name}" readonly></div></td>
+                <td><strong>Họ: </strong>
+                <input type="text" class="form-control" value="{$last_name}" readonly></td>
             </tr>
             <tr>
                 <td><strong>Email: </strong>
@@ -2396,9 +2637,7 @@ function display_user()
             </div>
         DELIMETER;
 
-            echo $user;
-        }
-    }
+    echo $user;
 }
 //hiển thị các tài khoản đã có trong db
 function display_users()
@@ -2470,7 +2709,23 @@ function edit_user()
             $row = fetch_array($get_pic);
             $user_photo = $row['user_photo'];
         }
-        $query = "UPDATE users SET 
+        $query = query("SELECT * FROM users WHERE email = '{$email}' OR username = '{$username}'");
+        confirm($query);
+        if (mysqli_num_rows($query) > 0) {
+            // Nếu dữ liệu đã tồn tại, hiển thị thông báo yêu cầu nhập lại
+            $existing_info = [];
+            while ($row = fetch_array($query)) {
+                if ($row['email'] == $email) {
+                    $existing_info[] = 'Địa chỉ email';
+                }
+                if ($row['username'] == $username) {
+                    $existing_info[] = 'Tên tài khoản';
+                }
+            }
+            $error_message = implode(' và ', $existing_info) . " đã tồn tại, vui lòng nhập lại.";
+            set_message($error_message);
+        } else {
+            $query = "UPDATE users SET 
                     username = '{$username}',
                     first_name = '{$first_name}',
                     last_name = '{$last_name}',
@@ -2480,11 +2735,11 @@ function edit_user()
                     user_photo = '{$user_photo}' 
                     WHERE user_id={$user_id}";
 
-        $send_update_query = query($query);
-        confirm($send_update_query);
+            $send_update_query = query($query);
+            confirm($send_update_query);
 
-        echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index_user.php?user';</script>";
-
+            echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index_user.php?user';</script>";
+        }
     }
 }
 
@@ -2524,7 +2779,23 @@ function edit()
         } else {
             $sex = $_POST['sex'];
         }
-        $query = "UPDATE users SET 
+        $query = query("SELECT * FROM users WHERE email = '{$email}' OR username = '{$username}'");
+        confirm($query);
+        if (mysqli_num_rows($query) > 0) {
+            // Nếu dữ liệu đã tồn tại, hiển thị thông báo yêu cầu nhập lại
+            $existing_info = [];
+            while ($row = fetch_array($query)) {
+                if ($row['email'] == $email) {
+                    $existing_info[] = 'Địa chỉ email';
+                }
+                if ($row['username'] == $username) {
+                    $existing_info[] = 'Tên tài khoản';
+                }
+            }
+            $error_message = implode(' và ', $existing_info) . " đã tồn tại, vui lòng nhập lại.";
+            set_message($error_message);
+        } else {
+            $query = "UPDATE users SET 
                     user_level = '{$user_level}',
                     username = '{$username}',
                     first_name = '{$first_name}',
@@ -2535,11 +2806,11 @@ function edit()
                     user_photo = '{$user_photo}'
                     WHERE user_id = " . escape_string($_GET['user_id']) . "";
 
-        $send_update_query = query($query);
-        confirm($send_update_query);
+            $send_update_query = query($query);
+            confirm($send_update_query);
 
-        echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index.php?users';</script>";
-
+            echo "<script>alert('Dữ liệu đã được cập nhật thành công!'); window.location='index.php?users';</script>";
+        }
     }
 }
 
@@ -2562,7 +2833,45 @@ function user_name()
 
 //#######################################
 //gửi hỗ trợ đến admin
+function request_to_admin()
+{
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
 
+    $mail = new PHPMailer(true);
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;
+            $mail->isSMTP(); // Sử dụng SMTP để gửi mail
+            $mail->Host = 'smtp.gmail.com'; // Server SMTP của gmail
+            $mail->SMTPAuth = true; // Bật xác thực SMTP
+            $mail->Username = '21111064263@hunre.edu.vn'; // Tài khoản email
+            $mail->Password = 'nnik jinu bgus qeyz'; // Mật khẩu ứng dụng ở bước 1 hoặc mật khẩu email
+            $mail->SMTPSecure = 'ssl'; // Mã hóa SSL
+            $mail->Port = 465; // Cổng kết nối SMTP là 465
+
+            //Recipients
+            $mail->setFrom($email, $name); // Địa chỉ email và tên người gửi
+            $mail->addAddress('21111064263@hunre.edu.vn', 'ADMIN'); // Địa chỉ mail và tên người nhận
+
+            //Content
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = $subject; // Tiêu đề
+            $mail->Body = $message; // Nội dung
+            $mail->send();
+            set_message("Cảm ơn bạn đã đóng góp,chúng tôi sẽ phản hồi sớm nhất có thể");
+            redirect("contact.php");
+        } catch (Exception $e) {
+            echo 'Gửi không thành công!Lỗi: ', $mail->ErrorInfo;
+        }
+    }
+}
 
 
 function last_id()

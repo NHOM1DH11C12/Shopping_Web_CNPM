@@ -20,9 +20,9 @@ if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
         while ($row = fetch_array($query)) {
             $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
             $item_quantity += $_SESSION["product_" . $selected_product];
-            $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad)
+            $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status, payment, photo, buyad)
                 VALUES('{$_SESSION['buy_code']}','{$user_name}', '{$row['product_title']}', '{$row['product_price']}', '{$_SESSION["product_" . $selected_product]}',
-               '{$sub}', 'Đang xử lý', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
+               '{$sub}', 'Đang xử lý', 'vnpay', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
 
             confirm($query2);
             $result = mysqli_query($connection, $query2);

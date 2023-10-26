@@ -67,52 +67,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        var data = [
-            { status: 'Đang xử lý', value: 20 },
-            { status: 'Đã xác nhận', value: 10 },
-            { status: 'Đang giao hàng', value: 5 },
-            { status: 'Đã hoàn thành', value: 5 }
-        ];
-
-        Morris.Donut({
-            element: 'chart',
-            data: data,
-            formatter: function (value, data) {
-                if (data !== null) {
-                    return data.status + ': ' + value;
-                } else {
-                    return value;
-                }
-            }
-        });
-    });
-    new Morris.Bar({
-        // ID of the element in which to draw the chart.
-        element: 'tchart',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
-        data: [
-            { year: '2008', value: 20 },
-            { year: '2009', value: 10 },
-            { year: '2010', value: 5 },
-            { year: '2011', value: 5 },
-            { year: '2012', value: 20 }
-        ],
-        // The name of the data record attribute that contains x-values.
-        xkey: 'year',
-        // A list of names of data record attributes that contain y-values.
-        ykeys: ['value'],
-        // Labels for the ykeys -- will be displayed when you hover over the
-        // chart.
-        labels: ['Value']
-    });
-</script>
 </body>
 
 </html>

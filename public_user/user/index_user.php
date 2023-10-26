@@ -34,6 +34,10 @@
         if (isset($_GET['delive'])) {
             include(TEMPLATE_BACK_USER  . '\delive.php');
         }
+        
+        if (isset($_GET['detail_order'])) {
+            include(TEMPLATE_BACK_USER . '/detail_order.php');
+        }
         //adding products**********************************************************************
         //users*******************************************************************************
         if (isset($_GET['user'])) {
@@ -61,4 +65,4 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
-<?php include(TEMPLATE_BACK . '\footer.php'); ?>
+<?php include(TEMPLATE_BACK_USER . '\footer_user.php'); ?>

@@ -58,11 +58,7 @@
                             <p>Để lại email của bạn,chúng tôi sẽ chủ động liên hệ</p>
                             <p>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Nhập địa chỉ email của bạn">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button"><span
-                                            class="glyphicon glyphicon-envelope"></span></button>
-                                </span>
+                                
                             </div><!-- /input-group -->
                             </p>
                         </div>
@@ -81,10 +77,10 @@
 </div>
 <!-- /.container -->
 
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/core/jquery.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
 
 <!-- jQuery -->

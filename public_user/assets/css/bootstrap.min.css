@@ -11414,3 +11414,38 @@ a.text-dark:hover {
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+/*# sourceMappingURL=bootstrap.css.map */
+.status-processing {
+    width: 120px;
+    background-color: gray;
+    color: white;
+    border-radius: 10px;
+   cursor: pointer;
+  }
+  .status-confirmed {
+    width: 120px;
+    background-color:  red;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    /* Màu đỏ cho trạng thái đã xác nhận */
+  }
+  
+  .status-shipping {
+    width: 150px;
+    background-color:  green;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    /* Màu xanh lá cho trạng thái đang vận chuyển */
+  }
+  
+  .status-delivered {
+    width: 150px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    /* Màu xanh dương cho trạng thái đã giao hàng */
+  }

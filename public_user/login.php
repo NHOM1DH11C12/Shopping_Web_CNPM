@@ -25,12 +25,12 @@
           <input type="password" name="password" class="form-control">
         </div>
         <div class="form-group text-center">
-          <input type="submit" name="submit" class="btn btn-primary" value="Đăng nhập">
+          <input type="submit" name="submit" class="btn btn-primary " value="Đăng nhập"><br/>
+          <a href="forgot.php">Quên mật khẩu </a>
         </div>
-        <div class="text-left">Bạn chưa có tài khoản? <a href="register.php">Đăng kí</a></div>
+        <div class=" form-group text-left">Bạn chưa có tài khoản? <a href="register.php">Đăng kí</a></div>
       </form>
     </div>
   </div>
 </div>
-
 <?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>
