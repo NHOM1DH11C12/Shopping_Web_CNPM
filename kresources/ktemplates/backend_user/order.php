@@ -32,8 +32,5 @@
                <p>Đã hoàn thành</p>
          </td>
    </table>
-   <table class="table table-hover">
-   
-         <?php display_order(); ?>
-   </table>
+   <?php display_order(); ?>
 </div>

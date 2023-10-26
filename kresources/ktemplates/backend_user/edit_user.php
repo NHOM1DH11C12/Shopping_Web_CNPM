@@ -72,11 +72,12 @@ function extra_photo()
     <h1>
         Sửa tài khoản
     </h1>
+    <span id="user_admin" class='fa fa-user fa-4x'></span>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
-            <span id="user_admin" class='fa fa-user fa-4x'></span>
             <div class="form-group">
-                <label for="sex">Giới tính :</label><br />
+                <br />
+                <label for="sex"><i class="fa fa-venus-mars">Giới tính :</i></label><br />
                 <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-mars"> Nam </label>
                 &ensp;<input type="radio" name="sex" id="nu" value="nu"><label class="fa fa-venus"> Nữ </label>
                 &ensp;<input type="radio" name="sex" id="khac" value="khac"><label class="fa fa-transgender-alt">

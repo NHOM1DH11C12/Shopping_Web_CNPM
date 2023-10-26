@@ -37,6 +37,7 @@ function display_message()
 {
     if (isset($_SESSION['message'])) {
         echo $_SESSION['message'];
+        sleep(3);
         unset($_SESSION['message']);
     }
 
@@ -1271,59 +1272,62 @@ function display_order()
             $get_date = $row['receive_date'];
             $status = $row['status'];
             $photo = display_images($row['photo']);
-
+            echo "<table style='width:100%;'>";
             echo "<tr>";
-            echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+            echo "<td><hr style='border: 1px solid blue;'> </td>";
             echo "</tr>";
+            echo "</table>";
+            echo "<table class='table table-hover'>";
             echo "<tr>";
-            echo "<th>Mã đơn hàng</th>";
-            echo "<th>Sản phẩm</th>";
-            echo "<th>Số lượng</th>";
-            echo "<th>Giá</th>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
-            echo "<td>{$row['product_name']}</td>";
-            echo "<td>{$row['quantity']}</td>";
-            echo "<td>";
-            echo number_format($row['price']);
-            echo " VND</td>";
-            echo "</tr>";
-            echo "<tr>";
+            echo "<th><h4>Mã đơn hàng: &nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></h4></th>";
             echo "<td>&ensp;</td>";
-            echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-            echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-
+            echo "<td>&ensp;</td>";
             if ($status == 'Đang xử lý') {
-                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+                echo "<th ><h4><div class='status-processing text-center' style='display: inline;'>
+                <i class='fa fa-redo'></i> {$row['status']}</div></h4></th>";
+            } elseif ($status == 'Đã xác nhận') {
+                echo "<th><h4><div class='status-confirmed text-center' style='display: inline;'>
+                <i class='fa fa-check-circle'></i>{$row['status']}</div></h4></th>";
+            } elseif ($status == 'Đang giao hàng') {
+                echo "<th><h4><div class='status-shipping text-center'>
+                <i class='fa fa-truck-moving'></i> {$row['status']}</div></h4></th>";
+            } else {
+                echo "<th ><h4><div class='status-delivered text-center'>
+                <i class='fa fa-clipboard-check'></i> {$row['status']}</div></h4></th>";
             }
-
             echo "</tr>";
             echo "<tr>";
+            echo "<th><h4>{$row['product_name']}</h4>
+            <br /><img width='100' src='../../kresources/{$photo}'>
+            X {$row['quantity']}</th>";
+            echo "<td>&ensp;</td>";
+            echo "<td>&ensp;</td>";
+            echo "<td class='text-right text-warning'><h5>";
+            echo number_format($row['price']);
+            echo " VND&ensp;</h5></td>";
+            echo "</tr>";
+            echo "<tr >";
             echo "<td><strong>Tổng tiền:</strong> ";
             echo number_format($row['amount']);
-            echo " VND</td>";
-
-            if ($status == 'Đang xử lý') {
-                echo "<td><strong>Trạng thái:</strong> 
-                <div class='status-processing text-center'>
-                <i class='fa fa-redo'></i> {$row['status']}</div></td>";
-            } elseif ($status == 'Đã xác nhận') {
-                echo "<td><strong>Trạng thái:</strong> <div class='status-confirmed text-center'>
-                <i class='fa fa-check-circle'></i> {$row['status']}</div></td>";
-            } elseif ($status == 'Đang giao hàng') {
-                echo "<td><strong>Trạng thái:</strong> <div class='status-shipping text-center'>
-                <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
+            echo " VND </td>";
+            if ($status == 'Đã xác nhận' || $status == 'Đang giao hàng') {
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<td>&ensp;</td>";
             } else {
-                echo "<td><strong>Trạng thái:</strong> <div class='status-delivered text-center'>
-                <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
             }
-            echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
             if ($status == 'Đã hoàn thành') {
-                echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
+                echo "<th>Ngày giao : {$get_date}</th>";
+            }
+            if ($status == 'Đang xử lý') {
+                echo "<td><a class='text-right btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
             }
             echo "</tr>";
+            echo "</table>";
         }
     } else {
         echo "<tr><td colspan='3'>Không có đơn hàng</td></tr>";
@@ -1374,7 +1378,7 @@ function detail_order()
         echo "<td colspan='2'><hr style='border: 0,1px solid gray;width:150%;'> </td>";
         echo "</tr>";
         echo "</tbody>";
-        
+
         echo "</table>";
         echo "<table style='width:100%;'>";
         echo "<tr><h4><strong>{$row['product_name']}</strong></h4></tr>";
@@ -1404,23 +1408,21 @@ function detail_order()
         echo "</table>";
         echo "<table style='width:100%;background-color:#cbc7c7;'>";
         echo "<tr>";
-        if ($status != "Đã hoàn thành" && $payment != "vnpay" ) {
+        if ($status != "Đã hoàn thành" && $payment != "vnpay") {
             echo "<td class='text-center bg-warning' style='width:100%;'>
             <h4 style='display: inline;'>
             Vui lòng trả </h4>
             <h3 class='text-danger' style='display: inline;'> " . number_format($row['amount']) . " VND</h3>
             <h4 style='display: inline;'> khi nhận hàng!</h4></td>";
-        }
-        elseif ($status == "Đã hoàn thành" && $payment != "vnpay" ) {
+        } elseif ($status == "Đã hoàn thành" && $payment != "vnpay") {
             echo "<td class='text-center bg-warning' style='width:100%;'>
             <h4>Cảm  ơn bạn đã mua hàng!</h4></td>";
-        }
-        else{
+        } else {
             echo "<td class='text-center bg-warning' style='width:100%;'>
             <h4 style='display: inline;'>
             Đã thanh toán </h4>
             <h3 class='text-danger' style='display: inline;'> " . number_format($row['amount']) . " VND</h3>
-            <h4 style='display: inline;'> qua VNPay!</h4></td>"; 
+            <h4 style='display: inline;'> qua VNPay!</h4></td>";
         }
         echo "</tr>";
         echo "</table>";
@@ -1450,39 +1452,39 @@ function display_process()
             $status = $row['status'];
             $photo = display_images($row['photo']);
             if ($status == 'Đang xử lý') {
+                echo "<table style='width:100%;'>";
                 echo "<tr>";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "<td><hr style='border: 1px solid blue;'> </td>";
                 echo "</tr>";
+                echo "</table>";
+                echo "<table class='table table-hover'>";
                 echo "<tr>";
-                echo "<th>Mã đơn hàng</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
-                echo "<td>{$row['product_name']}</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>";
-                echo number_format($row['price']);
-                echo " VND</td>";
-                echo "</tr>";
-                echo "<tr>";
+                echo "<th><h4>Mã đơn hàng: &nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></h4></th>";
                 echo "<td>&ensp;</td>";
-                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-
+                echo "<td>&ensp;</td>";
+                echo "<th ><h4><div class='status-processing text-center' style='display: inline;'>
+                <i class='fa fa-redo'></i> {$row['status']}</div></h4></th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>Tổng tiền: ";
-                echo number_format($row['amount']);
-                echo " VND</td>";
-                echo "<td><strong>Trạng thái:</strong> <div class='status-processing text-center'>
-                <i class='fa fa-redo'></i> {$row['status']}</div></td>";
-                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
+                echo "<th><h4>{$row['product_name']}</h4>
+                <br /><img width='100' src='../../kresources/{$photo}'>
+                X {$row['quantity']}</th>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<td class='text-right text-warning'><h5>";
+                echo number_format($row['price']);
+                echo " VND&ensp;</h5></td>";
                 echo "</tr>";
+                echo "<tr >";
+                echo "<td><strong>Tổng tiền:</strong> ";
+                echo number_format($row['amount']);
+                echo " VND </td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<td><a class='text-right btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
+                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
+                echo "</tr>";
+                echo "</table>";
             }
         }
     } else {
@@ -1512,40 +1514,39 @@ function display_confirm()
             $status = $row['status'];
             $photo = display_images($row['photo']);
             if ($status == 'Đã xác nhận') {
+                echo "<table style='width:100%;'>";
                 echo "<tr>";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "<td><hr style='border: 1px solid blue;'> </td>";
                 echo "</tr>";
+                echo "</table>";
+                echo "<table class='table table-hover'>";
                 echo "<tr>";
-                echo "<th>Mã đơn hàng</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
-                echo "<td>{$row['product_name']}</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>";
-                echo number_format($row['price']);
-                echo " VND</td>";
-                echo "</tr>";
-                echo "<tr>";
+                echo "<th><h4>Mã đơn hàng: &nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></h4></th>";
                 echo "<td>&ensp;</td>";
-                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-
+                echo "<td>&ensp;</td>";
+                echo "<th><h4><div class='status-confirmed text-center' style='display: inline;'>
+                    <i class='fa fa-check-circle'></i>{$row['status']}</div></h4></th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>Tổng tiền: ";
-                echo number_format($row['amount']);
-                echo " VND</td>";
-                echo "<td>
-                <strong>Trạng thái:</strong> <div class='status-confirmed text-center'>
-                <i class='fa fa-check-circle'></i> {$row['status']}</div></td>";
-                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
+                echo "<th><h4>{$row['product_name']}</h4>
+                <br /><img width='100' src='../../kresources/{$photo}'>
+                X {$row['quantity']}</th>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<td class='text-right text-warning'><h5>";
+                echo number_format($row['price']);
+                echo " VND&ensp;</h5></td>";
                 echo "</tr>";
+                echo "<tr >";
+                echo "<td><strong>Tổng tiền:</strong> ";
+                echo number_format($row['amount']);
+                echo " VND </td>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<td>&ensp;</td>";
+                echo "</tr>";
+                echo "</table>";
             }
         }
     } else {
@@ -1577,39 +1578,39 @@ function display_ship()
             $photo = display_images($row['photo']);
             $count++;
             if ($status == 'Đang giao hàng') {
+                echo "<table style='width:100%;'>";
                 echo "<tr>";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "<td><hr style='border: 1px solid blue;'> </td>";
                 echo "</tr>";
+                echo "</table>";
+                echo "<table class='table table-hover'>";
                 echo "<tr>";
-                echo "<th>Mã đơn hàng</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
-                echo "<td>{$row['product_name']}</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>";
-                echo number_format($row['price']);
-                echo " VND</td>";
-                echo "</tr>";
-                echo "<tr>";
+                echo "<th><h4>Mã đơn hàng: &nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></h4></th>";
                 echo "<td>&ensp;</td>";
-                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-
+                echo "<td>&ensp;</td>";
+                echo "<th><h4><div class='status-shipping text-center'>
+                <i class='fa fa-truck-moving'></i> {$row['status']}</div></h4></th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>Tổng tiền: ";
-                echo number_format($row['amount']);
-                echo " VND</td>";
-                echo "<td><strong>Trạng thái:</strong> <div class='status-shipping text-center'>
-            <i class='fa fa-truck-moving'></i> {$row['status']}</div></td>";
-                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
+                echo "<th><h4>{$row['product_name']}</h4>
+                <br /><img width='100' src='../../kresources/{$photo}'>
+                X {$row['quantity']}</th>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<td class='text-right text-warning'><h5>";
+                echo number_format($row['price']);
+                echo " VND&ensp;</h5></td>";
                 echo "</tr>";
+                echo "<tr >";
+                echo "<td><strong>Tổng tiền:</strong> ";
+                echo number_format($row['amount']);
+                echo " VND </td>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<td>&ensp;</td>";
+                echo "</tr>";
+                echo "</table>";
             }
         }
     }
@@ -1643,43 +1644,38 @@ function display_delive()
             $photo = display_images($row['photo']);
             $count++;
             if ($status == 'Đã hoàn thành') {
+                echo "<table style='width:100%;'>";
                 echo "<tr>";
-                echo "<td><hr style='border: 1px solid blue; width:500%;'> </td>";
+                echo "<td><hr style='border: 1px solid blue;'> </td>";
                 echo "</tr>";
+                echo "</table>";
+                echo "<table class='table table-hover'>";
                 echo "<tr>";
-                echo "<th>Mã đơn hàng</th>";
-                echo "<th>Sản phẩm</th>";
-                echo "<th>Số lượng</th>";
-                echo "<th>Giá</th>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "<td>&nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></td>";
-                echo "<td>{$row['product_name']}</td>";
-                echo "<td>{$row['quantity']}</td>";
-                echo "<td>";
-                echo number_format($row['price']);
-                echo " VND</td>";
-                echo "</tr>";
-                echo "<tr>";
+                echo "<th><h4>Mã đơn hàng: &nbsp<a href='index_user.php?detail_order&buy_code={$row['buy_code']}'>{$row['buy_code']}</a></h4></th>";
                 echo "<td>&ensp;</td>";
-                echo "<td><img width='100' src='../../kresources/{$photo}'></td>";
-                echo "<td><strong>địa chỉ:</strong> " . nl2br($row['buyad']) . "</td>";
-                echo "<td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_order.php?id={$row['id']}'
-                onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class ='glyphicon glyphicon-remove'></span></a></td>";
-
+                echo "<td>&ensp;</td>";
+                echo "<th ><h4><div class='status-delivered text-center'>
+                <i class='fa fa-clipboard-check'></i> {$row['status']}</div></h4></th>";
                 echo "</tr>";
                 echo "<tr>";
-                echo "<td>Tổng tiền: ";
-                echo number_format($row['amount']);
-                echo " VND</td>";
-                echo "<td>
-                <strong>Trạng thái:</strong> <div class='status-delivered text-center'>
-                <i class='fa fa-clipboard-check'></i> {$row['status']}</div></td>";
-                echo "<td><strong>Ngày đặt:</strong> {$date}</td>";
-                if ($status == 'Đã hoàn thành') {
-                    echo "<td><strong>Ngày giao :</strong> {$get_date}</td>";
-                }
+                echo "<th><h4>{$row['product_name']}</h4>
+                <br /><img width='100' src='../../kresources/{$photo}'>
+                X {$row['quantity']}</th>";
+                echo "<td>&ensp;</td>";
+                echo "<td>&ensp;</td>";
+                echo "<td class='text-right text-warning'><h5>";
+                echo number_format($row['price']);
+                echo " VND&ensp;</h5></td>";
                 echo "</tr>";
+                echo "<tr >";
+                echo "<td><strong>Tổng tiền:</strong> ";
+                echo number_format($row['amount']);
+                echo " VND </td>";
+                echo "<td>&ensp;</td>";
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<th>Ngày giao : {$get_date}</th>";
+                echo "</tr>";
+                echo "</table>";
             }
         }
     }
@@ -2521,7 +2517,6 @@ function otp_check()
         $otp = escape_string($_POST['otp']);
         if ($otp != $_SESSION['forgot_code']) {
             set_message("MÃ OTP KHÔNG CHÍNH XÁC , VUI LÒNG NHẬP LẠI!");
-            redirect("OTP.php");
         } else {
 
             redirect("create_pw.php");

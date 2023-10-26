@@ -11424,7 +11424,7 @@ a.text-dark:hover {
    cursor: pointer;
   }
   .status-confirmed {
-    width: 120px;
+    width: 69%;
     background-color:  red;
     color: white;
     border-radius: 10px;
@@ -11433,7 +11433,7 @@ a.text-dark:hover {
   }
   
   .status-shipping {
-    width: 150px;
+    width: 60%;
     background-color:  green;
     color: white;
     border-radius: 10px;
@@ -11442,7 +11442,7 @@ a.text-dark:hover {
   }
   
   .status-delivered {
-    width: 150px;
+    width: 80%;
     background-color: blue;
     color: white;
     border-radius: 10px;

@@ -22,7 +22,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 text-left">
-                        <input type="submit" name="submit" class="btn btn-primary" value="Xác minh">
+                        <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Xác minh"style="display: block">
                     </div>
                     <div class="col-xs-6 text-right">
                         <input type="submit" id="new_submit" name="re_otp" class="btn btn-primary" value="Gửi lại mã"
@@ -36,10 +36,9 @@
                     if (timeleft <= 0) {
                         clearInterval(downloadTimer);
                         document.getElementById("countdown").innerHTML = "Hết giờ!";
-                        // Hiển thị nút submit mới khi hết giờ
+                        document.getElementById("submit").style.display = "none";
                         document.getElementById("new_submit").style.display = "block";
                     } else {
-                        document.getElementById("new_submit").style.display = "block";
                         document.getElementById("countdown").innerHTML = timeleft + " giây còn lại";
                     }
                     timeleft -= 1;
