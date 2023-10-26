@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 20, 2023 lúc 07:54 PM
+-- Thời gian đã tạo: Th10 26, 2023 lúc 01:45 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -46,7 +46,8 @@ INSERT INTO `address` (`id`, `username`, `fullname`, `phone`, `province`, `distr
 (1, 'user', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '151234567'),
 (2, '12', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ hòa', '15'),
 (3, '1', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '15'),
-(6, 'user', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '15ghjkkfjfjgjjjxsdfg');
+(6, 'user', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công23456', '15ghjkkfjfjgjjjxsdfg'),
+(7, '123', 'trung nguyen', '0375716892', 'Thái bình', 'kiến xương', 'vũ công', '15');
 
 -- --------------------------------------------------------
 
@@ -62,6 +63,7 @@ CREATE TABLE `buy` (
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
   `amount` varchar(50) NOT NULL,
+  `payment` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `buyad` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
@@ -73,11 +75,34 @@ CREATE TABLE `buy` (
 -- Đang đổ dữ liệu cho bảng `buy`
 --
 
-INSERT INTO `buy` (`id`, `buy_code`, `user_name`, `product_name`, `price`, `quantity`, `amount`, `status`, `buyad`, `photo`, `add_date`, `receive_date`) VALUES
-(6, '', '1', 'diend', 950000, 1, '950000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-20 16:25:01', '2023-10-20 16:25:01'),
-(7, '', '1', 'decade', 9500000, 1, '9500000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-20 16:25:01', '2023-10-20 16:25:01'),
-(13, '', '1', 'double', 9500000, 1, '9500000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'double.jpg', '2023-10-20 17:53:39', '2023-10-20 17:53:39'),
-(14, '', '1', 'diend', 950000, 1, '950000', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-20 17:53:39', '2023-10-20 17:53:39');
+INSERT INTO `buy` (`id`, `buy_code`, `user_name`, `product_name`, `price`, `quantity`, `amount`, `payment`, `status`, `buyad`, `photo`, `add_date`, `receive_date`) VALUES
+(1, '326714773', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-26 11:40:22', '2023-10-21 07:10:18'),
+(2, '349959494', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:27:36', '2023-10-21 03:47:19'),
+(3, '256175866', '1', 'wizard', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-26 11:40:08', '2023-10-21 03:50:00'),
+(4, '562497643', '1', 'wizard', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-21 07:12:12', '2023-10-21 07:13:03'),
+(5, '327050451', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-22 17:12:54', '2023-10-22 17:12:54'),
+(6, '327050451', '1', 'wizard', 950000, 1, '950000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-22 17:13:30', '2023-10-22 17:12:54'),
+(7, '327050451', '1', 'fourze', 9500000, 1, '9500000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'fourze.jpg', '2023-10-22 17:13:25', '2023-10-22 17:12:54'),
+(8, '327050451', '1', 'ooo', 9500000, 1, '9500000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'ooo.jpg', '2023-10-22 17:13:21', '2023-10-22 17:12:54'),
+(9, '327050451', '1', 'drive', 950000000, 1, '950000000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'drive.jpg', '2023-10-22 17:13:16', '2023-10-22 17:12:54'),
+(10, '463976150', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:35:36', '2023-10-23 08:35:36'),
+(11, '912823951', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:46:11', '2023-10-23 08:46:11'),
+(12, '200409184', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:46:24', '2023-10-23 08:46:24'),
+(13, '617805375', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:49:42', '2023-10-23 08:49:42'),
+(14, '290969576', '1', 'wizard', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 08:50:23', '2023-10-23 08:50:23'),
+(15, '977088475', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 08:51:50', '2023-10-23 08:51:50'),
+(16, '478564028', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:23', '2023-10-23 09:06:23'),
+(17, '133503097', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:39', '2023-10-23 09:06:39'),
+(18, '325003558', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:11:05', '2023-10-23 09:11:05'),
+(19, '121325322', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:12:12', '2023-10-23 09:12:12'),
+(20, '284331390', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:12:59', '2023-10-23 09:12:59'),
+(21, '361861325', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:22:46', '2023-10-23 09:22:46'),
+(22, '475850179', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:23:09', '2023-10-23 10:41:38'),
+(23, '585156991', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:24:36', '2023-10-23 10:41:19'),
+(24, '750238270', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:29:17', '2023-10-23 10:40:59'),
+(27, '569738398', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:32:17', '2023-10-23 10:39:38'),
+(28, '266149356', '1', 'wizard', 950000, 1, '950000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 10:37:09', '2023-10-23 09:33:45'),
+(29, '170147315', '123', 'diend', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công\n15', 'diend.jpg', '2023-10-23 10:21:34', '2023-10-23 10:28:26');
 
 -- --------------------------------------------------------
 
@@ -125,6 +150,24 @@ CREATE TABLE `orders` (
   `get_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_code`, `order_name`, `order_quantity`, `order_amount`, `order_status`, `order_currency`, `get_date`) VALUES
+(1, '', 'diend', 1, 950000, 'Đã hoàn thành', 'VND', '0000-00-00 00:00:00'),
+(2, '', 'wizard', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-21 03:48:48'),
+(3, '', 'wizard', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-21 03:48:48'),
+(4, '', 'wizard', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-21 03:50:00'),
+(5, '', 'decade', 1, 9500000, 'Đã hoàn thành', 'VND', '2023-10-21 07:10:18'),
+(6, '', 'wizard', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-21 07:12:17'),
+(7, '562497643', 'wizard', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-21 07:13:03'),
+(8, '', 'diend', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-23 10:28:26'),
+(9, '', 'diend', 1, 950000, 'Đã hoàn thành', 'VND', '2023-10-23 10:39:38'),
+(10, '750238270', 'decade', 1, 9500000, 'Đã hoàn thành', 'VND', '2023-10-23 10:40:59'),
+(11, '585156991', 'decade', 1, 9500000, 'Đã hoàn thành', 'VND', '2023-10-23 10:41:19'),
+(12, '475850179', 'decade', 1, 9500000, 'Đã hoàn thành', 'VND', '2023-10-23 10:41:38');
+
 -- --------------------------------------------------------
 
 --
@@ -147,14 +190,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `product_price`, `product_quantity`, `product_description`, `short_desc`, `product_image`) VALUES
-(1, 'decade', 3, 9500000, 989, '', '', 'decade.jpg'),
-(2, 'diend', 3, 950000, 987, '', '', 'diend.jpg'),
-(3, 'double', 3, 9500000, 14, '', '', 'double.jpg'),
-(4, 'ooo', 3, 9500000, 26, '', '', 'ooo.jpg'),
-(5, 'fourze', 3, 9500000, 28, '', '', 'fourze.jpg'),
-(6, 'wizard', 3, 950000, 13, '', '', 'wizard.jpg'),
+(1, 'decade', 3, 9500000, 975, '', '', 'decade.jpg'),
+(2, 'diend', 3, 950000, 974, '', '', 'diend.jpg'),
+(3, 'double', 3, 9500000, 13, '', '', 'double.jpg'),
+(4, 'ooo', 3, 9500000, 25, '', '', 'ooo.jpg'),
+(5, 'fourze', 3, 9500000, 26, '', '', 'fourze.jpg'),
+(6, 'wizard', 3, 950000, 4, '', '', 'wizard.jpg'),
 (7, 'gaim', 3, 950000000, 0, '', 'Mô hình kamenrider gaim', 'gaim.jpg'),
-(8, 'drive', 3, 950000000, 26, '', 'Mô hình kamenrider drive', 'drive.jpg'),
+(8, 'drive', 3, 950000000, 25, '', 'Mô hình kamenrider drive', 'drive.jpg'),
 (9, 'ghost', 3, 950000000, 28, '', 'Mô hình kamenrider ghost', 'ghost.jpg'),
 (10, 'exaid', 3, 950000000, 8, '', 'Mô hình kamenrider exaid', 'exaid.jpg'),
 (11, 'build', 3, 950000000, 9, '', 'Mô hình kamenrider build', 'build.jpg'),
@@ -182,7 +225,9 @@ INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `p
 (33, 'gundam-exia', 1, 950000000, 10, '', 'Mô hình Gundam Exia', 'gundam-exia.jpg'),
 (34, 'gundam-barbatos', 1, 950000000, 10, '', 'Mô hình Gundam Barbatos', 'gundam-barbatos.jpg'),
 (35, 'unicorn-gundam', 1, 950000000, 10, '', 'Mô hình Unicorn Gundam', 'unicorn-gundam.jpg'),
-(36, 'strike-gundam', 1, 950000000, 10, '', 'Mô hình Strike Gundam', 'strike-gundam.jpg');
+(36, 'strike-gundam', 1, 950000000, 10, '', 'Mô hình Strike Gundam', 'strike-gundam.jpg'),
+(99, '123', 16, 54356, 24567, '', '', '_a616f20d-5e2a-414b-864f-5af7f1886ed9.jfif'),
+(100, '456', 17, 5675440, 98668, '0877', '678', 'big-one.jpg');
 
 -- --------------------------------------------------------
 
@@ -267,12 +312,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `user_level`, `username`, `first_name`, `last_name`, `sex`, `email`, `password`, `user_photo`) VALUES
 (1, '2', 'admin', 'adxx', 'min', 'nam', 'tendai@gmail.com', '1234', 'gaim.jpg'),
-(2, '1', 'user', 'trung', 'nguyen', 'nam', 'tapnham1502@gmail.com', '1234', 'agito.jpg'),
-(5, '1', '1', 'trung', 'nguyen1', 'nam', 'tapnham1502@gmail.com', '1', 'dragonranger.jpg'),
+(2, '1', 'user', 'trung', 'nguyen', 'nam', 'tapnham15022@gmail.com', '1234', 'agito.jpg'),
+(5, '1', '1', 'trung', 'nguyen1', 'nam', 'tapnham15402@gmail.com', '1', 'dragonranger.jpg'),
 (6, '2', '2', 'trung1', 'nguyen', 'nam', 'tapnham1502@gmail.com', '1', 'diend.jpg'),
 (7, '1', '12', 'trungq', 'trung', 'nam', 'lemann78783457@gmail.com', '1', 'decade.jpg'),
 (8, '1', 'tendai1', 'asdfgh', 'asdfghjkl', 'nu', 'sdfghjk@dsfghj.sdfgh', '1234', 'shin.jpg'),
-(9, '1', 'ashy1234', 'wesdrtfhghuijok', 'nguyen', 'nu', 'tapnham1502@gmail.com', '', '_a616f20d-5e2a-414b-864f-5af7f1886ed9.jfif');
+(9, '1', 'ashy1234', 'wesdrtfhghuijok', 'nguyen', 'nu', 'tapnham150245@gmail.com', '', '_a616f20d-5e2a-414b-864f-5af7f1886ed9.jfif'),
+(14, '1', '123', 'trung1', 'nguyen', 'nam', 'tapnham150we2@gmail.com', '1234', 'drive.jpg');
 
 -- --------------------------------------------------------
 
@@ -359,13 +405,13 @@ ALTER TABLE `vnpay`
 -- AUTO_INCREMENT cho bảng `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `buy`
 --
 ALTER TABLE `buy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -377,13 +423,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT cho bảng `reports`
@@ -401,7 +447,7 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `vnpay`
