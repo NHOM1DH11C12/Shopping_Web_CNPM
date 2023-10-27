@@ -134,7 +134,7 @@ function extra_email()
 
                 </div>
 
-
+            <?php display_report() ?>
             </div><!--Row for Tab Panel-->
 
 

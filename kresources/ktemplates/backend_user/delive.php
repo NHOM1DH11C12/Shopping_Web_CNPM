@@ -1,5 +1,5 @@
 <h1 class="text-center ">
-   Đơn hàng
+   Đơn hàng đã hoàn thành
 </h1>
 <div class="col-md-12">
 
