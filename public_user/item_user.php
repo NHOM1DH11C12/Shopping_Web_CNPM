@@ -119,6 +119,8 @@ function extra_email()
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
                                 data-toggle="tab">Mô tả sản phẩm </a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Đánh
+                                giá</a></li>
 
                     </ul>
 
@@ -129,21 +131,23 @@ function extra_email()
                                 <?php echo $row['product_description'] ?>
                             </p>
                         </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <?php display_report() ?>
+
+                        </div>
 
                     </div>
 
-                </div>
 
-            <?php display_report() ?>
-            </div><!--Row for Tab Panel-->
+                </div><!--Row for Tab Panel-->
 
 
 
 
-        </div><!-- col-md-9 end here-->
-    <?php endwhile; ?>
+            </div><!-- col-md-9 end here-->
+        <?php endwhile; ?>
 
-</div>
-<!-- /.container -->
+    </div>
+    <!-- /.container -->
 
-<?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>
+    <?php include(TEMPLATE_FRONT_USER . DS . 'footer.php'); ?>
