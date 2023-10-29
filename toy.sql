@@ -104,7 +104,10 @@ INSERT INTO `buy` (`id`, `buy_code`, `user_name`, `product_name`, `price`, `quan
 (28, '266149356', '1', 'wizard', 950000, 1, '950000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 10:37:09', '2023-10-23 09:33:45'),
 (29, '170147315', '123', 'diend', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công\n15', 'diend.jpg', '2023-10-23 10:21:34', '2023-10-23 10:28:26');
 
--- --------------------------------------------------------
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
 
 --
 -- Cấu trúc bảng cho bảng `categories`
@@ -237,37 +240,12 @@ INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `p
 
 CREATE TABLE `reports` (
   `report_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `product_price` float NOT NULL,
-  `product_title` varchar(255) NOT NULL,
-  `product_quantity` int(11) NOT NULL
+  `report_code` varchar(50) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `report_file` varchar(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `reports`
---
-
-INSERT INTO `reports` (`report_id`, `product_id`, `order_id`, `product_price`, `product_title`, `product_quantity`) VALUES
-(1, 1, 0, 25.59, '', 1),
-(2, 1, 0, 25.59, '', 3),
-(3, 1, 0, 25.59, '', 3),
-(4, 1, 0, 25.59, '', 3),
-(5, 1, 0, 25.59, '', 3),
-(6, 1, 0, 25.59, '', 3),
-(7, 1, 0, 25.59, '', 3),
-(8, 1, 0, 25.59, '', 3),
-(9, 1, 0, 25.59, '', 3),
-(10, 1, 0, 25.59, '', 3),
-(11, 1, 29, 25.59, '', 3),
-(12, 1, 30, 25.59, '', 3),
-(13, 1, 31, 25.59, '', 3),
-(14, 1, 32, 25.59, '', 3),
-(15, 1, 33, 25.59, '', 3),
-(16, 1, 39, 25.59, 'Olivine Oil ', 3),
-(17, 1, 40, 25.59, 'Olivine Oil ', 3),
-(18, 2, 41, 2499.99, 'Dell XPS 13 2020', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -323,22 +301,6 @@ INSERT INTO `users` (`user_id`, `user_level`, `username`, `first_name`, `last_na
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `vnpay`
---
-
-CREATE TABLE `vnpay` (
-  `id` int(11) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `buy_code` varchar(50) NOT NULL,
-  `money` float NOT NULL,
-  `note` varchar(50) NOT NULL,
-  `vnp_reponse_code` varchar(50) NOT NULL,
-  `code_vnpay` varchar(255) NOT NULL,
-  `code_blank` varchar(255) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -392,12 +354,6 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Chỉ mục cho bảng `vnpay`
---
-ALTER TABLE `vnpay`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -449,12 +405,6 @@ ALTER TABLE `slides`
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
---
--- AUTO_INCREMENT cho bảng `vnpay`
---
-ALTER TABLE `vnpay`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

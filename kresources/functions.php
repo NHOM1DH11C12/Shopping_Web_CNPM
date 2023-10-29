@@ -1251,7 +1251,7 @@ function display_order()
     global $connection;
     $user_name = "";
     $user_id = $_SESSION['user_id'];
-
+    $count=0;
     $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
     confirm($query_user);
     while ($row_user = fetch_array($query_user)) {
@@ -1277,6 +1277,9 @@ function display_order()
             while ($row_report = fetch_array($query2)) {
                 if (!empty($row_report["report_code"])) {
                     $report_code = $row_report['report_code'];
+                    if ($report_code == $row["buy_code"]) {
+                        $count=1;
+                    }
                 }
             }
             echo "<table style='width:100%;'>";
@@ -1324,7 +1327,7 @@ function display_order()
                 echo "<td>&ensp;</td>";
             }
             elseif ($status == 'Đã hoàn thành') {
-                if ($report_code != $row["buy_code"]) {
+                if ($count==0) {
                     echo "<td><a class='text-right btn btn-danger' href='index_user.php?report&product_name={$row['product_name']}&buy_code={$row['buy_code']}'
                     >Đánh giá</a></td>";
                 } else {
@@ -1756,7 +1759,7 @@ function display_delive()
 {
     global $connection;
     $user_name = "";
-
+    $count= 0;
     // Lấy username từ bảng users
     $user_id = $_SESSION['user_id']; // Giả sử user_id đã được lưu trữ trong session
     $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
@@ -1782,6 +1785,9 @@ function display_delive()
                 while ($row_report = fetch_array($query2)) {
                     if (!empty($row_report["report_code"])) {
                         $report_code = $row_report['report_code'];
+                        if ($report_code == $row["buy_code"]) {
+                            $count=1;
+                        }
                     }
                 }
                 echo "<table style='width:100%;'>";
@@ -1811,7 +1817,7 @@ function display_delive()
                 echo "<th>Tổng tiền: <p class='text-right text-warning' style='display: inline;'>";
                 echo number_format($row['amount']);
                 echo " VND </p></th>";
-                if (empty($report_code)||$report_code != $row["buy_code"]) {
+                if ($count==0) {
                     echo "<td><a class='text-right btn btn-danger' href='index_user.php?report&product_name={$row['product_name']}&buy_code={$row['buy_code']}'>Đánh giá</a></td>";
                 }                
                 else{
