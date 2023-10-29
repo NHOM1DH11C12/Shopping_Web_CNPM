@@ -61,22 +61,19 @@
             </table>
 
             <?php return_cart() ?>
-
-            <!-- Thêm 2 thẻ radio vào đây -->
             <div class="form-group">
-                <label for="direct"><input type="checkbox" name="payment"> Thanh toán trực
-                    tiếp</label><br>
-                <label for="redirect"><input type="checkbox" name="redirect"> Thanh toán
-                    bằng VNPAY</label>
+                <label for="direct"><input type="checkbox" id="direct" name="payment"> Thanh toán trực tiếp</label><br>
+                <label for="redirect"><input type="checkbox" id="redirect" name="redirect"> Thanh toán bằng
+                    VNPAY</label>
             </div>
+
             <script>
-                const checkboxes = document.querySelectorAll('input[name="payment"]');
-                checkboxes.forEach((checkbox) => {
-                    checkbox.addEventListener('change', (event) => {
-                        checkboxes.forEach((c) => {
-                            if (c !== event.target) {
-                                c.checked = false;
-                            }
+                var checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('change', function () {
+                        checkboxes.forEach(function (c) {
+                            if (c !== checkbox) c.checked = false;
                         });
                     });
                 });
@@ -92,4 +89,4 @@
     </div>
     <!-- /.container -->
 
-    <?php include(TEMPLATE_FRONT_USER.DS.'footer.php'); ?>
+    <?php include(TEMPLATE_FRONT_USER . DS . 'footer.php'); ?>

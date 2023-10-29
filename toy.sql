@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 26, 2023 lúc 01:45 PM
+-- Thời gian đã tạo: Th10 29, 2023 lúc 06:18 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -58,6 +58,7 @@ INSERT INTO `address` (`id`, `username`, `fullname`, `phone`, `province`, `distr
 CREATE TABLE `buy` (
   `id` int(11) NOT NULL,
   `buy_code` varchar(50) NOT NULL,
+  `vnpay_code` varchar(50) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `price` float NOT NULL,
@@ -75,39 +76,54 @@ CREATE TABLE `buy` (
 -- Đang đổ dữ liệu cho bảng `buy`
 --
 
-INSERT INTO `buy` (`id`, `buy_code`, `user_name`, `product_name`, `price`, `quantity`, `amount`, `payment`, `status`, `buyad`, `photo`, `add_date`, `receive_date`) VALUES
-(1, '326714773', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-26 11:40:22', '2023-10-21 07:10:18'),
-(2, '349959494', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:27:36', '2023-10-21 03:47:19'),
-(3, '256175866', '1', 'wizard', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-26 11:40:08', '2023-10-21 03:50:00'),
-(4, '562497643', '1', 'wizard', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-21 07:12:12', '2023-10-21 07:13:03'),
-(5, '327050451', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-22 17:12:54', '2023-10-22 17:12:54'),
-(6, '327050451', '1', 'wizard', 950000, 1, '950000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-22 17:13:30', '2023-10-22 17:12:54'),
-(7, '327050451', '1', 'fourze', 9500000, 1, '9500000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'fourze.jpg', '2023-10-22 17:13:25', '2023-10-22 17:12:54'),
-(8, '327050451', '1', 'ooo', 9500000, 1, '9500000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'ooo.jpg', '2023-10-22 17:13:21', '2023-10-22 17:12:54'),
-(9, '327050451', '1', 'drive', 950000000, 1, '950000000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'drive.jpg', '2023-10-22 17:13:16', '2023-10-22 17:12:54'),
-(10, '463976150', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:35:36', '2023-10-23 08:35:36'),
-(11, '912823951', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:46:11', '2023-10-23 08:46:11'),
-(12, '200409184', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:46:24', '2023-10-23 08:46:24'),
-(13, '617805375', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 08:49:42', '2023-10-23 08:49:42'),
-(14, '290969576', '1', 'wizard', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 08:50:23', '2023-10-23 08:50:23'),
-(15, '977088475', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 08:51:50', '2023-10-23 08:51:50'),
-(16, '478564028', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:23', '2023-10-23 09:06:23'),
-(17, '133503097', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:39', '2023-10-23 09:06:39'),
-(18, '325003558', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:11:05', '2023-10-23 09:11:05'),
-(19, '121325322', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:12:12', '2023-10-23 09:12:12'),
-(20, '284331390', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:12:59', '2023-10-23 09:12:59'),
-(21, '361861325', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:22:46', '2023-10-23 09:22:46'),
-(22, '475850179', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:23:09', '2023-10-23 10:41:38'),
-(23, '585156991', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:24:36', '2023-10-23 10:41:19'),
-(24, '750238270', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:29:17', '2023-10-23 10:40:59'),
-(27, '569738398', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:32:17', '2023-10-23 10:39:38'),
-(28, '266149356', '1', 'wizard', 950000, 1, '950000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 10:37:09', '2023-10-23 09:33:45'),
-(29, '170147315', '123', 'diend', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công\n15', 'diend.jpg', '2023-10-23 10:21:34', '2023-10-23 10:28:26');
+INSERT INTO `buy` (`id`, `buy_code`, `vnpay_code`, `user_name`, `product_name`, `price`, `quantity`, `amount`, `payment`, `status`, `buyad`, `photo`, `add_date`, `receive_date`) VALUES
+(1, '326714773', '', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-26 11:40:22', '2023-10-21 07:10:18'),
+(2, '349959494', '', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:27:36', '2023-10-21 03:47:19'),
+(3, '256175866', '', '1', 'wizard', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-26 11:40:08', '2023-10-21 03:50:00'),
+(4, '562497643', '', '1', 'wizard', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-21 07:12:12', '2023-10-21 07:13:03'),
+(5, '327050451', '', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-22 17:12:54', '2023-10-22 17:12:54'),
+(6, '327050451', '', '1', 'wizard', 950000, 1, '950000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-22 17:13:30', '2023-10-22 17:12:54'),
+(7, '327050451', '', '1', 'fourze', 9500000, 1, '9500000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'fourze.jpg', '2023-10-22 17:13:25', '2023-10-22 17:12:54'),
+(8, '327050451', '', '1', 'ooo', 9500000, 1, '9500000', '', 'Đang giao hàng', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'ooo.jpg', '2023-10-22 17:13:21', '2023-10-22 17:12:54'),
+(9, '327050451', '', '1', 'drive', 950000000, 1, '950000000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'drive.jpg', '2023-10-22 17:13:16', '2023-10-22 17:12:54'),
+(14, '290969576', '', '1', 'wizard', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 08:50:23', '2023-10-23 08:50:23'),
+(15, '977088475', '', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 08:51:50', '2023-10-23 08:51:50'),
+(16, '478564028', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:23', '2023-10-23 09:06:23'),
+(17, '133503097', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:06:39', '2023-10-23 09:06:39'),
+(18, '325003558', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:11:05', '2023-10-23 09:11:05'),
+(19, '121325322', '', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:12:12', '2023-10-23 09:12:12'),
+(20, '284331390', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:12:59', '2023-10-23 09:12:59'),
+(21, '361861325', '', '1', 'diend', 950000, 1, '950000', '', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-23 09:22:46', '2023-10-23 09:22:46'),
+(22, '475850179', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:23:09', '2023-10-23 10:41:38'),
+(23, '585156991', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:24:36', '2023-10-23 10:41:19'),
+(24, '750238270', '', '1', 'decade', 9500000, 1, '9500000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-23 09:29:17', '2023-10-23 10:40:59'),
+(27, '569738398', '', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-26 10:32:17', '2023-10-23 10:39:38'),
+(28, '266149356', '', '1', 'wizard', 950000, 1, '950000', '', 'Đã xác nhận', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-23 10:37:09', '2023-10-23 09:33:45'),
+(29, '170147315', '', '123', 'diend', 950000, 1, '950000', '', 'Đã hoàn thành', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công\n15', 'diend.jpg', '2023-10-23 10:21:34', '2023-10-23 10:28:26'),
+(34, '839613613', '', '1', 'diend', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-29 15:33:26', '2023-10-29 15:33:26'),
+(35, '327414381', '', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-29 15:33:26', '2023-10-29 15:33:26'),
+(36, '306691816', '', '1', 'double', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'double.jpg', '2023-10-29 15:34:06', '2023-10-29 15:34:06'),
+(37, '559750249', '', '1', 'fourze', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'fourze.jpg', '2023-10-29 15:34:06', '2023-10-29 15:34:06'),
+(38, '931428123', '', '1', 'double', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'double.jpg', '2023-10-29 15:37:29', '2023-10-29 15:37:29'),
+(39, '931428123', '', '1', 'ooo', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'ooo.jpg', '2023-10-29 15:37:29', '2023-10-29 15:37:29'),
+(40, '582859139', '', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-29 15:38:33', '2023-10-29 15:38:33'),
+(41, '736203708', '', '1', 'diend', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-29 15:38:33', '2023-10-29 15:38:33'),
+(42, '569140821', '', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-29 15:38:45', '2023-10-29 15:38:45'),
+(43, '724395430', '', '1', 'diend', 950000, 1, '950000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-29 15:38:45', '2023-10-29 15:38:45'),
+(44, '894787124', '', '1', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-29 15:41:17', '2023-10-29 15:41:17'),
+(47, '773709925', '', '1', 'diend', 950000, 1, '950000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'diend.jpg', '2023-10-29 15:49:43', '2023-10-29 15:49:43'),
+(48, '773709925', '', '1', 'wizard', 950000, 1, '950000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'wizard.jpg', '2023-10-29 15:49:44', '2023-10-29 15:49:44'),
+(57, '523362774', '573995010', '1', 'decade', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n15', 'decade.jpg', '2023-10-29 17:06:40', '2023-10-29 16:39:11'),
+(64, '104502585', '', 'user', 'decade', 9500000, 1, '9500000', 'Thanh toán trực tiếp', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'decade.jpg', '2023-10-29 16:55:43', '2023-10-29 16:55:43'),
+(65, '950181579', '', 'user', 'diend', 950000, 1, '950000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'diend.jpg', '2023-10-29 16:57:32', '2023-10-29 16:57:32'),
+(66, '873039141', '', 'user', 'decade', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'decade.jpg', '2023-10-29 16:57:32', '2023-10-29 16:57:32'),
+(67, '230589572', '853655543', 'user', 'decade', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'decade.jpg', '2023-10-29 17:01:03', '2023-10-29 17:01:03'),
+(68, '772372714', '853655543', 'user', 'double', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'double.jpg', '2023-10-29 17:01:03', '2023-10-29 17:01:03'),
+(69, '442467339', '823580663', 'user', 'diend', 950000, 2, '1900000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'diend.jpg', '2023-10-29 17:04:21', '2023-10-29 17:04:21'),
+(70, '958814256', '190737161', 'user', 'double', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'double.jpg', '2023-10-29 17:08:03', '2023-10-29 17:08:03'),
+(71, '356016843', '190737161', 'user', 'ooo', 9500000, 1, '9500000', 'vnpay', 'Đang xử lý', 'trung nguyen;0375716892\nThái bình;kiến xương;vũ công23456\n151234567', 'ooo.jpg', '2023-10-29 17:08:03', '2023-10-29 17:08:03');
 
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
+-- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `categories`
@@ -193,12 +209,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_title`, `product_category_id`, `product_price`, `product_quantity`, `product_description`, `short_desc`, `product_image`) VALUES
-(1, 'decade', 3, 9500000, 975, '', '', 'decade.jpg'),
-(2, 'diend', 3, 950000, 974, '', '', 'diend.jpg'),
-(3, 'double', 3, 9500000, 13, '', '', 'double.jpg'),
-(4, 'ooo', 3, 9500000, 25, '', '', 'ooo.jpg'),
-(5, 'fourze', 3, 9500000, 26, '', '', 'fourze.jpg'),
-(6, 'wizard', 3, 950000, 4, '', '', 'wizard.jpg'),
+(1, 'decade', 3, 9500000, 961, '', '', 'decade.jpg'),
+(2, 'diend', 3, 950000, 958, '', '', 'diend.jpg'),
+(3, 'double', 3, 9500000, 7, '', '', 'double.jpg'),
+(4, 'ooo', 3, 9500000, 23, '', '', 'ooo.jpg'),
+(5, 'fourze', 3, 9500000, 25, '', '', 'fourze.jpg'),
+(6, 'wizard', 3, 950000, 0, '', '', 'wizard.jpg'),
 (7, 'gaim', 3, 950000000, 0, '', 'Mô hình kamenrider gaim', 'gaim.jpg'),
 (8, 'drive', 3, 950000000, 25, '', 'Mô hình kamenrider drive', 'drive.jpg'),
 (9, 'ghost', 3, 950000000, 28, '', 'Mô hình kamenrider ghost', 'ghost.jpg'),
@@ -244,8 +260,21 @@ CREATE TABLE `reports` (
   `user_name` varchar(50) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `report_file` varchar(255) NOT NULL,
+  `star` varchar(3) NOT NULL,
+  `comment` varchar(70) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `reports`
+--
+
+INSERT INTO `reports` (`report_id`, `report_code`, `user_name`, `product_name`, `report_file`, `star`, `comment`, `date`) VALUES
+(1, '326714773', '1', 'decade', '', '5', 'qưergtjkljhyewq', '2023-10-29 14:32:58'),
+(2, '256175866', '1', 'wizard', '', '5', 'dưegtrhyujtgre', '2023-10-29 14:35:43'),
+(3, '475850179', '1', 'decade', '', '5', 'dsfghjkhgfdsa', '2023-10-29 14:37:58'),
+(4, '562497643', '1', 'wizard', '', '5', 'sưdefrtyuiuytred', '2023-10-29 14:38:26');
+
 -- --------------------------------------------------------
 
 --
@@ -297,8 +326,6 @@ INSERT INTO `users` (`user_id`, `user_level`, `username`, `first_name`, `last_na
 (8, '1', 'tendai1', 'asdfgh', 'asdfghjkl', 'nu', 'sdfghjk@dsfghj.sdfgh', '1234', 'shin.jpg'),
 (9, '1', 'ashy1234', 'wesdrtfhghuijok', 'nguyen', 'nu', 'tapnham150245@gmail.com', '', '_a616f20d-5e2a-414b-864f-5af7f1886ed9.jfif'),
 (14, '1', '123', 'trung1', 'nguyen', 'nam', 'tapnham150we2@gmail.com', '1234', 'drive.jpg');
-
--- --------------------------------------------------------
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -367,7 +394,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT cho bảng `buy`
 --
 ALTER TABLE `buy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
@@ -391,7 +418,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `slides`
@@ -404,7 +431,7 @@ ALTER TABLE `slides`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

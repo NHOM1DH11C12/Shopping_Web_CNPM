@@ -18,10 +18,11 @@ if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
         $query = query("SELECT * FROM products WHERE product_id = " . escape_string($selected_product));
         confirm($query);
         while ($row = fetch_array($query)) {
+            $buy_code = rand(100000000, 987654567);
             $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
             $item_quantity += $_SESSION["product_" . $selected_product];
-            $query2 = "INSERT INTO buy(buy_code,user_name, product_name, price, quantity, amount, status, payment, photo, buyad)
-                VALUES('{$_SESSION['buy_code']}','{$user_name}', '{$row['product_title']}', '{$row['product_price']}', '{$_SESSION["product_" . $selected_product]}',
+            $query2 = "INSERT INTO buy(buy_code, vnpay_code, user_name, product_name, price, quantity, amount, status, payment, photo, buyad)
+                VALUES('{$buy_code}', '{$_SESSION['code']}', '{$user_name}', '{$row['product_title']}', '{$row['product_price']}', '{$_SESSION["product_" . $selected_product]}',
                '{$sub}', 'Đang xử lý', 'vnpay', '{$row['product_image']}', '{$_SESSION['fulladdress']}')";
 
             confirm($query2);
