@@ -18,7 +18,7 @@
             <a href="contact.php"><i class="fa fa-paper-plane"></i>LIÊN HỆ</a>
         </ul>
         <div class="nav navbar-right">
-            <form action="display_ad_product.php" method="post" enctype="multipart/form-data">
+            <form action="display_product.php" method="post" enctype="multipart/form-data">
                 <div class="input-group">
                     <div class="form-group navbar-left">
                         <input type="search" class="form-control" name="search" placeholder="Tìm kiếm sản phẩm "

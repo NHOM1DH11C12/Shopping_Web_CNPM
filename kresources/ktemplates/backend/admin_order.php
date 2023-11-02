@@ -8,10 +8,10 @@
    <div class="navbar navbar-cat">
       <form method="post" enctype="multipart/form-data">
 
-            <h4 class="text-left">Chỉnh sửa trạng thái đơn hàng theo ID:</h4>
-            <label>ID: </label><br><input type="text" name="id"><br/>
+            <h4 class="text-left">Chỉnh sửa trạng thái đơn hàng theo mã đơn hàng:</h4>
+            <label>Mã đơn hàng: </label><br><input type="text" name="buy_code"><br/>
             <label>Trạng thái:</label><br/>
-            <?php update_status() ?>
+            <?php update_status()?>
             <select name='status'>
                <option value='Đang xử lý'>Đang xử lý</option>
                <option value='Đã xác nhận'>Đã xác nhận</option>

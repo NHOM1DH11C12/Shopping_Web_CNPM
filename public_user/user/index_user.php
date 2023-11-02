@@ -5,7 +5,6 @@
 }
 
 ?>
-<div id="page-wrapper">
 
     <div class="container-fluid">
 
@@ -41,6 +40,9 @@
         if (isset($_GET['report'])) {
             include(TEMPLATE_BACK_USER . '/report.php');
         }
+        if (isset($_GET['update_user_status'])) {
+            include(TEMPLATE_BACK_USER . '/update_user_status.php');
+        }
         //adding products**********************************************************************
         //users*******************************************************************************
         if (isset($_GET['user'])) {
@@ -65,7 +67,5 @@
 
         ?>
     </div>
-    <!-- /.container-fluid -->
-</div>
 <!-- /#page-wrapper -->
 <?php include(TEMPLATE_BACK_USER . '\footer_user.php'); ?>

@@ -23,12 +23,10 @@ if (isset($_GET['add'])) {
   }
 }
 
-
-
 if (isset($_GET['remove'])) {
   if ($_SESSION['product_' . $_GET['remove']] <= 1) {
-    set_message("Không thể xóa khi còn 1 sản phẩm");
-    redirect("..\public\checkout.php");
+    set_message("Không thể giảm số lượng khi còn 1 sản phẩm");
+    redirect("..\public_user\checkout.php");
     unset($_SESSION['item_total']);
     unset($_SESSION['item_quantity']);
   } else {
@@ -36,7 +34,6 @@ if (isset($_GET['remove'])) {
     redirect("..\public_user\checkout.php");
   }
 }
-
 if (isset($_GET['delete'])) {
 
   $_SESSION['product_' . $_GET['delete']] = '0';
@@ -57,16 +54,7 @@ function cart()
   $amount = 1;
   $quantity = 1;
   $dem = 0;
-  echo "<tr>
-              <th><input type='checkbox' id='select-all' name='select_all'>
-              Chọn sản phẩm
-              </th>
-              <th>Sản phẩm</th>
-              <th>Giá</th>
-              <th>Số lượng</th>
-              <th>Thành tiền</th>
-              <th>Tùy chọn</th>
-          </tr>";
+  echo "<div class='card-body'><input type='checkbox' id='select-all' name='select_all'>Chọn tất cả<br />";
   foreach ($_SESSION as $name => $value) {
     if ($value > 0) {
       if (substr($name, 0, 8) == "product_") {
@@ -78,28 +66,55 @@ function cart()
         while ($row = fetch_array($query)) {
           $sub = $row['product_price'] * $value;
           $s = number_format($sub);
-          $price=number_format($row['product_price']);
+          $price = number_format($row['product_price']);
           $item_quantity += $value;
           $product_photo = display_images($row['product_image']);
           $product = <<<DELIMETER
-          
-<tr>
-<td>
-  <input type='checkbox' name='product_select[]' value='{$row['product_id']}'>
-  </td>
-  <td>
-  {$row['product_title']}<br>
-    <img width='100' src='../kresources/{$product_photo}'>
-  </td>
-  <td>{$price} VND</td>
-  <td>{$value}</td>
-  <td>{$s} VND</td>
-  <td>
-  <a class='btn btn-warning' href='..\kresources\cart.php?remove={$row['product_id']}'><span class='glyphicon glyphicon-minus'></span></a>   
-  <a class='btn btn-success' href='..\kresources\cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
-  <a class='btn btn-danger' href='..\kresources\cart.php?delete={$row['product_id']}' onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a>
-  </td>
-  </tr>
+     
+  <input type='checkbox' name='product_select[]' value='{$row['product_id']}'>Chọn sản phẩm 
+          <!-- thẻ sản phẩm cần thay thế bởi function php cart() -->
+          <div class="row">
+            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+              <!-- Image -->
+              <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+              <img width='100' src='../kresources/{$product_photo}'
+                  alt="Blue Jeans Jacket" />
+                <a href="#!">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                </a>
+              </div>
+              <!-- Image -->
+            </div>
+
+            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+              <!-- Data -->
+              <p><strong>{$row['product_title']}</strong></p>
+              <p>Color: blue</p>
+              <p>Size: M</p>
+              <a  class="btn btn-primary btn-sm me-1 mb-2" href='..\kresources\cart.php?delete={$row['product_id']}' 
+               onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\">
+              <i class="fas fa-trash"></i></a>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+              <span>Giá :</span>
+              <p class="text-start text-md-center">
+                <strong>{$price} VND</strong>
+              </p>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+              <div class="d-flex mb-4" style="max-width: 300px">
+                <a class='btn btn-success' href='..\kresources\cart.php?add={$row['product_id']}'>
+                <span class='glyphicon glyphicon-plus'></span></a>
+                <a class="btn btn-warning px-3 me-2" href='..\kresources\cart.php?remove={$row['product_id']}'>
+                <span class='glyphicon glyphicon-minus'></span></a> 
+                <div class="form-outline">
+                  <label class="form-label" for="form1" style="padding-right:10px;">Số lượng:</label>
+                  <input id="form1" min="0" name="quantity" rows="10" value="{$value}" type="number" class="form-control"/>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>
   
 <input type='hidden' name='item_name_{$item_name}' value='{$row['product_title']}'>
 <input type='hidden' name='item_number_{$item_number}' value='{$row['product_id']}'>
@@ -107,11 +122,11 @@ function cart()
 <input type='hidden' name='quantity_{$quantity}' value='{$value}'>
  
 DELIMETER;
-
           echo $product;
           $item_name++;
           $item_number++;
           $quantity++;
+
         }
         $_SESSION['item_total'] = $total += $sub;
         $_SESSION['item_quantity'] = $item_quantity;
@@ -123,6 +138,8 @@ DELIMETER;
   if ($dem == 0) {
     echo "<h2 class='text-center '>Không có sản phẩm</h2> ";
   }
+  echo "</div>
+  </div>";
 
   echo "<script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -185,24 +202,58 @@ function buy_cart()
       $query = query("SELECT * FROM products WHERE product_id = " . escape_string($selected_product));
       confirm($query);
       while ($row = fetch_array($query)) {
-        $price=number_format($row['product_price']);
+        $price = number_format($row['product_price']);
         $product_photo = display_images($row['product_image']);
         $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
-        $s=number_format($sub);
+        $s = number_format($sub);
         $item_quantity += $_SESSION["product_" . $selected_product];
-        echo "<tr>";
-        echo "<td>{$row['product_title']}<br>
-        <img width='100' src = '../kresources/{$product_photo}'>
-      </td>";
-        echo "<td>{$price} VND</td>";
-        echo "<td>{$_SESSION["product_" . $selected_product]}</td>";
-        echo "<td>{$s} VND</td>";
-        echo "</tr>";
-        $total += $sub;
+        $product = <<<DELIMETER
+        <div class="row">
+          <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+            <!-- Image -->
+            <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+            <img width='100' src = '../kresources/{$product_photo}'
+                alt="Blue Jeans Jacket" />
+              <a href="#!">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+              </a>
+            </div>
+            <!-- Image -->
+          </div>
+
+          <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+            <!-- Data -->
+            <p><strong>{$row["product_title"]}</strong></p>
+            <p>Color: blue</p>
+            <p>Size: M</p>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <span>Giá :</span>
+            <p class="text-start text-md-center">
+              <strong class="text-warning">{$price} VND</strong>
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="d-flex mb-4" style="max-width: 300px">
+              <div class="form-outline">
+                <label class="form-label" for="form1" style="padding-right:10px;">
+                Số lượng:  <strong class=" text-danger">{$_SESSION["product_" . $selected_product]}</strong></label>
+              </div>
+              <div class="form-outline">
+                <label class="form-label" for="form1" style="padding-right:10px;">
+                Thành tiền :</label><br>
+                 <strong class="text-primary">{$s} VND</strong>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+        DELIMETER;
+        echo $product;
       }
     }
-    $t=number_format($total);
-    echo "<tr><td>Tổng số lượng: {$item_quantity}</td><td>Tổng tiền: {$t} VND</td></tr>";
+    echo "</div>
+    </div>";
   } else {
     echo "<script type='text/javascript'>";
     echo "var confirmResult = confirm('Không có sản phẩm được chọn trong giỏ hàng! Bạn có muốn đến gian hàng không( OK đến trang mua sắm || Cancel để trở lại giỏ hàng.)');";

@@ -17,58 +17,57 @@
                 <span class="icon-bar"></span>
         </button>
         <div class="navbar-left">
-                <a href="index.php"><i class="fa fa-home"></i>TRANG CHỦ &NegativeThinSpace;</a>
+                <a href="..\public\index.php"><i class="fa fa-home"></i>TRANG CHỦ &NegativeThinSpace;</a>
         </div>
 </div>
 
 <div class="navbar-form navbar-center">
         <div class="collapse navbar-collapse navbar-ex1-collapse navbar-center">
                 <ul class="nav navbar-left">
-                        <a href="shop_admin.php"><i class="fa fa-fa fa-shopping-cart"></i> GIAN HÀNG
-                                &NegativeThinSpace;</a>
-                        <a href="login.php"><i class="fa fa-user"></i> ĐĂNG NHẬP &NegativeThinSpace;</a>
-                        <a href="admin"><i class="fa fa-cogs"></i> QUẢN TRỊ TRANG WEB &NegativeThinSpace;</a>
+                        <a href="..\public\shop_admin.php">&ensp;<i class="fa fa-fa fa-shopping-cart"></i> GIAN HÀNG</a>
+                        <a href="..\public_user\login.php">&ensp;<i class="fa fa-user"></i>ĐĂNG NHẬP</a>
+                        <a href="..\public\admin">&ensp;<i class="fa fa-cogs"></i> QUẢN TRỊ TRANG WEB</a>
                         <a href="#" class="dropdown-toggle " data-toggle="dropdown">
                                 <i class="fa fa-chevron-circle-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-left">
                                 <li class="">
-                                        <a href="admin\index.php?revenue">
+                                        <a href="..\public\admin\index.php?revenue">
                                                 <i class="now-ui-icons education_atom"></i>
                                                 <p>Thống kê doanh thu</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?admin_order">
+                                        <a href="..\public\admin\index.php?admin_order">
                                                 <i class="now-ui-icons files_paper"></i>
                                                 <p>Đơn hàng</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?products">
+                                        <a href="..\public\admin\index.php?products">
                                                 <i class="now-ui-icons education_paper"></i>
                                                 <p>danh sách sản phẩm</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?add_product">
+                                        <a href="..\public\admin\index.php?add_product">
                                                 <i class="now-ui-icons ui-1_simple-add "></i>
                                                 <p>quản lí sản phẩm</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?categories">
+                                        <a href="..\public\admin\index.php?categories">
                                                 <i class="now-ui-icons design_bullet-list-67"></i>
                                                 <p>Danh mục sản phẩm</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?users">
+                                        <a href="..\public\admin\index.php?users">
                                                 <i class="now-ui-icons users_single-02"></i>
                                                 <p>tài khoản</p>
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="admin\index.php?slides">
+                                        <a href="..\public\admin\index.php?slides">
                                                 <i class="now-ui-icons text_caps-small"></i>
                                                 <p>Nội dung trên shop</p>
                                         </a>
@@ -84,7 +83,8 @@
                                                         style="background-color:white;width:500px;">
                                         </div>
                                         <div class="form-group navbar-right">
-                                                <button type="submit" name="submit" class="now-ui-icons ui-1_zoom-bold btn-primary"
+                                                <button type="submit" name="submit"
+                                                        class="now-ui-icons ui-1_zoom-bold btn-primary"
                                                         style="height:37px;"></button>
                                         </div>
                                 </div>

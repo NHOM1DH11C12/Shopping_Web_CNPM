@@ -13,7 +13,7 @@
                 </h3>
             </div>
             <div class="navbar navbar-cat col-6">
-                <form action="index.php?cat_product.php" method="post" enctype="multipart/form-data">
+                <form action="index.php?cat_product" method="post" enctype="multipart/form-data">
                     <label>Phân loại:</label><br>
                     <select name="product_category_id" id="" class="form-product">
                         <option value="">Chọn danh mục</option>
@@ -25,14 +25,14 @@
                 </form>
             </div>
             <div class="navbar navbar-search col-6">
-                <form action="index.php?display_product.php" method="post" enctype="multipart/form-data">
+                <form action="index.php?display_product" method="post" enctype="multipart/form-data">
                         <input type="search" class="form-group" name="search" placeholder="Tìm kiếm sản phẩm">
                             <button type="submit" name="submit" class="btn btn-primary ">
                                 <i class="now-ui-icons ui-1_zoom-bold"></i>
                             </button>
                 </form>
             </div>
-            <div class="col-12" id="productData">
+            <div class="col-md-10" id="productData">
                 <table class="table table-hover" border="1px">
                     <?php get_products_in_admin(); ?>
                 </table>

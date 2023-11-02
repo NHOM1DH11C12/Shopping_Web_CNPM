@@ -1,4 +1,6 @@
-
+*{
+  font-family: 'Poppins', sans-serif;
+}
 
 #page-wrapper {
   background-color: #F1F1F1 !important;
@@ -31,7 +33,7 @@ margin-bottom: 10px;
 
 #admin_sidebar .btn{
 
-width: 49%;
+width: 39%;
 
 }
 

@@ -7,6 +7,12 @@
                         </a>
                     </li>
                     <li class="">
+                        <a href="index.php?comment">
+                            <i class="now-ui-icons ui-2_chat-round"></i>
+                            <p>Thống kê comment</p>
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="index.php?revenue">
                             <i class="now-ui-icons education_atom"></i>
                             <p>Thống kê doanh thu</p>
@@ -61,6 +67,12 @@
                         <a href="index.php">
                             <i class="now-ui-icons design_app"></i>
                             <p>Tổng Quan</p>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="index.php?comment">
+                            <i class="now-ui-icons ui-2_chat-round"></i>
+                            <p>Thống kê comment</p>
                         </a>
                     </li>
                     <li class="">

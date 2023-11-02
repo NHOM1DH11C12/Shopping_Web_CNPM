@@ -1,16 +1,25 @@
+<?php
+$query = query("SELECT status, COUNT(*) as value FROM buy GROUP BY status");
+confirm($query);
+
+$data = '';
+while ($row = fetch_array($query)) {
+    $data .= "{ status: '" . $row['status'] . "',<br> value: " . $row['value'] . "},<br>";
+}
+$data = substr($data, 0, -2);
+?>
 <hr style="width:100%; border:3px solid black;">
-<div class="row col-12 text-center">
-    <h2>Sản phẩm của nhóm 1</h2>
+<div class="row col-12">
+    <h2 class=" text-center">Sản phẩm của nhóm 1</h2>
 </div>
 <!----------- Footer ------------>
 
 <footer class="footer-bs col-12">
     <div class="row">
-        <div class="col-md-3 footer-brand animated fadeInLeft">
-            <p>Sản phẩm của nhóm 1</p>
+        <div class="col-md-3 footer-brand">
             <p>Kì Học 1/2023 Công Nghệ Phần Mềm DH11C12</p>
         </div>
-        <div class="col-md-4 footer-nav animated fadeInUp">
+        <div class="col-md-4 footer-nav ">
             <h4>Thành Viên Tham Gia Dự Án —</h4>
             <div class="col-md-6">
                 <ul class="pages">
@@ -30,7 +39,7 @@
                 </ul> -->
             </div>
         </div>
-        <div class="col-md-2 footer-social animated fadeInDown">
+        <div class="col-md-2 footer-social ">
             <h4>Theo dõi chúng tôi tại</h4>
             <ul>
                 <li><a href="#">Facebook</a></li>
@@ -42,7 +51,9 @@
     </div>
 </footer>
 <section class="col-12" style="text-align:center; margin:10px auto;">
-    <p>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm</p>
+    <p>
+        <?php echo $data; ?>Dự án thiết kế bởi Nhóm 1 DH11C12 - Công Nghệ Phần Mềm
+    </p>
 </section>
 
 </div>
@@ -70,15 +81,31 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<?php
+$query = query("SELECT status, COUNT(*) as value FROM buy GROUP BY status");
+confirm($query);
+$query_total = query("SELECT id, COUNT(*) as total FROM buy");
+confirm($query_total);
+$row_total = fetch_array($query_total);
+$total=$row_total["total"];
+$data = array();
+while ($row = fetch_array($query)) {
+    $percent= round(($row['value']/$total)*100,2);
+    $data[] = array('status' => $row['status'], 'value' =>$percent .'%');
+}
 
+$query1 = query("SELECT order_name, COUNT(order_name) as count, SUM(order_amount) as total_amount FROM orders GROUP BY order_name");
+confirm($query1);
+
+$data_bar = array();
+while ($row = fetch_array($query1)) {
+    $data_bar[] = array('order_name' => $row['order_name'], 'count' => $row['count'], 'total_amount' => $row['total_amount']);
+}
+
+?>
 <script type="text/javascript">
     $(function () {
-        var data = [
-            { status: 'Đang xử lý', value: 20 },
-            { status: 'Đã xác nhận', value: 10 },
-            { status: 'Đang giao hàng', value: 5 },
-            { status: 'Đã hoàn thành', value: 5 }
-        ];
+        var data = <?php echo json_encode($data); ?>;
 
         Morris.Donut({
             element: 'chart',
@@ -93,24 +120,11 @@
         });
     });
     new Morris.Bar({
-        // ID of the element in which to draw the chart.
         element: 'tchart',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
-        data: [
-            { year: '2008', value: 20 },
-            { year: '2009', value: 10 },
-            { year: '2010', value: 5 },
-            { year: '2011', value: 5 },
-            { year: '2012', value: 20 }
-        ],
-        // The name of the data record attribute that contains x-values.
-        xkey: 'year',
-        // A list of names of data record attributes that contain y-values.
-        ykeys: ['value'],
-        // Labels for the ykeys -- will be displayed when you hover over the
-        // chart.
-        labels: ['Value']
+        data: <?php echo json_encode($data_bar); ?> ,
+        xkey: 'order_name',
+        ykeys: ['count', 'total_amount'],
+        labels: ['số lượng', 'Doanh thu']
     });
 </script>
 </body>

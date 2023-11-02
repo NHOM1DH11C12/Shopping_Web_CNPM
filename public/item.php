@@ -50,18 +50,6 @@
                                 <?php echo number_format($row['product_price']) ?> VND
                             </h4>
 
-                            <div class="ratings">
-
-                                <p>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                    4 sao
-                                </p>
-                            </div>
-
                             <p>
                                 <?php echo $row['short_desc'] ?>
                             </p>
@@ -88,21 +76,21 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
-                                data-toggle="tab">Mô tả</a></li>
+                                data-toggle="tab">Mô tả sản phẩm </a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Đánh
+                                giá</a></li>
 
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
-
-                            <p></p>
-
                             <p>
                                 <?php echo $row['product_description'] ?>
                             </p>
-
-
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <?php display_report() ?>
 
                         </div>
 

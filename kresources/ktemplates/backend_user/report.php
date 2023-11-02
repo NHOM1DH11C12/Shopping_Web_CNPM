@@ -1,15 +1,16 @@
+<h1 class="">
+    Đánh giá đơn hàng
+</h1>
 <?php
 $rate = 5; // Đặt giá trị ban đầu là 5
 for ($x = 0; $x < $rate; $x++) {
     echo '<i class="fa-star ' . ($x < $rate ? 'fas' : 'far') . '" data-index="' . $x . '"></i>';
 }
 ?>
-<h1 class="">
-    Đánh giá đơn hàng
-</h1>
 <?php display_order_from_report(); ?>
 <form action="" method="post" enctype="multipart/form-data">
     <?php add_report() ?>
+
     <input type="hidden" name="star" id="rate" value="<?php echo $rate; ?>">
     <script>
         var stars = document.querySelectorAll('.fa-star');

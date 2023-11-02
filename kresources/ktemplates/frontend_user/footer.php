@@ -1,31 +1,23 @@
-<hr style='border: 3px solid black; width:100%;'>
+
 </div>
+<hr style='border: 3px solid black; width:100%;'>
 <div class="container">
-
-
-    <!-- Footer -->
     <footer>
-        <!-- <div class="credit-left row">
-                <div class="col-lg-12">
-                    <p>Sản phẩm của nhóm 1</p>
-                </div>
-            </div> -->
         <div class="credit-right">
             <div class="container">
-                <section style="height:80px;"></section>
                 <div class="row text-center">
                     <h2>Sản phẩm của nhóm 1</h2>
                 </div>
                 <!----------- Footer ------------>
                 <footer class="footer-bs">
                     <div class="row">
-                        <div class="col-md-3 footer-brand animated fadeInLeft">
+                        <div class="col-md-3 footer-social">
                             <h2></h2>
                             <p>Sản phẩm của nhóm 1</p>
                             <p>Kì Học 1/2023 Công Nghệ Phần Mềm DH11C12</p>
                         </div>
-                        <div class="col-md-4 footer-nav animated fadeInUp">
-                            <h4>Thành Viên Tham Gia Dự Án —</h4>
+                        <div class="col-md-4 footer-nav ">
+                            <h4>-Thành Viên Tham Gia Dự Án-</h4>
                             <div class="col-md-6">
                                 <ul class="pages">
                                     <li><a href="#">Nguyễn Trần Trung (Leader-Trưởng Nhóm)</a></li>
@@ -44,8 +36,8 @@
                         </ul> -->
                             </div>
                         </div>
-                        <div class="col-md-2 footer-social animated fadeInDown">
-                            <h4>Theo dõi chúng tôi tại</h4>
+                        <div class="col-md-3 footer-social">
+                            <h4>-Theo dõi chúng tôi tại-</h4>
                             <ul>
                                 <li><a href="#">Facebook</a></li>
                                 <li><a href="#">Twitter</a></li>
@@ -82,7 +74,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-
 </body>
 
 </html>

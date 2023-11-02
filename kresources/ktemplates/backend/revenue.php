@@ -11,7 +11,9 @@
    </div>
    <button onclick="printRevenue()">In doanh thu</button>
    <div class="row" id="revenueData">
-      <?php display_revenue(); ?>
+      <div class="col-12">
+         <?php display_revenue(); ?>
+      </div>
       <script>
          function printRevenue() {
             var printContents = document.getElementById("revenueData").innerHTML;
@@ -29,6 +31,5 @@
 
 
       </script>
-
    </div>
 </div>

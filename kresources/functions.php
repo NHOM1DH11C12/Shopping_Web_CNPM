@@ -37,7 +37,6 @@ function display_message()
 {
     if (isset($_SESSION['message'])) {
         echo $_SESSION['message'];
-        sleep(3);
         unset($_SESSION['message']);
     }
 
@@ -328,7 +327,7 @@ function get_user_product()
                                 <br>
                                 <p>{$row['short_desc']}.</p>
                                 <div class="d-grid gap-2 my-4 text-center">
-                                    <a href="{$link}" class="btn btn-primary bold-btn">Hết hàng</a>   <a class="btn btn-primary"  href="item.php?id={$row['product_id']}" >Xem thêm</a> 
+                                    <a href="{$link}" class="btn btn-primary bold-btn">Hết hàng</a>   <a class="btn btn-primary"  href="item_user.php?id={$row['product_id']}" >Xem thêm</a> 
                                 </div>
                             </div>
                         </div>
@@ -877,7 +876,7 @@ function add_category()
 //tim kiem sản phẩm ở admin
 function search_product($keyword)
 {
-    $connection = mysqli_connect('localhost', 'root', '', 'thuchanh2');
+    $connection = mysqli_connect('localhost', 'root', '', 'toy');
     if ($connection === false) {
         die("Lỗi kết nối database: " . mysqli_connect_error());
     }
@@ -1336,6 +1335,11 @@ function display_order()
                     echo "<td>&ensp;</td>";
                 }
                 echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+            } elseif ($status == "Đang giao hàng") {
+                echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
+                echo "<td>&ensp;</td>";
+                echo "<td><a class='text-right btn btn-danger' 
+                href='index_user.php?update_user_status&buy_code={$row['buy_code']}'>Đã nhận hàng</a></td>";
             } else {
                 echo "<td>&ensp;</td>";
                 echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
@@ -1351,99 +1355,6 @@ function display_order()
         }
     } else {
         echo "<tr><td colspan='3'>Không có đơn hàng</td></tr>";
-    }
-}
-//thêm đánh giá đơn hàng
-function add_report()
-{
-    global $connection;
-    if (isset($_POST["report_product"])) {
-        $page = $_SESSION["page"];
-        $user_name = $_SESSION["username"];
-        $product_name = $_GET["product_name"];
-        $code = $_GET['buy_code'];
-        $star = $_POST["star"];
-        $comment = $_POST["comment"];
-        $report_file = ($_FILES['file']['name']);
-        $image_temp_location = ($_FILES['file']['tmp_name']);
-        $final_destination = UPLOAD_DIRECTORY . DS . $report_file;
-        move_uploaded_file($image_temp_location, $final_destination);
-        $query = "INSERT INTO reports(report_code, user_name,product_name, report_file, star, comment)
-        VALUES ('$code', '$user_name', '$product_name', '$report_file', '$star', '$comment')";
-        confirm($query);
-        $result = mysqli_query($connection, $query);
-        if (!$result) {
-            die('Query FAILED' . mysqli_error($connection));
-        } else {
-            $_SESSION['report_code'] = $code;
-            if ($page == 1) {
-                redirect('index_user.php?order');
-            } else {
-                redirect('index_user.php?delive');
-            }
-        }
-    }
-}
-function display_report()
-{
-    global $connection;
-    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
-    confirm($query);
-    $row = fetch_array($query);
-    $product_title = $row["product_title"];
-    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'ORDER BY 
-    CASE
-        WHEN star = '41' OR star = '5' THEN 1
-        WHEN star = '31' THEN 2
-        WHEN star = '21' THEN 3
-        WHEN star = '11' THEN 4
-        ELSE 5
-    END");
-    confirm($query2);
-    while ($row2 = fetch_array($query2)) {
-        if ($row2['star'] == 31) {
-            $row2['star'] = 4;
-        } elseif ($row2['star'] == 21) {
-            $row2['star'] = 3;
-        } elseif ($row2['star'] == 11) {
-            $row2['star'] = 2;
-        } elseif ($row2['star'] == 01) {
-            $row2['star'] = 1;
-        } else {
-            $row2['star'] = 5;
-        }
-        echo '<div class="report">';
-        if (!empty($row2['user_name'])) {
-            echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
-        }
-        for ($i = 0; $i < $row2['star']; $i++) {
-            echo '<i class="fas fa-star"></i>';
-        }
-        for ($i = 0; $i < 5 - $row2['star']; $i++) {
-            echo '<i class="far fa-star"></i>';
-        }
-        echo '<p >&ensp;' . $row2['date'] . '</p>';
-        echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
-        if (!empty($row2['report_file'])) {
-            echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
-        }
-        echo "<hr style='width:100%;'>";
-        echo '</div>';
-    }
-}
-
-function display_order_from_report()
-{
-    if (isset($_GET['product_name'])) {
-        $id = $_GET['product_name'];
-        $query = query("SELECT photo FROM buy WHERE product_name = '{$id}'");
-        confirm($query);
-        $row = fetch_array($query);
-        $photo = display_images($row['photo']);
-        echo "<table class='table table-hover'>";
-        echo "<tr><h4><strong>{$id}</strong></h4><img width='100' src='../../kresources/{$photo}'></tr>";
-        echo "</table>";
-
     }
 }
 //hiển thị chi tiết đơn hàng
@@ -1531,7 +1442,7 @@ function detail_order()
         echo "</tr>";
         if (!empty($row["vnpay_code"])) {
             echo "<tr>";
-            echo "<th>Mã thanh toán VNPAY: </th><th  class='text-right text-primary'>" . $row["vnpay_code"] ."</th>";
+            echo "<th>Mã thanh toán VNPAY: </th><th  class='text-right text-primary'>" . $row["vnpay_code"] . "</th>";
             echo "</tr>";
         }
         echo "</table>";
@@ -1739,9 +1650,10 @@ function display_ship()
                 echo number_format($row['amount']);
                 echo " VND </p></th>";
                 echo "<td>&ensp;</td>";
-                echo "<td>&ensp;</td>";
                 echo "<th><strong>Ngày đặt:</strong> {$date}</th>";
                 echo "<td>&ensp;</td>";
+                echo "<td><a class='text-right btn btn-danger' 
+                href='index_user.php?update_user_status&buy_code={$row['buy_code']}'>Đã nhận hàng</a></td>";
                 echo "</tr>";
                 echo "</table>";
                 $page = 4;
@@ -1749,7 +1661,7 @@ function display_ship()
             }
         }
     }
-    if ($count != 0) {
+    if ($count == 0) {
         echo "<tr><td colspan='3'>Không có đơn hàng</td></tr>";
     }
 }
@@ -1829,7 +1741,7 @@ function display_delive()
             }
         }
     }
-    if ($count != 0) {
+    if ($count == 0) {
         echo "<tr><td colspan='3'>Không có đơn hàng</td></tr>";
     }
 }
@@ -2310,15 +2222,14 @@ function display_ad_delive()
 //cập nhật trạng thái đơn hàng theo id
 function update_status()
 {
-    if (isset($_POST['update_status']) && isset($_POST['id'])) {
+    if (isset($_POST['update_status']) && isset($_POST['buy_code'])) {
         $status = $_POST['status'];
-        $id = $_POST['id'];
+        $code = $_POST['buy_code'];
 
         // Truy vấn dữ liệu từ cơ sở dữ liệu để lấy thông tin về đơn hàng
-        $query_order_info = query("SELECT  buy_code,user_name, product_name, price, quantity, amount, status, photo, buyad,add_date FROM buy WHERE id = '{$id}'");
+        $query_order_info = query("SELECT  user_name, product_name, price, quantity, amount, status, photo, buyad,add_date FROM buy WHERE buy_code = '{$code}'");
         confirm($query_order_info);
         $row = fetch_array($query_order_info);
-        $buy_code = $row['buy_code'];
         $user_name = $row['user_name'];
         $product_name = $row['product_name'];
         $price = $row['price'];
@@ -2329,13 +2240,13 @@ function update_status()
         $date = $row['add_date'];
 
         if ($status == 'Đã hoàn thành') {
-            $query = query("UPDATE buy SET status = '{$status}', add_date ='{$date}', receive_date = CURRENT_TIMESTAMP WHERE id = '{$id}'");
+            $query = query("UPDATE buy SET status = '{$status}', add_date ='{$date}', receive_date = CURRENT_TIMESTAMP WHERE buy_code = '{$code}'");
             $query_orders = query("INSERT INTO orders (order_code,order_name, order_quantity, order_amount, order_status, order_currency) 
-            VALUES ('{$buy_code}','{$product_name}', '{$quantity}', '{$amount}', '{$status}', 'VND')");
+            VALUES ('{$code}','{$product_name}', '{$quantity}', '{$amount}', '{$status}', 'VND')");
             $query_date = query("UPDATE orders SET get_date = CURRENT_TIMESTAMP WHERE order_id = '{$product_name}'");
             confirm($query_orders);
         } else {
-            $query = query("UPDATE buy SET status = '{$status}' WHERE id = '{$id}'");
+            $query = query("UPDATE buy SET status = '{$status}' WHERE buy_code = '{$code}'");
         }
         confirm($query);
         set_message("Cập nhật trạng thái thành công");
@@ -2398,7 +2309,7 @@ function display_revenue()
         <td>{$order_currency}</td>
         <td>{$order_status}</td>
         <td>{$get_date}</td>
-        <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_revenue.php?name={$order_name}' 
+        <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend\delete_revenue.php?order_id={$order_id}' 
         onclick=\"return confirm('Bạn có chắc chắn muốn xóa không?')\"><span class='glyphicon glyphicon-remove'></span></a></td>
     </tr>";
     }
@@ -2743,11 +2654,8 @@ function display_user()
     $row = fetch_array($query);
     $first_name = $row['first_name'];
     $last_name = $row['last_name'];
-    $user_level = $row['user_level'];
     $email = $row['email'];
     $sex = $row['sex'];
-    $password = $row['password'];
-    // Retrieve the image path from the database
     $user_photo = $row['user_photo'];
     $user = <<<DELIMETER
             <div class="row justify-content-center">
@@ -3049,6 +2957,15 @@ function display_address()
         $query_address = query("SELECT * FROM address WHERE username = '{$user_name}'");
         confirm($query_address);
         if (mysqli_num_rows($query_address) > 0) {
+            echo "<tr>
+            <th>Họ và tên</th>
+            <th>Số điện thoại</th>
+            <th>Tỉnh/Thành phố</th>
+            <th>Huyện</th>
+            <th>Xã/Phường</th>
+            <th>Địa chỉ cụ thể</th>
+            <th>Xóa</th>
+            <th>POP UP</th></tr>";
             while ($row = fetch_array($query_address)) {
                 // Lấy thông tin địa chỉ từ cột
                 $fullname = $row['fullname'];
@@ -3057,15 +2974,6 @@ function display_address()
                 $district = $row['district'];
                 $ward = $row['ward'];
                 $address = $row['address'];
-                echo "<tr>
-        <th>Họ và tên</th>
-          <th>Số điện thoại</th>
-          <th>Tỉnh/Thành phố</th>
-          <th>Huyện</th>
-          <th>Xã/Phường</th>
-          <th>Địa chỉ cụ thể</th>
-          <th>Xóa</th>
-          <th>POP UP</th></tr>";
 
                 // Hiển thị thông tin địa chỉ
                 echo "
@@ -3105,7 +3013,6 @@ function display_address()
 // hiện địa chỉ trong trang đặt hàng
 function buy_address()
 {
-    $username = "";
     $user_id = $_SESSION['user_id']; // Giả sử user_id đã được lưu trữ trong session
     $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
     confirm($query_user);
@@ -3126,15 +3033,18 @@ function buy_address()
             $address = $row['address'];
 
             $fulladdress = <<<DELIMETER
-
-        <tr>
-            <td><strong>{$fullname}</strong> {$phone}</td>
-        </tr>
-        <tr>
-            <td>{$address}, {$ward}, {$district}, {$province}</td>
-        </tr>
-
-        DELIMETER;
+            <ul>
+                    <li>
+                      <p class="mb-0"><strong>Họ và tên :</strong> {$fullname}</p>
+                    </li>
+                    <li>
+                      <p class="mb-0"><strong>SDT:</strong> {$phone}</p>
+                    </li>
+                    <li>
+                      <p class="mb-0"><strong>Địa chỉ:</strong> {$address}, {$ward}, {$district}, {$province}</p>
+                    </li>
+                  </ul>
+            DELIMETER;
 
             echo $fulladdress;
             $fulladdress = $fullname . ";" . $phone . "\n" . $province . ";" . $district . ";" . $ward . "\n" . $address;
@@ -3212,8 +3122,403 @@ function update_address()
     }
 }
 
-/******************SLIDES Functions *******************/
+/******************COMMENT Functions *******************/
+//comment
+function display_comment()
+{
+    $query = query("SELECT DISTINCT product_name FROM reports");
+    confirm($query);
+    while ($row = fetch_array($query)) {
+        $product_name = $row['product_name'];
+        $query2 = query("SELECT COUNT(report_id) as total FROM reports WHERE product_name = '{$product_name}'");
+        confirm($query2);
+        // Tính tổng số báo cáo cho sản phẩm
+        $count = fetch_array($query2)['total'];
+        $products = <<<DELIMETER
+        <tr>
+        <td><a href="index.php?display_comment&product_name={$product_name}">{$product_name}</td>
+        <td>{$count}</td>
+        </tr>
+        DELIMETER;
 
+        echo $products;
+    }
+}
+//hiển thị comment theo product
+function display_comment_product()
+{
+    if (isset($_GET['product_name'])) {
+        $product_name = escape_string($_GET['product_name']);
+        $query = query("SELECT * FROM reports WHERE product_name = '{$product_name}' ORDER BY 
+        CASE
+            WHEN star = '41' OR star = '5' THEN 1
+            WHEN star = '31' THEN 2
+            WHEN star = '21' THEN 3
+            WHEN star = '11' THEN 4
+            ELSE 5
+        END");
+        confirm($query);
+        echo "<h2> " . $product_name . "</h2>";
+
+        echo '<table class="table" border="1px">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th scope="col">Tài khoản</th>';
+        echo '<th scope="col">Đánh giá</th>';
+        echo '<th scope="col">Thang đánh giá</th>';
+        echo '<th scope="col">Ảnh phản hồi(nếu có) </th>';
+        echo '<th scope="col">Xóa</th>';
+        echo '</tr>';
+        echo '</thead>';
+
+        echo '<tbody>';
+        while ($row = fetch_array($query)) {
+
+            if ($row['star'] == 31) {
+                $row['star'] = 4;
+            } elseif ($row['star'] == 1) {
+                $row['star'] = 3;
+            } elseif ($row['star'] == 11) {
+                $row['star'] = 2;
+            } elseif ($row['star'] == 01) {
+                $row['star'] = 1;
+            } else {
+                $row['star'] = 5;
+            }
+            echo '<tr>';
+            echo '<td>' . $row['user_name'] . '</td>';
+            echo '<td>' . $row['comment'] . '</td>';
+            echo '<td>';
+            for ($i = 0; $i < $row['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '</td>';
+
+            if (!empty($row['report_file'])) {
+                echo '<td>';
+                echo "<img width='100' src='/Shopping_Web_CNPM/kresources/uploads/{$row['report_file']}'>";
+                echo '</td>';
+            } else {
+                echo '<td>Không có ảnh</td>';
+            }
+            $delete = <<<DELIMETER
+            <td><a class='btn btn-danger' href='..\..\kresources\ktemplates\backend_user\delete_comment.php?report_id={$row['report_id']}'">
+            <span class='glyphicon glyphicon-remove'></span></a></td>
+          DELIMETER;
+            echo $delete;
+            echo '</tr>';
+        }
+        echo '</tbody>';
+
+        echo '</table>';
+    }
+}
+//thêm đánh giá đơn hàng
+function add_report()
+{
+    global $connection;
+    if (isset($_POST["report_product"])) {
+        $page = $_SESSION["page"];
+        $user_name = $_SESSION["username"];
+        $product_name = $_GET["product_name"];
+        $code = $_GET['buy_code'];
+        $star = $_POST["star"];
+        $comment = $_POST["comment"];
+        $report_file = ($_FILES['file']['name']);
+        $image_temp_location = ($_FILES['file']['tmp_name']);
+        $final_destination = UPLOAD_DIRECTORY . DS . $report_file;
+        move_uploaded_file($image_temp_location, $final_destination);
+        $query = "INSERT INTO reports(report_code, user_name,product_name, report_file, star, comment)
+        VALUES ('$code', '$user_name', '$product_name', '$report_file', '$star', '$comment')";
+        confirm($query);
+        $result = mysqli_query($connection, $query);
+        if (!$result) {
+            die('Query FAILED' . mysqli_error($connection));
+        } else {
+            $_SESSION['report_code'] = $code;
+            if ($page == 1) {
+                redirect('index_user.php?order');
+            } else {
+                redirect('index_user.php?delive');
+            }
+        }
+    }
+}
+
+function display_report()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $c = 0;
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'ORDER BY 
+    CASE
+        WHEN star = '41' OR star = '5' THEN 1
+        WHEN star = '31' THEN 2
+        WHEN star = '21' THEN 3
+        WHEN star = '11' THEN 4
+        ELSE 5
+    END");
+    confirm($query2);
+    while ($row2 = fetch_array($query2)) {
+    if (!empty($row2['star'])) {
+        $c++;
+        if ($row2['star'] == 31) {
+            $row2['star'] = 4;
+        } elseif ($row2['star'] == 21) {
+            $row2['star'] = 3;
+        } elseif ($row2['star'] == 11) {
+            $row2['star'] = 2;
+        } elseif ($row2['star'] == 01) {
+            $row2['star'] = 1;
+        } else {
+            $row2['star'] = 5;
+        }
+        echo '<div class="report">';
+        if (!empty($row2['user_name'])) {
+            echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+        }
+        for ($i = 0; $i < $row2['star']; $i++) {
+            echo '<i class="fas fa-star text-warning"></i>';
+        }
+        for ($i = 0; $i < 5 - $row2['star']; $i++) {
+            echo '<i class="far fa-star"></i>';
+        }
+        echo '<p >&ensp;' . $row2['date'] . '</p>';
+        if (!empty($row2['report_file'])) {
+            echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+        }
+        if (!empty($row2['report_file'])) {
+            echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+        }
+        echo "<hr style='width:100%;'>";
+        echo '</div>';
+    }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_5()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'");
+    confirm($query2);
+    $c = 0;
+    while ($row2 = fetch_array($query2)) {
+        if (!empty($row2['star']) && ($row2['star'] == 41 || $row2['star'] == 5)) {
+            $row2['star'] = 5;
+            echo '<div class="report">';
+            if (!empty($row2['user_name'])) {
+                echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+            }
+            for ($i = 0; $i < $row2['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row2['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '<p >&ensp;' . $row2['date'] . '</p>';
+            if (!empty($row2['report_file'])) {
+                echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+            }
+            if (!empty($row2['report_file'])) {
+                echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+            }
+            echo "<hr style='width:100%;'>";
+            echo '</div>';
+        } elseif (!empty($row2['star'])) {
+            $c++;
+        }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_4()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'");
+    confirm($query2);
+    $c = 0;
+    while ($row2 = fetch_array($query2)) {
+        if (!empty($row2['star']) && $row2['star'] == 31) {
+            $row2['star'] = 4;
+            echo '<div class="report">';
+            if (!empty($row2['user_name'])) {
+                echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+            }
+            for ($i = 0; $i < $row2['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row2['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '<p >&ensp;' . $row2['date'] . '</p>';
+            if (!empty($row2['report_file'])) {
+                echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+            }
+            if (!empty($row2['report_file'])) {
+                echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+            }
+            echo "<hr style='width:100%;'>";
+            echo '</div>';
+        } elseif (!empty($row2['star'])) {
+            $c++;
+        }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_3()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'");
+    confirm($query2);
+    $c = 0;
+    while ($row2 = fetch_array($query2)) {
+        if (!empty($row2['star']) && $row2['star'] == 21) {
+            $row2['star'] = 3;
+            echo '<div class="report">';
+            if (!empty($row2['user_name'])) {
+                echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+            }
+            for ($i = 0; $i < $row2['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row2['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '<p >&ensp;' . $row2['date'] . '</p>';
+            if (!empty($row2['report_file'])) {
+                echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+            }
+            if (!empty($row2['report_file'])) {
+                echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+            }
+            echo "<hr style='width:100%;'>";
+            echo '</div>';
+        } elseif (!empty($row2['star'])) {
+            $c++;
+        }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_2()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'");
+    confirm($query2);
+    $c = 0;
+    while ($row2 = fetch_array($query2)) {
+        if (!empty($row2['star']) && $row2['star'] == 11) {
+            $row2['star'] = 2;
+            echo '<div class="report">';
+            if (!empty($row2['user_name'])) {
+                echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+            }
+            for ($i = 0; $i < $row2['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row2['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '<p >&ensp;' . $row2['date'] . '</p>';
+            if (!empty($row2['report_file'])) {
+                echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+            }
+            if (!empty($row2['report_file'])) {
+                echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+            }
+            echo "<hr style='width:100%;'>";
+            echo '</div>';
+        } elseif (!empty($row2['star'])) {
+            $c++;
+        }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_1()
+{
+    global $connection;
+    $query = query("SELECT product_title FROM products WHERE product_id = '{$_GET['id']}'");
+    confirm($query);
+    $row = fetch_array($query);
+    $product_title = $row["product_title"];
+    $query2 = query("SELECT user_name,product_name, report_file, star, comment,date FROM reports WHERE product_name='{$product_title}'");
+    confirm($query2);
+    $c = 0;
+    while ($row2 = fetch_array($query2)) {
+        if (!empty($row2['star']) && $row2['star'] == 01) {
+            $row2['star'] = 1;
+            echo '<div class="report">';
+            if (!empty($row2['user_name'])) {
+                echo '<p>Tài khoản: ' . $row2['user_name'] . '</p>';
+            }
+            for ($i = 0; $i < $row2['star']; $i++) {
+                echo '<i class="fas fa-star text-warning"></i>';
+            }
+            for ($i = 0; $i < 5 - $row2['star']; $i++) {
+                echo '<i class="far fa-star"></i>';
+            }
+            echo '<p >&ensp;' . $row2['date'] . '</p>';
+            if (!empty($row2['report_file'])) {
+                echo '<p>Đánh giá: ' . $row2['comment'] . '</p>';
+            }
+            if (!empty($row2['report_file'])) {
+                echo "<img width='100' src='../kresources/uploads/{$row2['report_file']}'>";
+            }
+            echo "<hr style='width:100%;'>";
+            echo '</div>';
+        } elseif (!empty($row2['star'])) {
+            $c++;
+        }
+    }
+    if ($c == 0) {
+        echo "<img width='500' src='../kresources/uploads/comment.png'>";
+    }
+}
+function display_order_from_report()
+{
+    if (isset($_GET['product_name'])) {
+        $id = $_GET['product_name'];
+        $query = query("SELECT photo FROM buy WHERE product_name = '{$id}'");
+        confirm($query);
+        $row = fetch_array($query);
+        $photo = display_images($row['photo']);
+        echo "<table class='table table-hover'>";
+        echo "<tr><h4><strong>{$id}</strong></h4><img width='100' src='../../kresources/{$photo}'></tr>";
+        echo "</table>";
+
+    }
+}
+/******************SLIDES Functions *******************/
 //thêm slides
 function add_slides()
 {

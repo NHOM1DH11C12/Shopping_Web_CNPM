@@ -86,6 +86,7 @@ function extra_photo()
                     </select></label>
                 <br />
             </div>
+
             <div class="form-group">
                 <label for="sex">Giới tính :</label><br />
                 <input type="radio" name="sex" id="nam" value="nam"><label class="fa fa-mars"> Nam </label>

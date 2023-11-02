@@ -10,7 +10,6 @@ if (!isset($_SESSION['username'])) {
 }
 ?>
 
-<div id="page-wrapper">
     <div class="container-fluid">
         <?php
         if ($_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/" || $_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public/admin/index.php") {
@@ -45,6 +44,14 @@ if (!isset($_SESSION['username'])) {
         // Hiển thị trang products
         if (isset($_GET['products'])) {
             include(TEMPLATE_BACK . '/products.php');
+        }
+        //trang hien thị comment
+        if (isset($_GET['comment'])) {
+            include(TEMPLATE_BACK . '/comment.php');
+        }
+        //trang hien thị comment
+        if (isset($_GET['display_comment'])) {
+            include(TEMPLATE_BACK . '/display_comment.php');
         }
         //sp tìm kiếm được
         if (isset($_POST['submit'])) {
@@ -95,8 +102,4 @@ if (!isset($_SESSION['username'])) {
         }
         ?>
     </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /#page-wrapper -->
-
 <?php include(TEMPLATE_BACK . '/footer.php'); ?>
