@@ -24,21 +24,27 @@ if (!isset($_SESSION['username'])) {
         }
 
         if (isset($_GET['admin_order'])|| isset($_GET['ad_order'])) {
+            
             include(TEMPLATE_BACK . '/admin_order.php');
         }
         if (isset($_GET['ad_process'])) {
+            
+            
             include(TEMPLATE_BACK  . '\ad_process.php');
         }
         
         if (isset($_GET['ad_confirm'])) {
+            
             include(TEMPLATE_BACK  . '\ad_confirm.php');
         }
         
         if (isset($_GET['ad_ship'])) {
+            
             include(TEMPLATE_BACK  . '\ad_ship.php');
         }
         
         if (isset($_GET['ad_delive'])) {
+            
             include(TEMPLATE_BACK  . '\ad_delive.php');
         }
         // Hiển thị trang products
@@ -81,9 +87,9 @@ if (!isset($_SESSION['username'])) {
             include(TEMPLATE_BACK . '/edit_product.php');
         }
 
-        // Hiển thị trang thêm người dùng
-        if (isset($_GET['add_user'])) {
-            include(TEMPLATE_BACK . '/add_user.php');
+        // Hiển thị trang  người dùng đơn
+        if (isset($_GET['detail_id'])) {
+            include(TEMPLATE_BACK . '/detail_user.php');
         }
 
         // Hiển thị trang chỉnh sửa người dùng

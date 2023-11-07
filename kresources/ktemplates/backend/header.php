@@ -15,6 +15,10 @@
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/order.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
 
@@ -32,11 +36,11 @@
 <body>
     <div id="wrapper">
 
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <!--top items-->
-                <?php include(TEMPLATE_BACK . '\top_nav_admin.php'); ?>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <?php include(TEMPLATE_BACK . '\side_nav_admin.php'); ?>
-            </nav>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <!--top items-->
+            <?php include(TEMPLATE_BACK . '\top_nav_admin.php'); ?>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <?php include(TEMPLATE_BACK . '\side_nav_admin.php'); ?>
+        </nav>

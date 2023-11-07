@@ -9,6 +9,7 @@ if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
     $item_quantity = 0;
     $user_name = "";
     $user_id = $_SESSION['user_id'];
+    $buy_codes = array();
     $query_user = query("SELECT username FROM users WHERE user_id = " . escape_string($user_id));
     confirm($query_user);
     while ($row_user = fetch_array($query_user)) {
@@ -19,6 +20,7 @@ if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
         confirm($query);
         while ($row = fetch_array($query)) {
             $buy_code = rand(100000000, 987654567);
+            $buy_codes[] = $buy_code;
             $sub = $row['product_price'] * $_SESSION["product_" . $selected_product];
             $item_quantity += $_SESSION["product_" . $selected_product];
             $query2 = "INSERT INTO buy(buy_code, vnpay_code, user_name, product_name, price, quantity, amount, status, payment, photo, buyad)
@@ -43,8 +45,9 @@ if (isset($_GET['vnp_ResponseCode']) && $_GET['vnp_ResponseCode'] == '00') {
                 die('Query FAILED' . mysqli_error($connection));
             }
         }
-        echo "<script>window.location='thank_you.php';</script>";
     }
+        $buy_codes_string = implode(',', $buy_codes);
+        echo "<script>window.location='thank_you.php?buy_codes=$buy_codes_string';</script>";
 } elseif ($_GET['vnp_ResponseCode'] != '00') {
     echo "<script>alert('Thanh toán không thành công!trở lại giỏ hàng'); window.location='checkout.php';</script>";
 }

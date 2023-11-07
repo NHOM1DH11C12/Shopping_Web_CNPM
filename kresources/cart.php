@@ -54,7 +54,7 @@ function cart()
   $amount = 1;
   $quantity = 1;
   $dem = 0;
-  echo "<div class='card-body'><input type='checkbox' id='select-all' name='select_all'>Chọn tất cả<br />";
+  echo "<div class='card-body'><input type='checkbox' id='select-all' name='select_all'> Chọn tất cả <br />";
   foreach ($_SESSION as $name => $value) {
     if ($value > 0) {
       if (substr($name, 0, 8) == "product_") {
@@ -71,7 +71,7 @@ function cart()
           $product_photo = display_images($row['product_image']);
           $product = <<<DELIMETER
      
-  <input type='checkbox' name='product_select[]' value='{$row['product_id']}'>Chọn sản phẩm 
+  <input type='checkbox' name='product_select[]' value='{$row['product_id']}'> Chọn sản phẩm 
           <!-- thẻ sản phẩm cần thay thế bởi function php cart() -->
           <div class="row">
             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
@@ -213,7 +213,7 @@ function buy_cart()
             <!-- Image -->
             <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
             <img width='100' src = '../kresources/{$product_photo}'
-                alt="Blue Jeans Jacket" />
+                alt="F5 đi anh em êi" />
               <a href="#!">
                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
               </a>
@@ -224,8 +224,8 @@ function buy_cart()
           <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
             <!-- Data -->
             <p><strong>{$row["product_title"]}</strong></p>
-            <p>Color: blue</p>
-            <p>Size: M</p>
+            <p>Bán và giao hàng bởi Chicken Hobby</p>
+            <p>Phân loại : Sẵn hàng</p>
           </div>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <span>Giá :</span>

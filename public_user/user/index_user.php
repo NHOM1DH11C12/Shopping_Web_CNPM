@@ -11,7 +11,7 @@
 
         <?php
         if ($_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public_user/user/" || $_SERVER['REQUEST_URI'] == "/Shopping_Web_CNPM/public_user/user/index_user.php") {
-            include(TEMPLATE_BACK_USER  . '\content.php');
+            include(TEMPLATE_BACK_USER  . '\user.php');
         }
         //orders******************************************************************************
         
@@ -45,9 +45,6 @@
         }
         //adding products**********************************************************************
         //users*******************************************************************************
-        if (isset($_GET['user'])) {
-            include(TEMPLATE_BACK_USER  . '\user.php');
-        }
         if (isset($_GET['id'])) {
             include(TEMPLATE_BACK_USER  . '\edit_address.php');
         }

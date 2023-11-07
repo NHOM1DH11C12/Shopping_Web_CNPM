@@ -1,4 +1,4 @@
-<div>
+<div class="container-fluid">
   <div class="row">
 
     <h3 class="bg-success">
@@ -26,7 +26,7 @@
 
         <div class="form-group">
 
-          <input type="submit" class="btn btn-primary btn-lg" name="add_slide" value="Lưu">
+          <input type="submit" class="btn btn-primary btn-lg" name="add_slide" value="Lưu" style="border-radius: 25px;">
 
         </div>
 

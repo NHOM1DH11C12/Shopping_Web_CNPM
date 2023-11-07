@@ -1,0 +1,54 @@
+.custom-col {
+    margin-left:25%;
+    margin-right:20%;
+}
+.ty_card {
+    padding-left: 550px;
+    padding-right: 0px;
+    min-height: 150vh;
+    width: 100%;
+    /* justify-content:center; */
+
+}
+
+.border {
+    width: 100%;
+}
+
+.ty_card.d-flex.align-items-center {
+    padding-right: -1000px;
+
+}
+
+.distance1 {
+    min-height: 10vh;
+}
+
+.btn {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #ffffff;
+    display: block;
+    width: 77%;
+    height: 50px;
+    border-radius: 25px;
+    /* padding: 0 30px 0 68px; */
+
+}
+
+.btn:hover {
+    background: #05a5ea;
+}
+
+.btn-gr {
+    margin-left: 65px;
+
+}
+
+.btn-gr .btn1 {
+    margin-left: 12%;
+}
+
+.btn-gr .btn2 {
+    margin-left: 12%;
+}

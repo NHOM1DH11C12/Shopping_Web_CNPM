@@ -4,7 +4,6 @@
 } else {
   include(TEMPLATE_FRONT . DS . 'header.php');
 } ?>
-<link href="css/login.css" rel="stylesheet">
   <div class="limiter">
     <div class="container-login100">
       <h2 class="text-center bg-warning">
@@ -14,7 +13,7 @@
         <div class="login100-pic js-tilt" data-tilt>
           <img src="./img/login.png" style="height:405px; background-color:white;">
         </div>
-        <div class="col-md-6 pull-right">
+        <div class="col-md-6">
           <h2 class="text-center"><b>ĐĂNG NHẬP</b></h2><br />
           <div class="card mb-4">
             <div class="card-body">

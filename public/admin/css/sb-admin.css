@@ -45,7 +45,6 @@ body {
 }
 
 /* Top Navigation */
-
 .top-nav {
     padding: 0 15px;
 }
@@ -257,3 +256,11 @@ ul.alert-dropdown {
 .panel-pink a:hover {
     color:#f60323;
 }
+.custom-link {
+    color: rgb(0, 157, 255);
+ }
+
+ .custom-link:hover {
+    color: rgb(233, 54, 0);
+    text-decoration: none;
+ }

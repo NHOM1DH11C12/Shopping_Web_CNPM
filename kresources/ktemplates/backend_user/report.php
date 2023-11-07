@@ -1,13 +1,15 @@
 <h1 class="">
     Đánh giá đơn hàng
 </h1>
+<?php display_order_from_report(); ?>
 <?php
-$rate = 5; // Đặt giá trị ban đầu là 5
+$rate = 5;// Đặt giá trị ban đầu là 5
+echo "<p style='display: inline;'>Chất lượng sản phẩm: </p>";
 for ($x = 0; $x < $rate; $x++) {
-    echo '<i class="fa-star ' . ($x < $rate ? 'fas' : 'far') . '" data-index="' . $x . '"></i>';
+    
+    echo '<i class="fa-star ' . ($x < $rate ? 'fas text-warning' : 'far') . '" data-index="' . $x . '" ></i>';
 }
 ?>
-<?php display_order_from_report(); ?>
 <form action="" method="post" enctype="multipart/form-data">
     <?php add_report() ?>
 
@@ -19,7 +21,7 @@ for ($x = 0; $x < $rate; $x++) {
                 var index = this.getAttribute('data-index');
                 document.getElementById('rate').value = index + 1;
                 for (var j = 0; j < stars.length; j++) {
-                    stars[j].className = 'fa-star ' + (j <= index ? 'fas' : 'far');
+                    stars[j].className = 'fa-star ' + (j <= index ? 'fas text-warning' : 'far');
                 }
             });
         }
@@ -27,7 +29,7 @@ for ($x = 0; $x < $rate; $x++) {
     <div class="form-group">
         <label class="fa fa-pen"></label>
         <label for="comment">Viết đánh giá:</label><br />
-        <textarea name="comment" cols="50" rows="10" class="typography-line"></textarea>
+        <textarea name="comment" cols="50" rows="10" class="typography-line" style="border:1px solid black;"></textarea>
     </div>
     <div class="form-group fa fa-file-image">
         <label for="file">Hình ảnh:</label>
